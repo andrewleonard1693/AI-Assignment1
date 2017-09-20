@@ -2,8 +2,7 @@
 //awt allows us to ask questions of the OS
 import com.sun.xml.internal.bind.v2.TODO;
 
-import java.awt.Dimension;
-import java.awt.Toolkit;
+import java.awt.*;
 import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -33,20 +32,29 @@ public class GUI extends JFrame {
 //      set the title of the window
         this.setTitle("Grid");
 
-//      create panel
-        JPanel panel = new JPanel();
+//      create main panel
+        JPanel mainPanel = new JPanel();
+        mainPanel.setLayout(new BoxLayout(mainPanel,BoxLayout.Y_AXIS));
+
+
+        //create panel for text input
+        JPanel textPanel = new JPanel();
+
 //      text field
         JTextField matrixField = new JTextField("Enter matrix dimensions", 20);
         matrixField.setToolTipText("Matrix dimensions");
         matrixField.requestFocus();
-        panel.add(matrixField);
-
+        textPanel.add(matrixField);
+        //create the submit button and add it to the text panel
         JButton submitButton = new JButton("Submit");
-        panel.add(submitButton);
+        textPanel.add(submitButton);
+
+        //add the text panel to the main panel
+        mainPanel.add(textPanel);
+
 
 //      listen for submit button clicked
 //      add panel to the frame
-        this.add(panel);
         submitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -55,6 +63,7 @@ public class GUI extends JFrame {
 //              check if the string is not valid
                 if(!(textFieldString.equals("5")) && !(textFieldString.equals("7"))&&!(textFieldString.equals("9"))&&!(textFieldString.equals("11"))){
                     System.out.println("Failure");
+                    return;
                     // handle error case here with a error window?
                     //TODO: pop up a window alerting the user of an error
                 }else{
@@ -62,12 +71,27 @@ public class GUI extends JFrame {
                     int parsedTextFieldNumber = Integer.parseInt(textFieldString);
                     System.out.println(parsedTextFieldNumber);
                     //create the grid of numbers
+                    //create panel for grid
+                    JPanel gridPanel = new JPanel();
+                    //set the grid layout for the grid panel using the converted input
+                    gridPanel.setLayout(new GridLayout(parsedTextFieldNumber,parsedTextFieldNumber,0,0));
+                    //add labels
+                    for(int i = 0;i<parsedTextFieldNumber;++i){
+                        for(int j = 0;j<parsedTextFieldNumber;++j){
+                            //create a label and add it to the layout
+                            JLabel label = new JLabel("1");
+                            gridPanel.add(label);
+                            gridPanel.revalidate();
+                            gridPanel.repaint();
+                        }
+                    }
+                    mainPanel.add(gridPanel);
+                    System.out.println("addedd");
                 }
 
             }
         });
-
-
+        this.add(mainPanel);
 
 
 //      show the window
