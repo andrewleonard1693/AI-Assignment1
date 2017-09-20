@@ -115,7 +115,10 @@ public class GUI extends JFrame {
         findMaxNumberOfMoves[2] = maxColumns-currentColumn;
         findMaxNumberOfMoves[3] = currentColumn-1;
         int maxNumOfMoves = Arrays.stream(findMaxNumberOfMoves).max().getAsInt();
-        return maxNumOfMoves;
+        Random rand = new Random();
+        int randomNumInValidRange = rand.nextInt((maxNumOfMoves - 1) + 1) + 1;
+
+        return randomNumInValidRange;
     }
     public static int[][] create2DArray(int rows, int columns){
         int[][] array = new int[rows][columns];
