@@ -62,7 +62,6 @@ public class GUI extends JFrame {
                 if(!(textFieldString.equals("5")) && !(textFieldString.equals("7"))&&!(textFieldString.equals("9"))&&!(textFieldString.equals("11"))){
                     System.out.println("Failure");
                     // handle error case here with a error window?
-                    //TODO: pop up a window alerting the user of an error
                     JOptionPane.showMessageDialog(frame,"You've entered an invalid size. Valid sizes: 5, 7, 9, 11");
                     return;
 
@@ -106,17 +105,6 @@ public class GUI extends JFrame {
 
 //      show the window
         this.setVisible(true);
-    }
-    // generates a random value from the set of valid grid sizes and returns it
-    public static int generateRandomValueForGridLayout(){
-        int[] array = new int[4];
-        array[0] = 5;
-        array[1] = 7;
-        array[2] = 9;
-        array[3] = 11;
-        int rand = (int)(Math.random()*4);
-        return array[rand];
-
     }
     //get the grid number depending on the current row and column
     public static int generateGridNumber(int currentRow, int currentColumn,int maxRows, int maxColumns){
