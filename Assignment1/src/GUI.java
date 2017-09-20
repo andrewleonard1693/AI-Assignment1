@@ -40,11 +40,14 @@ public class GUI extends JFrame {
 
         //create panel for text input
         JPanel buttonPanel = new JPanel();
+        JTextField textField = new JTextField("Input matrix dimensions",20);
         //create the submit button and add it to the text panel
         JButton generateButton = new JButton("Generate");
+        buttonPanel.add(textField);
         buttonPanel.add(generateButton);
 
         //add the text panel to the main panel
+        textField.requestFocus();
         mainPanel.add(buttonPanel);
 
 
@@ -55,38 +58,48 @@ public class GUI extends JFrame {
             public void actionPerformed(ActionEvent e) {
 //              grab the text field contents
 //              check if the string is not valid
-                int n = generateRandomValueForGridLayout();
-                int maxRows = n;
-                int maxColumns = n;
-                //check if the user already pressed the submit button so we dont keep adding grids to the layout
-                if(mainPanel.getComponentCount()>1){
-                    //the user already added a grid so delete the grid and revalidate
-                    Component[] comp = mainPanel.getComponents();
-                    mainPanel.remove(comp[1]);
-                    frame.revalidate();
-                }
-                //create the grid of numbers
-                //create panel for grid
-                JPanel gridPanel = new JPanel();
-                //set the grid layout for the grid panel using the converted input
-                gridPanel.setLayout(new GridLayout(maxRows,maxColumns,0,0));
-                //create the 2d array
-                int[][] grid2dArray = create2DArray(maxRows,maxColumns);
-                //add labels
-                for(int i = 0;i<maxRows;++i){
-                    for(int j = 0;j<maxColumns;++j){
-                        //TODO: generate the valid grid number
-                        //create a label and add it to the layout
-                        String labelNum = Integer.toString(grid2dArray[i][j]);
-                        JLabel label = new JLabel(labelNum,SwingConstants.CENTER);
-                        //set the border for each cell
-                        label.setBorder(BorderFactory.createLineBorder(Color.black));
-                        //add the label to the grid
-                        gridPanel.add(label);
+                String textFieldString = textField.getText();
+                if(!(textFieldString.equals("5")) && !(textFieldString.equals("7"))&&!(textFieldString.equals("9"))&&!(textFieldString.equals("11"))){
+                    System.out.println("Failure");
+                    // handle error case here with a error window?
+                    //TODO: pop up a window alerting the user of an error
+                    JOptionPane.showMessageDialog(frame,"You've entered an invalid size. Valid sizes: 5, 7, 9, 11");
+                    return;
+
+                }else{
+                    //check if the user already pressed the submit button so we dont keep adding grids to the layout
+                    if(mainPanel.getComponentCount()>1){
+                        //the user already added a grid so delete the grid and revalidate
+                        Component[] comp = mainPanel.getComponents();
+                        mainPanel.remove(comp[1]);
+                        frame.revalidate();
                     }
+                    int n = Integer.parseInt(textFieldString);
+                    int maxRows = n;
+                    int maxColumns = n;
+                    //create the grid of numbers
+                    //create panel for grid
+                    JPanel gridPanel = new JPanel();
+                    //set the grid layout for the grid panel using the converted input
+                    gridPanel.setLayout(new GridLayout(maxRows,maxColumns,0,0));
+                    //create the 2d array
+                    int[][] grid2dArray = create2DArray(maxRows,maxColumns);
+                    //add labels
+                    for(int i = 0;i<maxRows;++i){
+                        for(int j = 0;j<maxColumns;++j){
+                            //create a label and add it to the layout
+                            String labelNum = Integer.toString(grid2dArray[i][j]);
+                            JLabel label = new JLabel(labelNum,SwingConstants.CENTER);
+                            //set the border for each cell
+                            label.setBorder(BorderFactory.createLineBorder(Color.black));
+                            //add the label to the grid
+                            gridPanel.add(label);
+                        }
+                    }
+                    mainPanel.add(gridPanel);
+                    frame.revalidate();
+
                 }
-                mainPanel.add(gridPanel);
-                frame.revalidate();
             }
         });
         this.add(mainPanel);
@@ -120,9 +133,9 @@ public class GUI extends JFrame {
 
         return randomNumInValidRange;
     }
+    //creates a valid 2d array of grid numbers
     public static int[][] create2DArray(int rows, int columns){
         int[][] array = new int[rows][columns];
-        //TODO: implement array with generated grid number
         for(int i = 0; i<rows;++i){
             for(int j = 0;j<columns;++j){
                 array[i][j] = generateGridNumber(i,j,rows,columns);
