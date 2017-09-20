@@ -43,14 +43,22 @@ public class GUI extends JFrame {
         panel.add(submitButton);
 
 //      listen for submit button clicked
+//      add panel to the frame
+        this.add(panel);
         submitButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                System.out.println("Submit button pressed");
+//              grab the text field contents
+                String textFieldString = matrixField.getText();
+//              check if the string is not valid
+                if(!(textFieldString.equals("5")) && !(textFieldString.equals("7"))&&!(textFieldString.equals("9"))&&!(textFieldString.equals("11"))){
+                    System.out.println("Failure");
+                }else{
+                    System.out.println("Success");
+                }
+
             }
         });
-//      add panel to the frame
-        this.add(panel);
 
 
 
