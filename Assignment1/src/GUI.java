@@ -55,7 +55,7 @@ public class GUI extends JFrame {
             public void actionPerformed(ActionEvent e) {
 //              grab the text field contents
 //              check if the string is not valid
-                int n = generateRandomValue();
+                int n = generateRandomValueForGridLayout();
                 int maxRows = n;
                 int maxColumns = n;
                 //check if the user already pressed the submit button so we dont keep adding grids to the layout
@@ -70,12 +70,15 @@ public class GUI extends JFrame {
                 JPanel gridPanel = new JPanel();
                 //set the grid layout for the grid panel using the converted input
                 gridPanel.setLayout(new GridLayout(maxRows,maxColumns,0,0));
+                //create the 2d array
+                int[][] grid2dArray = create2DArray(maxRows,maxColumns);
                 //add labels
                 for(int i = 0;i<maxRows;++i){
                     for(int j = 0;j<maxColumns;++j){
                         //TODO: generate the valid grid number
                         //create a label and add it to the layout
-                        JLabel label = new JLabel("1",SwingConstants.CENTER);
+                        String labelNum = Integer.toString(grid2dArray[i][j]);
+                        JLabel label = new JLabel(labelNum,SwingConstants.CENTER);
                         //set the border for each cell
                         label.setBorder(BorderFactory.createLineBorder(Color.black));
                         //add the label to the grid
@@ -87,13 +90,12 @@ public class GUI extends JFrame {
             }
         });
         this.add(mainPanel);
-        System.out.println(mainPanel.getComponentCount());
-
 
 //      show the window
         this.setVisible(true);
     }
-    public static int generateRandomValue(){
+    // generates a random value from the set of valid grid sizes and returns it
+    public static int generateRandomValueForGridLayout(){
         int[] array = new int[4];
         array[0] = 5;
         array[1] = 7;
@@ -104,15 +106,23 @@ public class GUI extends JFrame {
 
     }
     //get the grid number depending on the current row and column
-    public static int generateGridNumber(int currentRow, int currentColumn){
-        return 0;
+    public static int generateGridNumber(int currentRow, int currentColumn,int maxRows, int maxColumns){
+        int[] findMaxNumberOfMoves = new int[4];
+        currentRow++;
+        currentColumn++;
+        findMaxNumberOfMoves[0] = maxRows-currentRow;
+        findMaxNumberOfMoves[1] = currentRow-1;
+        findMaxNumberOfMoves[2] = maxColumns-currentColumn;
+        findMaxNumberOfMoves[3] = currentColumn-1;
+        int maxNumOfMoves = Arrays.stream(findMaxNumberOfMoves).max().getAsInt();
+        return maxNumOfMoves;
     }
     public static int[][] create2DArray(int rows, int columns){
         int[][] array = new int[rows][columns];
-        //TODO: implement array with generated grid numbers
+        //TODO: implement array with generated grid number
         for(int i = 0; i<rows;++i){
             for(int j = 0;j<columns;++j){
-                array[i][j] = generateGridNumber(i,j);
+                array[i][j] = generateGridNumber(i,j,rows,columns);
             }
         }
         //set the goal cell to 0
