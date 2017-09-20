@@ -14,6 +14,7 @@ public class GUI extends JFrame {
     }
 
     public GUI(){
+        JFrame frame = this;
         this.setSize(750,750);
 //      this.setLocationRelativeTo(null);
 //      create new instance of the toolkit
@@ -61,31 +62,31 @@ public class GUI extends JFrame {
 //              grab the text field contents
                 String textFieldString = matrixField.getText();
 //              check if the string is not valid
-                if(!(textFieldString.equals("5")) && !(textFieldString.equals("7"))&&!(textFieldString.equals("9"))&&!(textFieldString.equals("11"))){
-                    System.out.println("Failure");
-                    return;
-                    // handle error case here with a error window?
-                    //TODO: pop up a window alerting the user of an error
-                }else{
-                    // convert the inputted string to an integer
-                    int parsedTextFieldNumber = Integer.parseInt(textFieldString);
-                    System.out.println(parsedTextFieldNumber);
-                    //create the grid of numbers
-                    //create panel for grid
-                    JPanel gridPanel = new JPanel();
-                    //set the grid layout for the grid panel using the converted input
-                    gridPanel.setLayout(new GridLayout(parsedTextFieldNumber,parsedTextFieldNumber,0,0));
-                    //add labels
-                    for(int i = 0;i<parsedTextFieldNumber;++i){
-                        for(int j = 0;j<parsedTextFieldNumber;++j){
-                            //create a label and add it to the layout
-                            JLabel label = new JLabel("1");
-                            gridPanel.add(label);
-                            gridPanel.revalidate();
-                            gridPanel.repaint();
-                        }
-                    }
+                            if(!(textFieldString.equals("5")) && !(textFieldString.equals("7"))&&!(textFieldString.equals("9"))&&!(textFieldString.equals("11"))){
+                                System.out.println("Failure");
+                                return;
+                                // handle error case here with a error window?
+                                //TODO: pop up a window alerting the user of an error
+                            }else{
+                                // convert the inputted string to an integer
+                                int parsedTextFieldNumber = Integer.parseInt(textFieldString);
+                                System.out.println(parsedTextFieldNumber);
+                                //create the grid of numbers
+                                //create panel for grid
+                                JPanel gridPanel = new JPanel();
+                                //set the grid layout for the grid panel using the converted input
+                                gridPanel.setLayout(new GridLayout(parsedTextFieldNumber,parsedTextFieldNumber,0,0));
+                                //add labels
+                                for(int i = 0;i<parsedTextFieldNumber;++i){
+                                    for(int j = 0;j<parsedTextFieldNumber;++j){
+                                        //create a label and add it to the layout
+                                        JLabel label = new JLabel("1",SwingConstants.CENTER);
+                                        label.setBorder(BorderFactory.createLineBorder(Color.black));
+                                        gridPanel.add(label);
+                                    }
+                                }
                     mainPanel.add(gridPanel);
+                    frame.revalidate();
                     System.out.println("addedd");
                 }
 
