@@ -66,6 +66,7 @@ public class GUI extends JFrame {
                                 // handle error case here with a error window?
                                 //TODO: pop up a window alerting the user of an error
                             }else{
+                                //check if the user already pressed the submit button so we dont keep adding grids to the layout
                                 if(mainPanel.getComponentCount()>1){
                                     //the user already added a grid so delete the grid and revalidate
                                     Component[] comp = mainPanel.getComponents();
@@ -74,6 +75,9 @@ public class GUI extends JFrame {
                                 }
                                 // convert the inputted string to an integer
                                 int parsedTextFieldNumber = Integer.parseInt(textFieldString);
+                                //variables for max rows and columns
+                                int maxRows = parsedTextFieldNumber;
+                                int maxColumns = parsedTextFieldNumber;
                                 //create the grid of numbers
                                 //create panel for grid
                                 JPanel gridPanel = new JPanel();
