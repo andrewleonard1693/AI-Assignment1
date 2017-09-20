@@ -31,7 +31,7 @@ public class GUI extends JFrame {
 //      cleanup on close(red close button pressed)
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 //      set the title of the window
-        this.setTitle("Grid");
+        this.setTitle("Local Search");
 
 //      create main panel
         JPanel mainPanel = new JPanel();
@@ -62,7 +62,7 @@ public class GUI extends JFrame {
                 if(!(textFieldString.equals("5")) && !(textFieldString.equals("7"))&&!(textFieldString.equals("9"))&&!(textFieldString.equals("11"))){
                     System.out.println("Failure");
                     // handle error case here with a error window?
-                    JOptionPane.showMessageDialog(frame,"You've entered an invalid size. Valid sizes: 5, 7, 9, 11");
+                    JOptionPane.showMessageDialog(frame,"You've entered an invalid grid size. Valid sizes: 5, 7, 9, 11");
                     return;
 
                 }else{
@@ -106,6 +106,12 @@ public class GUI extends JFrame {
 //      show the window
         this.setVisible(true);
     }
+
+
+
+    /*---------UTILITY METHODS---------*/
+
+
     //get the grid number depending on the current row and column
     public static int generateGridNumber(int currentRow, int currentColumn,int maxRows, int maxColumns){
         int[] findMaxNumberOfMoves = new int[4];
