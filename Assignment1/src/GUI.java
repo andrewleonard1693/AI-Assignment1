@@ -1,15 +1,19 @@
+
 //awt allows us to ask questions of the OS
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import javax.swing.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 
 public class GUI extends JFrame {
 
     public static void main(String[] args) {
         new GUI();
     }
+
     public GUI(){
-        this.setSize(400,400);
+        this.setSize(750,750);
 //      this.setLocationRelativeTo(null);
 //      create new instance of the toolkit
         Toolkit tk = Toolkit.getDefaultToolkit();
@@ -29,26 +33,22 @@ public class GUI extends JFrame {
 
 //      create panel
         JPanel panel = new JPanel();
-//      create a label
-        JLabel label1 = new JLabel("Tell me something");
-        label1.setText("New Text");
-        label1.setToolTipText("Doesn't do anything");
-        panel.add(label1);
+//      text field
+        JTextField matrixField = new JTextField("Enter matrix dimensions", 20);
+        matrixField.setToolTipText("Matrix dimensions");
+        matrixField.requestFocus();
+        panel.add(matrixField);
 
-//      create a button
-        JButton button1 = new JButton("Send");
-        button1.setText("New Button");
-        button1.setToolTipText("Its a button.");
-        panel.add(button1);
+        JButton submitButton = new JButton("Submit");
+        panel.add(submitButton);
 
-//        text field
-        JTextField textfield1 = new JTextField("Type here", 15);
-        textfield1.setColumns(10);
-        textfield1.setText("Type again");
-        textfield1.setToolTipText("Its a text field");
-
-        panel.add(textfield1);
-
+//      listen for submit button clicked
+        submitButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                System.out.println("Submit button pressed");
+            }
+        });
 //      add panel to the frame
         this.add(panel);
 
