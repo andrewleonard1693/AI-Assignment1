@@ -1,5 +1,7 @@
 
 //awt allows us to ask questions of the OS
+import com.sun.xml.internal.bind.v2.TODO;
+
 import java.awt.Dimension;
 import java.awt.Toolkit;
 import javax.swing.*;
@@ -53,8 +55,13 @@ public class GUI extends JFrame {
 //              check if the string is not valid
                 if(!(textFieldString.equals("5")) && !(textFieldString.equals("7"))&&!(textFieldString.equals("9"))&&!(textFieldString.equals("11"))){
                     System.out.println("Failure");
+                    // handle error case here with a error window?
+                    //TODO: pop up a window alerting the user of an error
                 }else{
-                    System.out.println("Success");
+                    // convert the inputted string to an integer
+                    int parsedTextFieldNumber = Integer.parseInt(textFieldString);
+                    System.out.println(parsedTextFieldNumber);
+                    //create the grid of numbers
                 }
 
             }
