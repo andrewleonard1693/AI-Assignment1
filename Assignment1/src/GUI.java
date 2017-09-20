@@ -66,6 +66,12 @@ public class GUI extends JFrame {
                                 // handle error case here with a error window?
                                 //TODO: pop up a window alerting the user of an error
                             }else{
+                                if(mainPanel.getComponentCount()>1){
+                                    //the user already added a grid so delete the grid and revalidate
+                                    Component[] comp = mainPanel.getComponents();
+                                    mainPanel.remove(comp[1]);
+                                    frame.revalidate();
+                                }
                                 // convert the inputted string to an integer
                                 int parsedTextFieldNumber = Integer.parseInt(textFieldString);
                                 //create the grid of numbers
@@ -86,12 +92,12 @@ public class GUI extends JFrame {
                                 }
                     mainPanel.add(gridPanel);
                     frame.revalidate();
-                    System.out.println("addedd");
                 }
 
             }
         });
         this.add(mainPanel);
+        System.out.println(mainPanel.getComponentCount());
 
 
 //      show the window
