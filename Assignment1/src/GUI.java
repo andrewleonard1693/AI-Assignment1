@@ -27,7 +27,6 @@ public class GUI extends JFrame {
 //      set the position of the window
         this.setLocation(xPos,yPos);
 //      prevent the resizing of the window
-        this.setResizable(false);
 //      cleanup on close(red close button pressed)
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 //      set the title of the window
@@ -40,7 +39,6 @@ public class GUI extends JFrame {
 
         //create panel for text input
         JPanel textPanel = new JPanel();
-
 //      text field
         JTextField matrixField = new JTextField("Enter matrix dimensions", 20);
         matrixField.setToolTipText("Matrix dimensions");
@@ -70,7 +68,6 @@ public class GUI extends JFrame {
                             }else{
                                 // convert the inputted string to an integer
                                 int parsedTextFieldNumber = Integer.parseInt(textFieldString);
-                                System.out.println(parsedTextFieldNumber);
                                 //create the grid of numbers
                                 //create panel for grid
                                 JPanel gridPanel = new JPanel();
@@ -81,7 +78,9 @@ public class GUI extends JFrame {
                                     for(int j = 0;j<parsedTextFieldNumber;++j){
                                         //create a label and add it to the layout
                                         JLabel label = new JLabel("1",SwingConstants.CENTER);
+                                        //set the border for each cell
                                         label.setBorder(BorderFactory.createLineBorder(Color.black));
+                                        //add the label to the grid
                                         gridPanel.add(label);
                                     }
                                 }
@@ -98,4 +97,18 @@ public class GUI extends JFrame {
 //      show the window
         this.setVisible(true);
     }
+    //get the grid number depending on the current row and column
+//    public static int generateGridNumber(int currentRow, int currentColumn){
+//        return 0;
+//    }
+//    public static int[][] create2DArray(int rows, int columns, ){
+//        int[][] array = new int[rows][columns];
+//        //TODO: implement array with generated grid numbers
+//        for(int i = 0; i<rows;++i){
+//            for(int j = 0;j<columns;++j){
+//                array[i][j] = generateGridNumber(i,j);
+//            }
+//        }
+//        return array;
+//    }
 }
