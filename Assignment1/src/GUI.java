@@ -82,12 +82,12 @@ public class GUI extends JFrame {
                     //set the grid layout for the grid panel using the converted input
                     gridPanel.setLayout(new GridLayout(maxRows,maxColumns,0,0));
                     //create the 2d array
-                    int[][] grid2dArray = create2DArray(maxRows,maxColumns);
+                    Node[][] grid2dArray = create2DArrayOfNodes(maxRows,maxColumns);
                     //add labels
                     for(int i = 0;i<maxRows;++i){
                         for(int j = 0;j<maxColumns;++j){
                             //create a label and add it to the layout
-                            String labelNum = Integer.toString(grid2dArray[i][j]);
+                            String labelNum = Integer.toString(grid2dArray[i][j].getCellValue());
                             JLabel label = new JLabel(labelNum,SwingConstants.CENTER);
                             //set the border for each cell
                             label.setBorder(BorderFactory.createLineBorder(Color.black));
@@ -128,15 +128,15 @@ public class GUI extends JFrame {
         return randomNumInValidRange;
     }
     //creates a valid 2d array of grid numbers
-    public static int[][] create2DArray(int rows, int columns){
-        int[][] array = new int[rows][columns];
+    public static Node[][] create2DArrayOfNodes(int rows, int columns){
+        Node[][] array = new Node[rows][columns];
         for(int i = 0; i<rows;++i){
             for(int j = 0;j<columns;++j){
-                array[i][j] = generateGridNumber(i,j,rows,columns);
+                array[i][j] = new Node(i,j,generateGridNumber(i,j,rows,columns));
             }
         }
         //set the goal cell to 0
-        array[rows-1][columns-1]=0;
+        array[rows-1][columns-1].setCellValue(0);
         return array;
     }
 }

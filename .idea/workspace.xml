@@ -2,8 +2,8 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f067d3e8-a390-484f-875a-7f691c3c6473" name="Default" comment="barebones gui">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/Assignment1/src/Node.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Assignment1/src/GUI.java" afterPath="$PROJECT_DIR$/Assignment1/src/GUI.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Assignment1/src/Node.java" afterPath="$PROJECT_DIR$/Assignment1/src/Node.java" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -15,28 +15,34 @@
   </component>
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="GUI.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="GUI.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Assignment1/src/GUI.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-2181">
-              <caret line="1" column="28" lean-forward="false" selection-start-line="1" selection-start-column="28" selection-end-line="1" selection-end-column="28" />
+            <state relative-caret-position="285">
+              <caret line="85" column="32" lean-forward="true" selection-start-line="85" selection-start-column="32" selection-end-line="85" selection-end-column="32" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Node.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="Node.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Assignment1/src/Node.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="462">
-              <caret line="21" column="22" lean-forward="false" selection-start-line="21" selection-start-column="22" selection-end-line="21" selection-end-column="22" />
+            <state relative-caret-position="748">
+              <caret line="34" column="5" lean-forward="false" selection-start-line="34" selection-start-column="5" selection-end-line="34" selection-end-column="5" />
               <folding>
-                <element signature="e#280#281#0" expanded="true" />
-                <element signature="e#307#308#0" expanded="true" />
-                <element signature="e#333#334#0" expanded="true" />
-                <element signature="e#360#361#0" expanded="true" />
-                <element signature="e#389#390#0" expanded="true" />
-                <element signature="e#418#419#0" expanded="true" />
+                <element signature="e#315#316#0" expanded="true" />
+                <element signature="e#342#343#0" expanded="true" />
+                <element signature="e#368#369#0" expanded="true" />
+                <element signature="e#395#396#0" expanded="true" />
+                <element signature="e#424#425#0" expanded="true" />
+                <element signature="e#453#454#0" expanded="true" />
+                <element signature="e#484#485#0" expanded="true" />
+                <element signature="e#516#517#0" expanded="true" />
+                <element signature="e#587#588#0" expanded="true" />
+                <element signature="e#629#630#0" expanded="true" />
+                <element signature="e#669#670#0" expanded="true" />
+                <element signature="e#705#706#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -67,8 +73,8 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/Assignment1/src/GUI.java" />
         <option value="$PROJECT_DIR$/Assignment1/src/Node.java" />
+        <option value="$PROJECT_DIR$/Assignment1/src/GUI.java" />
       </list>
     </option>
   </component>
@@ -302,7 +308,9 @@
     <option name="LAST_COMMIT_MESSAGE" value="barebones gui" />
   </component>
   <component name="XDebuggerManager">
-    <breakpoint-manager />
+    <breakpoint-manager>
+      <option name="time" value="1" />
+    </breakpoint-manager>
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
@@ -346,26 +354,32 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Assignment1/src/GUI.java">
+    <entry file="file://$PROJECT_DIR$/Assignment1/src/Node.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-2181">
-          <caret line="1" column="28" lean-forward="false" selection-start-line="1" selection-start-column="28" selection-end-line="1" selection-end-column="28" />
-          <folding />
+        <state relative-caret-position="748">
+          <caret line="34" column="5" lean-forward="false" selection-start-line="34" selection-start-column="5" selection-end-line="34" selection-end-column="5" />
+          <folding>
+            <element signature="e#315#316#0" expanded="true" />
+            <element signature="e#342#343#0" expanded="true" />
+            <element signature="e#368#369#0" expanded="true" />
+            <element signature="e#395#396#0" expanded="true" />
+            <element signature="e#424#425#0" expanded="true" />
+            <element signature="e#453#454#0" expanded="true" />
+            <element signature="e#484#485#0" expanded="true" />
+            <element signature="e#516#517#0" expanded="true" />
+            <element signature="e#587#588#0" expanded="true" />
+            <element signature="e#629#630#0" expanded="true" />
+            <element signature="e#669#670#0" expanded="true" />
+            <element signature="e#705#706#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Assignment1/src/Node.java">
+    <entry file="file://$PROJECT_DIR$/Assignment1/src/GUI.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="462">
-          <caret line="21" column="22" lean-forward="false" selection-start-line="21" selection-start-column="22" selection-end-line="21" selection-end-column="22" />
-          <folding>
-            <element signature="e#280#281#0" expanded="true" />
-            <element signature="e#307#308#0" expanded="true" />
-            <element signature="e#333#334#0" expanded="true" />
-            <element signature="e#360#361#0" expanded="true" />
-            <element signature="e#389#390#0" expanded="true" />
-            <element signature="e#418#419#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="285">
+          <caret line="85" column="32" lean-forward="true" selection-start-line="85" selection-start-column="32" selection-end-line="85" selection-end-column="32" />
+          <folding />
         </state>
       </provider>
     </entry>
