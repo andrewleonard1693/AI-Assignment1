@@ -139,4 +139,17 @@ public class GUI extends JFrame {
         array[rows-1][columns-1].setCellValue(0);
         return array;
     }
+    //creates the visited array initialized all to 0
+    public static int[][] create2DVisitedArray(int rows, int columns){
+        int[][] array = new int[rows][columns];
+        for(int i = 0;i<rows;++i){
+            for(int j = 0;j<columns;++j){
+                array[i][j]=0;
+            }
+        }
+        return array;
+    }
+
+    //---------BFS Methods---------
+
 }

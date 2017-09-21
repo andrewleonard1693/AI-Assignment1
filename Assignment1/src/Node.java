@@ -4,6 +4,7 @@ public class Node {
     private int yPos;
     private Node parent;
     private int cellValue;
+    private int pathCount;
 
     public Node(int xPos, int yPos, int cellValue){
         this.xPos = xPos;
@@ -25,6 +26,9 @@ public class Node {
     public int getCellValue(){
         return cellValue;
     }
+    public int getPathCount(){
+        return pathCount;
+    }
 
     //setters for values
     public void setCellValue(int cellValue){
@@ -32,6 +36,9 @@ public class Node {
     }
     public void setParent(Node parent){
         this.parent = parent;
+    }
+    public void setPathCount(int pathCount){
+        this.pathCount=pathCount;
     }
 
 }
