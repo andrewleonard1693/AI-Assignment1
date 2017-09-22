@@ -1,6 +1,5 @@
 
 //awt allows us to ask questions of the OS
-import com.sun.xml.internal.bind.v2.TODO;
 
 import java.awt.*;
 import javax.swing.*;
@@ -84,6 +83,8 @@ public class GUI extends JFrame {
                     gridPanel.setLayout(new GridLayout(maxRows,maxColumns,0,0));
                     //create the 2d array
                     Node[][] gridOfNodes = create2DArrayOfNodes(maxRows,maxColumns);
+                    Node startNode = gridOfNodes[0][0];
+                    Node goalNode = gridOfNodes[maxRows-1][maxColumns-1];
                     //add labels
                     for(int i = 0;i<maxRows;++i){
                         for(int j = 0;j<maxColumns;++j){
@@ -98,6 +99,12 @@ public class GUI extends JFrame {
                     }
                     mainPanel.add(gridPanel);
                     frame.revalidate();
+                    int[][] visitedMatrix = create2DVisitedMatrix(maxRows,maxColumns);
+                    //call BFS to see if there is a path
+                    System.out.println(BFS(startNode,goalNode,gridOfNodes,visitedMatrix,maxRows,maxColumns));
+
+
+
 
                 }
             }
@@ -142,7 +149,7 @@ public class GUI extends JFrame {
         return array;
     }
     //creates the visited array initialized all to 0
-    public static int[][] create2DVisitedArray(int rows, int columns){
+    public static int[][] create2DVisitedMatrix(int rows, int columns){
         int[][] array = new int[rows][columns];
         for(int i = 0;i<rows;++i){
             for(int j = 0;j<columns;++j){
@@ -155,22 +162,31 @@ public class GUI extends JFrame {
     //---------BFS Methods---------
 
     public static ArrayList<Node> getNeighborsOfCurrentNode(Node currentNode,Node[][] gridOfNodes,int maxRows, int maxCol){
+        System.out.println("Max Rows: "+maxRows);
+        System.out.println("Max Col: "+maxCol);
         //Initialize an arraylist of Nodes
         ArrayList<Node> arrayOfNeighbors = new ArrayList<>();
+        System.out.println("Current cell value "+ currentNode.getCellValue());
+        System.out.println("Current cell position: ["+currentNode.getRowPos()+"] "+"["+currentNode.getColPos()+"]");
         //check if the Node has a top neighbor
         if(currentNode.getCellValue()<=currentNode.getRowPos()){
             //Node has a top neighbor
+            System.out.println("Top Neighbor position: "+"["+gridOfNodes[currentNode.getRowPos()-currentNode.getCellValue()][currentNode.getColPos()].getRowPos()+"] ["+gridOfNodes[currentNode.getRowPos()-currentNode.getCellValue()][currentNode.getColPos()].getColPos());
             arrayOfNeighbors.add(gridOfNodes[currentNode.getRowPos()-currentNode.getCellValue()][currentNode.getColPos()]);
+
         }
         //check if the Node has a neighbor to the right of it
-        maxCol-=1;
-        if(maxCol-currentNode.getColPos()>=currentNode.getCellValue()){
+
+        if((maxCol-1)-currentNode.getColPos()>=currentNode.getCellValue()){
             //Node has a right neighbor
+            System.out.println("Right neighbor position: "+"["+gridOfNodes[currentNode.getRowPos()][currentNode.getColPos()+currentNode.getCellValue()].getRowPos()+"] ["+gridOfNodes[currentNode.getRowPos()][currentNode.getColPos()+currentNode.getCellValue()].getColPos());
             arrayOfNeighbors.add(gridOfNodes[currentNode.getRowPos()][currentNode.getColPos()+currentNode.getCellValue()]);
         }
         //check if the Node has a bottom neighbor
-        if(maxRows-currentNode.getRowPos()>=currentNode.getCellValue()){
+        if((maxRows-1)-currentNode.getRowPos()>=currentNode.getCellValue()){
             //Node has a bottom neighbor
+            System.out.println("Bottom neighbor row index "+(currentNode.getRowPos()+currentNode.getCellValue()));
+            System.out.println("Bottom neighbor col index "+currentNode.getColPos());
             arrayOfNeighbors.add(gridOfNodes[currentNode.getRowPos()+currentNode.getCellValue()][currentNode.getColPos()]);
         }
         //check if the node has a left neighbor
@@ -179,6 +195,37 @@ public class GUI extends JFrame {
             arrayOfNeighbors.add(gridOfNodes[currentNode.getRowPos()][currentNode.getColPos()-currentNode.getCellValue()]);
         }
     return arrayOfNeighbors;
+    }
+    public static boolean BFS(Node startNode,Node goalNode,Node[][] gridOfNodes,int[][] visitedMatrix, int maxRows, int maxCols){
+        //initialize neighborqueue
+        Queue<Node> neighborQ = new LinkedList<Node>();
+        neighborQ.add(startNode);
+        while(!(neighborQ.isEmpty())){
+            Node currNode = neighborQ.remove();
+            if(currNode.equals(goalNode)) {
+                return true;
+            }else{
+                int rowPos = currNode.getRowPos();
+                int colPos = currNode.getColPos();
+                //check if visited
+                if(visitedMatrix[rowPos][colPos]==1){
+                    //the node has already been visited
+                    continue;
+                }else{
+                    //mark the node as visited
+                    visitedMatrix[rowPos][colPos]=1;
+                    //add all the neighbors of the current node to the queue
+                    ArrayList<Node> arrayOfNeighbors = getNeighborsOfCurrentNode(currNode,gridOfNodes,maxRows,maxCols);
+                    //add Nodes in array of neighbors to the queue
+                    for(int i = 0;i<arrayOfNeighbors.size();++i){
+                        neighborQ.add(arrayOfNeighbors.get(i));
+                    }
+
+                }
+            }
+        }
+        return false;
+
     }
 
 }
