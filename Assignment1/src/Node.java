@@ -1,24 +1,24 @@
 public class Node {
 
-    private int xPos;
-    private int yPos;
+    private int rowPos;
+    private int colPos;
     private Node parent;
     private int cellValue;
     private int pathCount;
 
-    public Node(int xPos, int yPos, int cellValue){
-        this.xPos = xPos;
-        this.yPos = yPos;
+    public Node(int rowPos, int colPos, int cellValue){
+        this.rowPos = rowPos;
+        this.colPos = colPos;
         this.cellValue = cellValue;
     }
 
 
     //getters for values
-    public int getXPos(){
-        return xPos;
+    public int getRowPos(){
+        return rowPos;
     }
-    public int getYPos(){
-        return yPos;
+    public int getColPos(){
+        return colPos;
     }
     public Node getParent(){
         return parent;

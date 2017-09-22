@@ -66,13 +66,14 @@ public class GUI extends JFrame {
                     return;
 
                 }else{
-                    //check if the user already pressed the submit button so we dont keep adding grids to the layout
+                    //check if the user already pressed the submit button so we don't keep adding grids to the layout
                     if(mainPanel.getComponentCount()>1){
                         //the user already added a grid so delete the grid and revalidate
                         Component[] comp = mainPanel.getComponents();
                         mainPanel.remove(comp[1]);
                         frame.revalidate();
                     }
+                    //p
                     int n = Integer.parseInt(textFieldString);
                     int maxRows = n;
                     int maxColumns = n;
@@ -82,12 +83,12 @@ public class GUI extends JFrame {
                     //set the grid layout for the grid panel using the converted input
                     gridPanel.setLayout(new GridLayout(maxRows,maxColumns,0,0));
                     //create the 2d array
-                    Node[][] grid2dArray = create2DArrayOfNodes(maxRows,maxColumns);
+                    Node[][] gridOfNodes = create2DArrayOfNodes(maxRows,maxColumns);
                     //add labels
                     for(int i = 0;i<maxRows;++i){
                         for(int j = 0;j<maxColumns;++j){
                             //create a label and add it to the layout
-                            String labelNum = Integer.toString(grid2dArray[i][j].getCellValue());
+                            String labelNum = Integer.toString(gridOfNodes[i][j].getCellValue());
                             JLabel label = new JLabel(labelNum,SwingConstants.CENTER);
                             //set the border for each cell
                             label.setBorder(BorderFactory.createLineBorder(Color.black));
@@ -105,6 +106,7 @@ public class GUI extends JFrame {
 
 //      show the window
         this.setVisible(true);
+        return;
     }
 
 
@@ -151,5 +153,32 @@ public class GUI extends JFrame {
     }
 
     //---------BFS Methods---------
+
+    public static ArrayList<Node> getNeighborsOfCurrentNode(Node currentNode,Node[][] gridOfNodes,int maxRows, int maxCol){
+        //Initialize an arraylist of Nodes
+        ArrayList<Node> arrayOfNeighbors = new ArrayList<>();
+        //check if the Node has a top neighbor
+        if(currentNode.getCellValue()<=currentNode.getRowPos()){
+            //Node has a top neighbor
+            arrayOfNeighbors.add(gridOfNodes[currentNode.getRowPos()-currentNode.getCellValue()][currentNode.getColPos()]);
+        }
+        //check if the Node has a neighbor to the right of it
+        maxCol-=1;
+        if(maxCol-currentNode.getColPos()>=currentNode.getCellValue()){
+            //Node has a right neighbor
+            arrayOfNeighbors.add(gridOfNodes[currentNode.getRowPos()][currentNode.getColPos()+currentNode.getCellValue()]);
+        }
+        //check if the Node has a bottom neighbor
+        if(maxRows-currentNode.getRowPos()>=currentNode.getCellValue()){
+            //Node has a bottom neighbor
+            arrayOfNeighbors.add(gridOfNodes[currentNode.getRowPos()+currentNode.getCellValue()][currentNode.getColPos()]);
+        }
+        //check if the node has a left neighbor
+        if(currentNode.getCellValue()<=currentNode.getColPos()){
+            //Node has a neighbor to the left of it
+            arrayOfNeighbors.add(gridOfNodes[currentNode.getRowPos()][currentNode.getColPos()-currentNode.getCellValue()]);
+        }
+    return arrayOfNeighbors;
+    }
 
 }
