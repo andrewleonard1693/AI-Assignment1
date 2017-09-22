@@ -186,6 +186,9 @@ public class GUI extends JFrame {
         if(currentNode.getCellValue()<=currentNode.getRowPos()){
             //Node has a top neighbor
             System.out.println("Top Neighbor position: "+"["+gridOfNodes[currentNode.getRowPos()-currentNode.getCellValue()][currentNode.getColPos()].getRowPos()+"] ["+gridOfNodes[currentNode.getRowPos()-currentNode.getCellValue()][currentNode.getColPos()].getColPos());
+            //set the parent of the neighbor node to be the current node before adding it to the array of neighbors
+            gridOfNodes[currentNode.getRowPos()-currentNode.getCellValue()][currentNode.getColPos()].setParent(currentNode);
+            //add the neighbor node to the array of neighbors
             arrayOfNeighbors.add(gridOfNodes[currentNode.getRowPos()-currentNode.getCellValue()][currentNode.getColPos()]);
 
         }
@@ -194,6 +197,9 @@ public class GUI extends JFrame {
         if((maxCol-1)-currentNode.getColPos()>=currentNode.getCellValue()){
             //Node has a right neighbor
             System.out.println("Right neighbor position: "+"["+gridOfNodes[currentNode.getRowPos()][currentNode.getColPos()+currentNode.getCellValue()].getRowPos()+"] ["+gridOfNodes[currentNode.getRowPos()][currentNode.getColPos()+currentNode.getCellValue()].getColPos());
+            //set the parent
+            gridOfNodes[currentNode.getRowPos()][currentNode.getColPos()+currentNode.getCellValue()].setParent(currentNode);
+            //add to the array
             arrayOfNeighbors.add(gridOfNodes[currentNode.getRowPos()][currentNode.getColPos()+currentNode.getCellValue()]);
         }
         //check if the Node has a bottom neighbor
@@ -201,11 +207,17 @@ public class GUI extends JFrame {
             //Node has a bottom neighbor
             System.out.println("Bottom neighbor row index "+(currentNode.getRowPos()+currentNode.getCellValue()));
             System.out.println("Bottom neighbor col index "+currentNode.getColPos());
+            //set the parent
+            gridOfNodes[currentNode.getRowPos()+currentNode.getCellValue()][currentNode.getColPos()].setParent(currentNode);
+            //add to the array
             arrayOfNeighbors.add(gridOfNodes[currentNode.getRowPos()+currentNode.getCellValue()][currentNode.getColPos()]);
         }
         //check if the node has a left neighbor
         if(currentNode.getCellValue()<=currentNode.getColPos()){
             //Node has a neighbor to the left of it
+            //set the parent node
+            gridOfNodes[currentNode.getRowPos()][currentNode.getColPos()-currentNode.getCellValue()].setParent(currentNode);
+            //add it to the array
             arrayOfNeighbors.add(gridOfNodes[currentNode.getRowPos()][currentNode.getColPos()-currentNode.getCellValue()]);
         }
     return arrayOfNeighbors;
@@ -213,6 +225,7 @@ public class GUI extends JFrame {
     public static boolean BFS(Node startNode,Node goalNode,Node[][] gridOfNodes,int[][] visitedMatrix, int maxRows, int maxCols){
         //initialize neighbor queue
         Queue<Node> neighborQ = new LinkedList<Node>();
+        startNode.setParent(null);
         neighborQ.add(startNode);
         while(!(neighborQ.isEmpty())){
             Node currNode = neighborQ.remove();
