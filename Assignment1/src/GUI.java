@@ -62,7 +62,6 @@ public class GUI extends JFrame {
 //              check if the string is not valid
                 String textFieldString = textField.getText();
                 if(!(textFieldString.equals("5")) && !(textFieldString.equals("7"))&&!(textFieldString.equals("9"))&&!(textFieldString.equals("11"))){
-                    System.out.println("Failure");
                     // handle error case here with a error window?
                     JOptionPane.showMessageDialog(frame,"You've entered an invalid grid size. Valid sizes: 5, 7, 9, 11");
                     return;
@@ -176,16 +175,16 @@ public class GUI extends JFrame {
     //---------BFS Methods---------
 
     public static ArrayList<Node> getNeighborsOfCurrentNode(Node currentNode,Node[][] gridOfNodes,int maxRows, int maxCol){
-        System.out.println("Max Rows: "+maxRows);
-        System.out.println("Max Col: "+maxCol);
+//        System.out.println("Max Rows: "+maxRows);
+//        System.out.println("Max Col: "+maxCol);
         //Initialize an arraylist of Nodes
         ArrayList<Node> arrayOfNeighbors = new ArrayList<>();
-        System.out.println("Current cell value "+ currentNode.getCellValue());
-        System.out.println("Current cell position: ["+currentNode.getRowPos()+"] "+"["+currentNode.getColPos()+"]");
+//        System.out.println("Current cell value "+ currentNode.getCellValue());
+//        System.out.println("Current cell position: ["+currentNode.getRowPos()+"] "+"["+currentNode.getColPos()+"]");
         //check if the Node has a top neighbor
         if(currentNode.getCellValue()<=currentNode.getRowPos()){
             //Node has a top neighbor
-            System.out.println("Top Neighbor position: "+"["+gridOfNodes[currentNode.getRowPos()-currentNode.getCellValue()][currentNode.getColPos()].getRowPos()+"] ["+gridOfNodes[currentNode.getRowPos()-currentNode.getCellValue()][currentNode.getColPos()].getColPos());
+//            System.out.println("Top Neighbor position: "+"["+gridOfNodes[currentNode.getRowPos()-currentNode.getCellValue()][currentNode.getColPos()].getRowPos()+"] ["+gridOfNodes[currentNode.getRowPos()-currentNode.getCellValue()][currentNode.getColPos()].getColPos());
             //set the parent of the neighbor node to be the current node before adding it to the array of neighbors
             gridOfNodes[currentNode.getRowPos()-currentNode.getCellValue()][currentNode.getColPos()].setParent(currentNode);
             //add the neighbor node to the array of neighbors
@@ -196,7 +195,7 @@ public class GUI extends JFrame {
 
         if((maxCol-1)-currentNode.getColPos()>=currentNode.getCellValue()){
             //Node has a right neighbor
-            System.out.println("Right neighbor position: "+"["+gridOfNodes[currentNode.getRowPos()][currentNode.getColPos()+currentNode.getCellValue()].getRowPos()+"] ["+gridOfNodes[currentNode.getRowPos()][currentNode.getColPos()+currentNode.getCellValue()].getColPos());
+//            System.out.println("Right neighbor position: "+"["+gridOfNodes[currentNode.getRowPos()][currentNode.getColPos()+currentNode.getCellValue()].getRowPos()+"] ["+gridOfNodes[currentNode.getRowPos()][currentNode.getColPos()+currentNode.getCellValue()].getColPos());
             //set the parent
             gridOfNodes[currentNode.getRowPos()][currentNode.getColPos()+currentNode.getCellValue()].setParent(currentNode);
             //add to the array
@@ -205,8 +204,8 @@ public class GUI extends JFrame {
         //check if the Node has a bottom neighbor
         if((maxRows-1)-currentNode.getRowPos()>=currentNode.getCellValue()){
             //Node has a bottom neighbor
-            System.out.println("Bottom neighbor row index "+(currentNode.getRowPos()+currentNode.getCellValue()));
-            System.out.println("Bottom neighbor col index "+currentNode.getColPos());
+//            System.out.println("Bottom neighbor row index "+(currentNode.getRowPos()+currentNode.getCellValue()));
+//            System.out.println("Bottom neighbor col index "+currentNode.getColPos());
             //set the parent
             gridOfNodes[currentNode.getRowPos()+currentNode.getCellValue()][currentNode.getColPos()].setParent(currentNode);
             //add to the array
@@ -225,8 +224,11 @@ public class GUI extends JFrame {
     public static boolean BFS(Node startNode,Node goalNode,Node[][] gridOfNodes,int[][] visitedMatrix, int maxRows, int maxCols){
         //initialize neighbor queue
         Queue<Node> neighborQ = new LinkedList<Node>();
-        startNode.setParent(null);
         neighborQ.add(startNode);
+        //set the level number for the start node
+        startNode.setLevel(0);
+        int level = 1;
+
         while(!(neighborQ.isEmpty())){
             Node currNode = neighborQ.remove();
             if(currNode.equals(goalNode)) {
@@ -245,8 +247,12 @@ public class GUI extends JFrame {
                     ArrayList<Node> arrayOfNeighbors = getNeighborsOfCurrentNode(currNode,gridOfNodes,maxRows,maxCols);
                     //add Nodes in array of neighbors to the queue
                     for(int i = 0;i<arrayOfNeighbors.size();++i){
+                        //set the level for each neighbor
+                        arrayOfNeighbors.get(i).setLevel(level);
                         neighborQ.add(arrayOfNeighbors.get(i));
                     }
+                    //increment the level
+                    level+=1;
 
                 }
             }

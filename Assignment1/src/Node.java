@@ -4,7 +4,7 @@ public class Node {
     private int colPos;
     private Node parent;
     private int cellValue;
-    private int numVisits;
+    private int level;
 
     public Node(int rowPos, int colPos, int cellValue){
         this.rowPos = rowPos;
@@ -20,8 +20,8 @@ public class Node {
     public int getColPos(){
         return colPos;
     }
-    public int getNumVisits(){
-        return numVisits;
+    public int getLevel(){
+        return level;
     }
 
     public Node getParent(){
@@ -38,8 +38,8 @@ public class Node {
     public void setParent(Node parent){
         this.parent = parent;
     }
-    public void setNumVisits(int newNumVisits){
-        this.numVisits = newNumVisits;
+    public void setLevel(int level){
+        this.level = level;
     }
 
 }
