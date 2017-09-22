@@ -6,6 +6,9 @@ import javax.swing.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.*;
+import java.util.concurrent.TimeUnit;
+
+//command to sleep --> TimeUnit.seconds.sleep(1);
 
 public class GUI extends JFrame {
 
@@ -101,7 +104,18 @@ public class GUI extends JFrame {
                     frame.revalidate();
                     int[][] visitedMatrix = create2DVisitedMatrix(maxRows,maxColumns);
                     //call BFS to see if there is a path
-                    System.out.println(BFS(startNode,goalNode,gridOfNodes,visitedMatrix,maxRows,maxColumns));
+                    if(BFS(startNode,goalNode,gridOfNodes,visitedMatrix,maxRows,maxColumns)){
+                        JLabel pathSuccessLabel = new JLabel("There is a path.");
+                        pathSuccessLabel.setForeground(Color.green);
+                        buttonPanel.add(pathSuccessLabel);
+                        frame.revalidate();
+                    }
+                    else{
+                        JLabel pathSuccessLabel = new JLabel("There is no path.");
+                        pathSuccessLabel.setForeground(Color.red);
+                        buttonPanel.add(pathSuccessLabel);
+                        frame.revalidate();
+                    }
 
 
 
@@ -197,7 +211,7 @@ public class GUI extends JFrame {
     return arrayOfNeighbors;
     }
     public static boolean BFS(Node startNode,Node goalNode,Node[][] gridOfNodes,int[][] visitedMatrix, int maxRows, int maxCols){
-        //initialize neighborqueue
+        //initialize neighbor queue
         Queue<Node> neighborQ = new LinkedList<Node>();
         neighborQ.add(startNode);
         while(!(neighborQ.isEmpty())){

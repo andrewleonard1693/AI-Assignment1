@@ -4,7 +4,7 @@ public class Node {
     private int colPos;
     private Node parent;
     private int cellValue;
-    private int pathCount;
+    private int numVisits;
 
     public Node(int rowPos, int colPos, int cellValue){
         this.rowPos = rowPos;
@@ -20,14 +20,15 @@ public class Node {
     public int getColPos(){
         return colPos;
     }
+    public int getNumVisits(){
+        return numVisits;
+    }
+
     public Node getParent(){
         return parent;
     }
     public int getCellValue(){
         return cellValue;
-    }
-    public int getPathCount(){
-        return pathCount;
     }
 
     //setters for values
@@ -37,8 +38,8 @@ public class Node {
     public void setParent(Node parent){
         this.parent = parent;
     }
-    public void setPathCount(int pathCount){
-        this.pathCount=pathCount;
+    public void setNumVisits(int newNumVisits){
+        this.numVisits = newNumVisits;
     }
 
 }
