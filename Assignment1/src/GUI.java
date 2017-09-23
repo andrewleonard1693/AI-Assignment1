@@ -61,6 +61,19 @@ public class GUI extends JFrame {
 
         buttonPanel.add(gridBuild);
 
+
+        //parse text file panel
+        JPanel textFileInputPanel = new JPanel();
+        JTextField fileTextField = new JTextField("Enter the name of the file containing the puzzle to be solved");
+        JButton generatePuzzleButton = new JButton("Generate");
+        JButton fileSolveButton = new JButton("Solve");
+        textFileInputPanel.add(fileTextField);
+        textFileInputPanel.add(generatePuzzleButton);
+        textFileInputPanel.add(fileSolveButton);
+        buttonPanel.add(textFileInputPanel);
+
+
+
         //iterate panel
         JPanel iteratePanel = new JPanel();
         JTextField iterationsTextField = new JTextField("Iterations for Hill Climb",20);
