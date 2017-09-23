@@ -6,7 +6,10 @@ import javax.swing.*;
 import javax.swing.border.Border;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.BufferedReader;
+import java.io.FileReader;
 import java.util.*;
+import java.io.*;
 import java.util.concurrent.TimeUnit;
 
 //command to sleep --> TimeUnit.seconds.sleep(1);
@@ -89,8 +92,7 @@ public class GUI extends JFrame {
         mainPanel.add(buttonPanel, BorderLayout.NORTH);
         textField.requestFocus();
 
-//      listen for submit button clicked
-//      add panel to the frame
+//      listen for generate button clicked for random puzzle
         generateButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -104,7 +106,7 @@ public class GUI extends JFrame {
 
                 }else{
                     //check if the user already pressed the submit button so we don't keep adding grids to the layout
-                    if(mainPanel.getComponentCount()>1){
+                    if(!(thereIsNoGrid(mainPanel))){
                         //the user already added a grid so delete the grid and revalidate
                         Component[] comp = mainPanel.getComponents();
                         mainPanel.remove(comp[1]);
@@ -114,29 +116,12 @@ public class GUI extends JFrame {
                     int n = Integer.parseInt(textFieldString);
                     maxRows = n;
                     maxColumns = n;
-                    //create the grid of numbers
-                    //create panel for grid
-                    JPanel gridPanel = new JPanel();
-                    //set the grid layout for the grid panel using the converted input
-                    gridPanel.setLayout(new GridLayout(maxRows,maxColumns,0,0));
-                    //create the 2d array
-                    gridOfNodes = create2DArrayOfNodes(maxRows,maxColumns);
+                    //create and add the grid of numbers
+                    Node[][] gridOfNodes=createAndAddRandomGrid(mainPanel,maxRows,maxColumns);
+                    //create references to the start and goal nodes
                     Node startNode = gridOfNodes[0][0];
                     Node goalNode = gridOfNodes[maxRows-1][maxColumns-1];
-                    //add labels
-                    for(int i = 0;i<maxRows;++i){
-                        for(int j = 0;j<maxColumns;++j){
-                            //create a label and add it to the layout
-                            String labelNum = Integer.toString(gridOfNodes[i][j].getCellValue());
-//                            gridRepresentation[i][j]= gridOfNodes[i][j].getLevel();
-                            JLabel label = new JLabel(labelNum,SwingConstants.CENTER);
-                            //set the border for each cell
-                            label.setBorder(BorderFactory.createLineBorder(Color.black));
-                            //add the label to the grid
-                            gridPanel.add(label);
-                        }
-                    }
-                    mainPanel.add(gridPanel);
+                    //update the window
                     frame.revalidate();
                     int[][] visitedMatrix = create2DVisitedMatrix(maxRows,maxColumns);
 
@@ -175,11 +160,11 @@ public class GUI extends JFrame {
         });
 
 
-        //listen for solve button pressed
+        //listen for solve button pressed for random puzzle
         solveButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if(mainPanel.getComponentCount()==1){
+                if(thereIsNoGrid(mainPanel)){
                     //the user hasnt added a grid yet
                     //throw an error window
                     JOptionPane.showMessageDialog(frame,"You haven't generated a grid to solve.");
@@ -190,7 +175,7 @@ public class GUI extends JFrame {
                 frame.revalidate();
                 frame.repaint();
 
-                //create a new grid from the grid representation numbers
+                //create a new grid from the node levels
                 JPanel gridPanel = new JPanel();
                 //set the grid layout for the grid panel using the converted input
                 gridPanel.setLayout(new GridLayout(maxRows,maxColumns,0,0));
@@ -220,6 +205,65 @@ public class GUI extends JFrame {
             }
         });
 
+        //listen for generate button pressed for text file input
+        generatePuzzleButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //grab the name of the file inputted into the text field
+                String nameOfFile = fileTextField.getText();
+                System.out.println(nameOfFile);
+                if(nameOfFile.length()==0){
+                    //add an error message for length of 0 file name
+                    JOptionPane.showMessageDialog(frame,"File name cannot be empty.");
+                    return;
+                }
+                try {
+
+                    //br = new BufferedReader(new FileReader(FILENAME));
+                    FileReader fr = new FileReader(nameOfFile);
+                    BufferedReader br = new BufferedReader(fr);
+
+                    String currentLine;
+                    int currentRow = 0;
+                    int currentColumn = 0;
+
+                    int gridDimension = Integer.parseInt(br.readLine());
+                    //initialize a grid of Nodes
+                    Node[][] gridOfNodesFromTextFile = new Node[gridDimension][gridDimension];
+                    //create a visited array
+                    int[][] visitedArr = create2DVisitedMatrix(gridDimension,gridDimension);
+                    //loop through the lines
+                    while ((currentLine = br.readLine()) != null) {
+                        for(int i=0;i<currentLine.length();i++){
+                            if(currentLine.charAt(i)==' '){
+                                continue;
+                            }else{
+//                                System.out.print(currentLine.charAt(i)+" ");
+                                gridOfNodesFromTextFile[currentRow][currentColumn]= new Node(currentRow,currentColumn,Character.getNumericValue(currentLine.charAt(i)));
+//                                System.out.println(gridOfNodesFromTextFile[currentRow][currentColumn].getCellValue());
+                                currentColumn+=1;
+                            }
+                        }
+                        currentRow+=1;
+                        currentColumn=0;
+                    }
+                    //test print out grid
+                    for(int i = 0;i<gridDimension;i++){
+                        for(int j=0;j<gridDimension;j++){
+                            System.out.print(gridOfNodesFromTextFile[i][j].getCellValue()+" ");
+                        }
+                        System.out.println();
+                    }
+
+                } catch (IOException err) {
+
+                    return;
+
+                }
+
+            }
+        });
+
 
 
 
@@ -234,6 +278,37 @@ public class GUI extends JFrame {
 
 
     /*---------UTILITY METHODS---------*/
+    public static Node[][] createAndAddRandomGrid(JPanel mainPanel,int maxRows, int maxColumns){
+        //create panel for grid
+        JPanel gridPanel = new JPanel();
+        //set the grid layout for the grid panel using the converted input
+        gridPanel.setLayout(new GridLayout(maxRows,maxColumns,0,0));
+        //create the 2d array
+        gridOfNodes = create2DArrayOfNodes(maxRows,maxColumns);
+        Node startNode = gridOfNodes[0][0];
+        Node goalNode = gridOfNodes[maxRows-1][maxColumns-1];
+        //add labels
+        for(int i = 0;i<maxRows;++i){
+            for(int j = 0;j<maxColumns;++j){
+                //create a label and add it to the layout
+                String labelNum = Integer.toString(gridOfNodes[i][j].getCellValue());
+//                            gridRepresentation[i][j]= gridOfNodes[i][j].getLevel();
+                JLabel label = new JLabel(labelNum,SwingConstants.CENTER);
+                //set the border for each cell
+                label.setBorder(BorderFactory.createLineBorder(Color.black));
+                //add the label to the grid
+                gridPanel.add(label);
+            }
+        }
+        mainPanel.add(gridPanel);
+        return gridOfNodes;
+    }
+    public boolean thereIsNoGrid(JPanel mainPanel){
+        if(mainPanel.getComponentCount()==1){
+            return true;
+        }
+        return false;
+    }
 
     public static void removeGrid(JPanel mainPanel){
         //remove the grid panel
