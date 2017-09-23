@@ -229,7 +229,7 @@ public class GUI extends JFrame {
 
                     int gridDimension = Integer.parseInt(br.readLine());
                     //initialize a grid of Nodes
-                    Node[][] gridOfNodesFromTextFile = new Node[gridDimension][gridDimension];
+                    gridOfNodes = new Node[gridDimension][gridDimension];
                     //create a visited array
                     int[][] visitedArr = create2DVisitedMatrix(gridDimension,gridDimension);
                     //loop through the lines
@@ -239,7 +239,7 @@ public class GUI extends JFrame {
                                 continue;
                             }else{
 //                                System.out.print(currentLine.charAt(i)+" ");
-                                gridOfNodesFromTextFile[currentRow][currentColumn]= new Node(currentRow,currentColumn,Character.getNumericValue(currentLine.charAt(i)));
+                                gridOfNodes[currentRow][currentColumn]= new Node(currentRow,currentColumn,Character.getNumericValue(currentLine.charAt(i)));
 //                                System.out.println(gridOfNodesFromTextFile[currentRow][currentColumn].getCellValue());
                                 currentColumn+=1;
                             }
@@ -247,19 +247,112 @@ public class GUI extends JFrame {
                         currentRow+=1;
                         currentColumn=0;
                     }
-                    //test print out grid
+                    //remove the grid if there is one there
+                    if(!(thereIsNoGrid(mainPanel))){
+                        removeGrid(mainPanel);
+                    }
+                    //create the grid and add it
+                    JPanel gridPanel = new JPanel();
+                    //set the grid layout for the grid panel using the converted input
+                    gridPanel.setLayout(new GridLayout(gridDimension,gridDimension,0,0));
+
                     for(int i = 0;i<gridDimension;i++){
                         for(int j=0;j<gridDimension;j++){
-                            System.out.print(gridOfNodesFromTextFile[i][j].getCellValue()+" ");
+                            //create a label and add it to the layout
+                            String labelNum = Integer.toString(gridOfNodes[i][j].getCellValue());
+//                            gridRepresentation[i][j]= gridOfNodes[i][j].getLevel();
+                            JLabel label = new JLabel(labelNum,SwingConstants.CENTER);
+                            //set the border for each cell
+                            label.setBorder(BorderFactory.createLineBorder(Color.black));
+                            //add the label to the grid
+                            gridPanel.add(label);
                         }
-                        System.out.println();
                     }
+                    //initialize start and goal node
+                    Node startNode = gridOfNodes[0][0];
+                    Node goalNode = gridOfNodes[gridDimension-1][gridDimension-1];
+
+                    mainPanel.add(gridPanel);
+                    JPanel pathSuccessPanel = new JPanel();
+                    JLabel pathSuccessLabel = new JLabel("text",JLabel.CENTER);
+                    Font font = new Font("Arial Black",Font.BOLD,20);
+                    pathSuccessLabel.setFont(font);
+                    pathSuccessLabel.setBackground(Color.BLACK);
+                    pathSuccessLabel.setOpaque(true);
+                    mainPanel.add(pathSuccessPanel, BorderLayout.SOUTH);
+                    //call BFS to see if there is a path
+                    if(BFS(startNode,goalNode,gridOfNodes,visitedArr,gridDimension,gridDimension)){
+//                        gridRepresentation[0][0]=0;
+                        if(pathSuccessPanel.getComponentCount()==1){
+                            pathSuccessPanel.remove(0);
+                        }
+                        pathSuccessLabel.setText("There is a path.");
+                        pathSuccessLabel.setForeground(Color.green);
+                        pathSuccessPanel.add(pathSuccessLabel);
+                    }
+                    else{
+                        if(pathSuccessPanel.getComponentCount()==1){
+                            pathSuccessPanel.remove(0);
+                        }
+                        pathSuccessLabel.setText("There is no path.");
+                        pathSuccessLabel.setForeground(Color.red);
+                        pathSuccessPanel.add(pathSuccessLabel);
+                    }
+                    frame.revalidate();
+                    frame.revalidate();
+                    frame.repaint();
+
 
                 } catch (IOException err) {
 
                     return;
 
                 }
+
+            }
+        });
+        fileSolveButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if(thereIsNoGrid(mainPanel)){
+                    //the user hasnt added a grid yet
+                    //throw an error window
+                    JOptionPane.showMessageDialog(frame,"You haven't generated a grid to solve.");
+                    return;
+                }
+                //removed the grid and revalidate the frame
+                removeGrid(mainPanel);
+                frame.revalidate();
+                frame.repaint();
+
+                //create a new grid from the node levels
+                JPanel gridPanel = new JPanel();
+                //set the grid layout for the grid panel using the converted input
+                int rows = gridOfNodes.length;
+                int columns = gridOfNodes.length;
+                gridPanel.setLayout(new GridLayout(rows,columns,0,0));
+                for(int i=0;i<rows;++i){
+                    for(int j = 0;j<columns;++j){
+                        String labelNum = Integer.toString(gridOfNodes[i][j].getLevel());
+                        //check for -1 meaning the node was never visited
+                        if(gridOfNodes[i][j].getLevel()==0){
+                            labelNum="X";
+                        }
+                        if(i==0&&j==0){
+                            labelNum="0";
+                        }
+                        JLabel label = new JLabel(labelNum,SwingConstants.CENTER);
+                        //set the border for each cell
+                        label.setBorder(BorderFactory.createLineBorder(Color.black));
+                        //add the label to the grid
+                        gridPanel.add(label);
+                    }
+                }
+//                gridRepresentation[]
+                mainPanel.add(gridPanel);
+                frame.revalidate();
+                frame.repaint();
+
 
             }
         });
@@ -278,6 +371,14 @@ public class GUI extends JFrame {
 
 
     /*---------UTILITY METHODS---------*/
+
+    public static void solvePuzzle(Node[][] gridOfNodes,int maxRows, int maxColumns){
+        //run bfs on the nodes in the grid of nodes
+
+        if(BFS(gridOfNodes[0][0],gridOfNodes[maxRows-1][maxColumns-1],gridOfNodes,create2DVisitedMatrix(maxRows,maxColumns),maxRows,maxColumns)){
+
+        }
+    }
     public static Node[][] createAndAddRandomGrid(JPanel mainPanel,int maxRows, int maxColumns){
         //create panel for grid
         JPanel gridPanel = new JPanel();
@@ -410,14 +511,17 @@ public class GUI extends JFrame {
     public static boolean BFS(Node startNode,Node goalNode,Node[][] gridOfNodes,int[][] visitedMatrix, int maxRows, int maxCols){
         //initialize neighbor queue
         Queue<Node> neighborQ = new LinkedList<Node>();
-        neighborQ.add(startNode);
         //set the level number for the start node
-        startNode.setLevel(0);
+        int level = 0;
+        startNode.setLevel(level);
+        neighborQ.add(startNode);
+        boolean hasPath = false;
         while(!(neighborQ.isEmpty())){
             Node currNode = neighborQ.remove();
             if(currNode.equals(goalNode)) {
-                return true;
-            }else {
+                 hasPath = true;
+            }
+            else {
                 int rowPos = currNode.getRowPos();
                 int colPos = currNode.getColPos();
                 //check if visited
@@ -430,13 +534,17 @@ public class GUI extends JFrame {
                     //add all the neighbors of the current node to the queue
                     ArrayList<Node> arrayOfNeighbors = getNeighborsOfCurrentNode(currNode, gridOfNodes, maxRows, maxCols);
                     //add Nodes in array of neighbors to the queue
-                    for (int i = 0; i < arrayOfNeighbors.size(); ++i) {
+                    System.out.println("Current node: "+currNode.getCellValue());
+                    for (int i = 0; i < arrayOfNeighbors.size(); i++) {
+                        System.out.println("Neighbor of current node: "+arrayOfNeighbors.get(i).getCellValue());
                         //check if any of the neighbors have been visited
                         if (visitedMatrix[arrayOfNeighbors.get(i).getRowPos()][arrayOfNeighbors.get(i).getColPos()] == 1) {
+                            System.out.println("already visited neighbor: "+arrayOfNeighbors.get(i).getCellValue());
                             continue;
                         } else {
-                            //set the level for each neighbor
                             arrayOfNeighbors.get(i).setLevel(currNode.getLevel() + 1);
+//                            arrayOfNeighbors.get(i).setLevel(level);
+                            System.out.println(arrayOfNeighbors.get(i).getLevel());
                             neighborQ.add(arrayOfNeighbors.get(i));
 
                         }
@@ -446,7 +554,7 @@ public class GUI extends JFrame {
                 }
             }
         }
-        return false;
+        return hasPath;
 
     }
 
