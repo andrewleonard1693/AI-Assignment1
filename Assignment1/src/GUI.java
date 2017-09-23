@@ -402,6 +402,7 @@ public class GUI extends JFrame {
 
                 //calculate the evaluation score for the starting grid
                 evaluationScore = evaluationFunction(gridOfNodes,gridOfNodes.length,gridOfNodes.length);
+                System.out.println("Initial evalutation score: "+evaluationScore);
                 //loop the amount of iterations
                 for(int i = 0;i<numberOfIterations;i++){
                     Random rand = new Random();
@@ -426,19 +427,28 @@ public class GUI extends JFrame {
                     //change the node's cell value to that new number
                     gridOfNodes[randomRow][randomCol].setCellValue(newCellNumber);
                     //run BFS to set the grid node levels with the possibly new cell value number
-                    if(BFS(gridOfNodes[0][0],gridOfNodes[gridOfNodes.length-1][gridOfNodes.length-1],gridOfNodes,create2DVisitedMatrix(gridOfNodes.length,gridOfNodes.length),gridOfNodes.length,gridOfNodes.length)){
+                    boolean isSolvable = BFS(gridOfNodes[0][0],gridOfNodes[gridOfNodes.length-1][gridOfNodes.length-1],gridOfNodes,create2DVisitedMatrix(gridOfNodes.length,gridOfNodes.length),gridOfNodes.length,gridOfNodes.length);
+                    if(isSolvable){//puzzle can be solved
                         //evaluate the new grid's function value
-//                    System.out.println("old eval score: "+evaluationScore);
+//                        System.out.println("old eval score: "+evaluationScore);
                         newEvaluationScore = evaluationFunction(gridOfNodes,gridOfNodes.length,gridOfNodes.length);
+//                        System.out.println("new eval score: "+newEvaluationScore);
                         //if the new evaluation score is better than the previous one, change the node's cell value
                         if(newEvaluationScore<evaluationScore){
                             gridOfNodes[randomRow][randomCol].setCellValue(newCellNumber);
+                            evaluationScore=newEvaluationScore;
                         }else{
                             gridOfNodes[randomRow][randomCol].setCellValue(oldCellNumber);
                         }
 
-                    }else{ //since BFS didnt work we keep the old value of the node
-                        gridOfNodes[randomRow][randomCol].setCellValue(oldCellNumber);
+                    }else{
+                        newEvaluationScore = evaluationFunction(gridOfNodes,gridOfNodes.length,gridOfNodes.length);
+                        if(newEvaluationScore>evaluationScore){
+                            gridOfNodes[randomRow][randomCol].setCellValue(newCellNumber);
+                            evaluationScore=newEvaluationScore;
+                        }else{
+                            gridOfNodes[randomRow][randomCol].setCellValue(oldCellNumber);
+                        }
                     }
 //                    System.out.println("new eval score: "+newEvaluationScore);
 
@@ -449,9 +459,11 @@ public class GUI extends JFrame {
 
 
                 }
+                System.out.println("Ending evaluation score: "+newEvaluationScore);
                 //remove the current grid and create a new one and add it
                 removeGrid(mainPanel);
                 addGridToLayout(mainPanel, gridOfNodes);
+                //add a penal showing the evaluation function and
                 frame.revalidate();
                 frame.repaint();
 
