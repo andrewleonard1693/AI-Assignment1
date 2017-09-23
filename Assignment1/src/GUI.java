@@ -10,9 +10,11 @@ import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 //command to sleep --> TimeUnit.seconds.sleep(1);
-
 public class GUI extends JFrame {
-
+    //global variables
+    public static Node[][] gridOfNodes = null;
+    public static int maxRows = 0;
+    public static int maxColumns = 0;
     public static void main(String[] args) {
         new GUI();
     }
@@ -74,7 +76,6 @@ public class GUI extends JFrame {
         mainPanel.add(buttonPanel, BorderLayout.NORTH);
         textField.requestFocus();
 
-
 //      listen for submit button clicked
 //      add panel to the frame
         generateButton.addActionListener(new ActionListener() {
@@ -98,15 +99,15 @@ public class GUI extends JFrame {
                     }
                     //p
                     int n = Integer.parseInt(textFieldString);
-                    int maxRows = n;
-                    int maxColumns = n;
+                    maxRows = n;
+                    maxColumns = n;
                     //create the grid of numbers
                     //create panel for grid
                     JPanel gridPanel = new JPanel();
                     //set the grid layout for the grid panel using the converted input
                     gridPanel.setLayout(new GridLayout(maxRows,maxColumns,0,0));
                     //create the 2d array
-                    Node[][] gridOfNodes = create2DArrayOfNodes(maxRows,maxColumns);
+                    gridOfNodes = create2DArrayOfNodes(maxRows,maxColumns);
                     Node startNode = gridOfNodes[0][0];
                     Node goalNode = gridOfNodes[maxRows-1][maxColumns-1];
                     //add labels
@@ -133,7 +134,7 @@ public class GUI extends JFrame {
                     pathSuccessLabel.setOpaque(true);
                     mainPanel.add(pathSuccessPanel, BorderLayout.SOUTH);
                     //call BFS to see if there is a path
-                    if(BFS(startNode,goalNode,gridOfNodes,visitedMatrix,maxRows,maxColumns)){
+                    if(BFS(startNode,goalNode, gridOfNodes,visitedMatrix,maxRows,maxColumns)){
                         if(pathSuccessPanel.getComponentCount()==1){
                             pathSuccessPanel.remove(0);
                         }
@@ -163,6 +164,14 @@ public class GUI extends JFrame {
         solveButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                if(mainPanel.getComponentCount()==1){
+                    //the user hasnt added a grid yet
+                    //throw an error window
+                    JOptionPane.showMessageDialog(frame,"You haven't generated a grid to solve.");
+
+
+                }
+                //loop through the grid of nodes and create a 2d matrix from the
                 return;
             }
         });
@@ -181,8 +190,6 @@ public class GUI extends JFrame {
 
 
     /*---------UTILITY METHODS---------*/
-
-
     //get the grid number depending on the current row and column
     public static int generateGridNumber(int currentRow, int currentColumn,int maxRows, int maxColumns){
         int[] findMaxNumberOfMoves = new int[4];
