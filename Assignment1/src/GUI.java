@@ -15,7 +15,6 @@ public class GUI extends JFrame {
     public static Node[][] gridOfNodes = null;
     public static int maxRows = 0;
     public static int maxColumns = 0;
-    public static int[][] gridRepresentation = null;
     public static void main(String[] args) {
         new GUI();
     }
@@ -109,7 +108,6 @@ public class GUI extends JFrame {
                     gridPanel.setLayout(new GridLayout(maxRows,maxColumns,0,0));
                     //create the 2d array
                     gridOfNodes = create2DArrayOfNodes(maxRows,maxColumns);
-                    gridRepresentation = new int[maxRows][maxColumns];
                     Node startNode = gridOfNodes[0][0];
                     Node goalNode = gridOfNodes[maxRows-1][maxColumns-1];
                     //add labels
@@ -154,14 +152,6 @@ public class GUI extends JFrame {
                         pathSuccessLabel.setForeground(Color.red);
                         pathSuccessPanel.add(pathSuccessLabel);
                     }
-                    //update the grid representation
-                    for(int i = 0;i<maxRows;++i){
-                        for(int j= 0;j<maxColumns;++j){
-                            gridRepresentation[i][j]=gridOfNodes[i][j].getLevel();
-//                            gridRepresentation[0][0]=0;
-
-                        }
-                    }
                     frame.revalidate();
 
 
@@ -203,9 +193,9 @@ public class GUI extends JFrame {
                 gridPanel.setLayout(new GridLayout(maxRows,maxColumns,0,0));
                 for(int i=0;i<maxRows;++i){
                     for(int j = 0;j<maxColumns;++j){
-                        String labelNum = Integer.toString(gridRepresentation[i][j]);
+                        String labelNum = Integer.toString(gridOfNodes[i][j].getLevel());
                         //check for -1 meaning the node was never visited
-                        if(gridRepresentation[i][j]==0){
+                        if(gridOfNodes[i][j].getLevel()==0){
                             labelNum="X";
                         }
                         if(i==0&&j==0){
