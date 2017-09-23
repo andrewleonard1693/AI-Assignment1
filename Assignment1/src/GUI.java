@@ -397,28 +397,69 @@ public class GUI extends JFrame {
 
                 //start a timer
                 long startTime = System.nanoTime();
+                int evaluationScore = 0;
+                int newEvaluationScore=0;
+
+                //calculate the evaluation score for the starting grid
+                evaluationScore = evaluationFunction(gridOfNodes,gridOfNodes.length,gridOfNodes.length);
                 //loop the amount of iterations
                 for(int i = 0;i<numberOfIterations;i++){
-
-                    //calculate the grid's current evaluation function
-                    //and store it to compare to the newer evaluation function
-
-                    //pick a random cell in the grid of nodes
-
+                    Random rand = new Random();
+                    int randomRow = rand.nextInt(gridOfNodes.length);
+                    int randomCol = rand.nextInt(gridOfNodes.length);
+                    //loop until the random cell is not the goal node
+                    while(randomRow==gridOfNodes.length-1 && randomCol==gridOfNodes.length-1){
+                        randomRow=rand.nextInt(gridOfNodes.length);
+                        randomCol=rand.nextInt(gridOfNodes.length);
+                    }
+                    //reset the grid's node levels
+                    gridOfNodes = clearGridNodeLevels(gridOfNodes);
+//                    System.out.println("random row: "+randomRow);
+//                    System.out.println("random col: "+randomCol);
                     //store the node in a temp variable so we can hold onto it if we need to change the grid back
-
+                    int oldCellNumber = gridOfNodes[randomRow][randomCol].getCellValue();
+//                    System.out.println("old cell number: "+oldCellNumber);
                     //generate a valid random number for that cells position
+                    int newCellNumber = generateGridNumber(randomRow,randomCol,gridOfNodes.length,gridOfNodes.length);
+//                    System.out.println("new cell number: "+newCellNumber);
 
                     //change the node's cell value to that new number
+                    gridOfNodes[randomRow][randomCol].setCellValue(newCellNumber);
+                    //run BFS to set the grid node levels with the possibly new cell value number
+                    if(BFS(gridOfNodes[0][0],gridOfNodes[gridOfNodes.length-1][gridOfNodes.length-1],gridOfNodes,create2DVisitedMatrix(gridOfNodes.length,gridOfNodes.length),gridOfNodes.length,gridOfNodes.length)){
+                        //evaluate the new grid's function value
+//                    System.out.println("old eval score: "+evaluationScore);
+                        newEvaluationScore = evaluationFunction(gridOfNodes,gridOfNodes.length,gridOfNodes.length);
+                        //if the new evaluation score is better than the previous one, change the node's cell value
+                        if(newEvaluationScore<evaluationScore){
+                            gridOfNodes[randomRow][randomCol].setCellValue(newCellNumber);
+                        }else{
+                            gridOfNodes[randomRow][randomCol].setCellValue(oldCellNumber);
+                        }
 
-                    //evaluate the current grid's function value
+                    }else{ //since BFS didnt work we keep the old value of the node
+                        gridOfNodes[randomRow][randomCol].setCellValue(oldCellNumber);
+                    }
+//                    System.out.println("new eval score: "+newEvaluationScore);
+
+
 
                     //write the new value function to a file
+                    //TODO
 
 
                 }
+                //remove the current grid and create a new one and add it
+                removeGrid(mainPanel);
+                addGridToLayout(mainPanel, gridOfNodes);
+                frame.revalidate();
+                frame.repaint();
+
+
+                //create a new grid from the grid of nodes and add it to the
                 long endTime = System.nanoTime();
                 long totalTime = endTime-startTime;
+                System.out.println(totalTime);
             }
         });
 
@@ -437,12 +478,56 @@ public class GUI extends JFrame {
 
     /*---------UTILITY METHODS---------*/
 
-    public static void solvePuzzle(Node[][] gridOfNodes,int maxRows, int maxColumns){
-        //run bfs on the nodes in the grid of nodes
-
-        if(BFS(gridOfNodes[0][0],gridOfNodes[maxRows-1][maxColumns-1],gridOfNodes,create2DVisitedMatrix(maxRows,maxColumns),maxRows,maxColumns)){
-
+    public static int evaluationFunction(Node[][] gridOfNodes, int maxRows, int maxCols){
+        int evaluation=0;
+        //check if goal was visited
+        //if yes, evaluation = goal node level
+        if(gridOfNodes[maxRows-1][maxCols-1].getLevel()>0){
+            evaluation=gridOfNodes[maxRows-1][maxCols-1].getLevel();
         }
+        //if not, evaluation = -(#of non visited cells)
+        else{
+            int nonvisited=0;
+            int i=0;
+            int j=0;
+            for(i=0; i<maxRows; i++){
+                for(j=0; j<maxCols; j++){
+                    if(gridOfNodes[i][j].getLevel()==0){
+                        nonvisited++;
+                    }
+                }
+            }
+            nonvisited*=-1;
+            evaluation=nonvisited+1;
+        }
+        return evaluation;
+    }
+//    public static void solvePuzzle(Node[][] gridOfNodes,int maxRows, int maxColumns){
+//        //run bfs on the nodes in the grid of nodes
+//
+//        if(BFS(gridOfNodes[0][0],gridOfNodes[maxRows-1][maxColumns-1],gridOfNodes,create2DVisitedMatrix(maxRows,maxColumns),maxRows,maxColumns)){
+//
+//        }
+//    }
+
+    public static void addGridToLayout(JPanel mainPanel, Node[][] gridOfNodes){
+        //create panel for grid
+        JPanel gridPanel = new JPanel();
+        //set the grid layout for the grid panel using the converted input
+        gridPanel.setLayout(new GridLayout(gridOfNodes.length,gridOfNodes.length,0,0));
+        //add labels
+        for(int i = 0;i<gridOfNodes.length;++i){
+            for(int j = 0;j<gridOfNodes.length;++j){
+                //create a label and add it to the layout
+                String labelNum = Integer.toString(gridOfNodes[i][j].getCellValue());
+                JLabel label = new JLabel(labelNum,SwingConstants.CENTER);
+                //set the border for each cell
+                label.setBorder(BorderFactory.createLineBorder(Color.black));
+                //add the label to the grid
+                gridPanel.add(label);
+            }
+        }
+        mainPanel.add(gridPanel);
     }
     public static Node[][] createAndAddRandomGrid(JPanel mainPanel,int maxRows, int maxColumns){
         //create panel for grid
@@ -573,6 +658,15 @@ public class GUI extends JFrame {
         }
     return arrayOfNeighbors;
     }
+
+    public static Node[][] clearGridNodeLevels(Node[][] gridOfNodes){
+        for(int i=0;i<gridOfNodes.length;i++){
+            for(int j = 0;j<gridOfNodes.length;j++){
+                gridOfNodes[i][j].setLevel(0);
+            }
+        }
+        return gridOfNodes;
+    }
     public static boolean BFS(Node startNode,Node goalNode,Node[][] gridOfNodes,int[][] visitedMatrix, int maxRows, int maxCols){
         //initialize neighbor queue
         Queue<Node> neighborQ = new LinkedList<Node>();
@@ -608,21 +702,21 @@ public class GUI extends JFrame {
                     });
 
                     //add Nodes in array of neighbors to the queue
-                    System.out.println("Current node: "+currNode.getCellValue());
-                    System.out.println("Current node position : "+currNode.getRowPos()+currNode.getColPos());
+//                    System.out.println("Current node: "+currNode.getCellValue());
+//                    System.out.println("Current node position : "+currNode.getRowPos()+currNode.getColPos());
 
                     for (int i = 0; i < arrayOfNeighbors.size(); i++) {
-                        System.out.println("Neighbor of current node: "+arrayOfNeighbors.get(i).getCellValue());
+//                        System.out.println("Neighbor of current node: "+arrayOfNeighbors.get(i).getCellValue());
                         //check if any of the neighbors have been visited
                         if (visitedMatrix[arrayOfNeighbors.get(i).getRowPos()][arrayOfNeighbors.get(i).getColPos()] == 1) {
-                            System.out.println("already visited neighbor: "+arrayOfNeighbors.get(i).getCellValue());
+//                            System.out.println("already visited neighbor: "+arrayOfNeighbors.get(i).getCellValue());
                             continue;
 //                            neighborQ.add(arrayOfNeighbors.get(i));
                         } else {
                             arrayOfNeighbors.get(i).setLevel(currNode.getLevel() + 1);
 //                            arrayOfNeighbors.get(i).setLevel(arrayOfNeighbors.get(i).getParent().getLevel() + 1);
 //                            arrayOfNeighbors.get(i).setLevel(level);
-                            System.out.println(arrayOfNeighbors.get(i).getLevel());
+//                            System.out.println(arrayOfNeighbors.get(i).getLevel());
                             neighborQ.add(arrayOfNeighbors.get(i));
 
                         }
