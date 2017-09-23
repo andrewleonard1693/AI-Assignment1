@@ -3,6 +3,7 @@
 
 import java.awt.*;
 import javax.swing.*;
+import javax.swing.border.Border;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.*;
@@ -37,20 +38,36 @@ public class GUI extends JFrame {
 
 //      create main panel
         JPanel mainPanel = new JPanel();
-        mainPanel.setLayout(new BoxLayout(mainPanel,BoxLayout.Y_AXIS));
+        mainPanel.setLayout(new BorderLayout());
 
 
         //create panel for text input
         JPanel buttonPanel = new JPanel();
+        buttonPanel.setLayout(new BoxLayout(buttonPanel,BoxLayout.Y_AXIS));
+
+        //gridBuild panel
+        JPanel gridBuild = new JPanel();
+
+
         JTextField textField = new JTextField("Input matrix dimensions",20);
         //create the submit button and add it to the text panel
         JButton generateButton = new JButton("Generate");
-        buttonPanel.add(textField);
-        buttonPanel.add(generateButton);
+        gridBuild.add(textField);
+        gridBuild.add(generateButton);
 
-        //add the text panel to the main panel
+        buttonPanel.add(gridBuild);
+
+        //iterate panel
+        JPanel iteratePanel = new JPanel();
+        JTextField iterationsTextField = new JTextField("Iterations for Hill Climb",20);
+        JButton iterationsButton = new JButton("Generate");
+        iteratePanel.add(iterationsTextField);
+        iteratePanel.add(iterationsButton);
+        buttonPanel.add(iteratePanel);
+
+        //add the button panels to the main panel
+        mainPanel.add(buttonPanel, BorderLayout.NORTH);
         textField.requestFocus();
-        mainPanel.add(buttonPanel);
 
 
 //      listen for submit button clicked
@@ -102,19 +119,32 @@ public class GUI extends JFrame {
                     mainPanel.add(gridPanel);
                     frame.revalidate();
                     int[][] visitedMatrix = create2DVisitedMatrix(maxRows,maxColumns);
+
+                    JPanel pathSuccessPanel = new JPanel();
+                    JLabel pathSuccessLabel = new JLabel("text",JLabel.CENTER);
+                    Font font = new Font("Arial Black",Font.BOLD,20);
+                    pathSuccessLabel.setFont(font);
+                    pathSuccessLabel.setBackground(Color.BLACK);
+                    pathSuccessLabel.setOpaque(true);
+                    mainPanel.add(pathSuccessPanel, BorderLayout.SOUTH);
                     //call BFS to see if there is a path
                     if(BFS(startNode,goalNode,gridOfNodes,visitedMatrix,maxRows,maxColumns)){
-                        JLabel pathSuccessLabel = new JLabel("There is a path.");
+                        if(pathSuccessPanel.getComponentCount()==1){
+                            pathSuccessPanel.remove(0);
+                        }
+                        pathSuccessLabel.setText("There is a path.");
                         pathSuccessLabel.setForeground(Color.green);
-                        buttonPanel.add(pathSuccessLabel);
-                        frame.revalidate();
+                        pathSuccessPanel.add(pathSuccessLabel);
                     }
                     else{
-                        JLabel pathSuccessLabel = new JLabel("There is no path.");
+                        if(pathSuccessPanel.getComponentCount()==1){
+                            pathSuccessPanel.remove(0);
+                        }
+                        pathSuccessLabel.setText("There is no path.");
                         pathSuccessLabel.setForeground(Color.red);
-                        buttonPanel.add(pathSuccessLabel);
-                        frame.revalidate();
+                        pathSuccessPanel.add(pathSuccessLabel);
                     }
+                    frame.revalidate();
 
 
 
@@ -247,9 +277,15 @@ public class GUI extends JFrame {
                     ArrayList<Node> arrayOfNeighbors = getNeighborsOfCurrentNode(currNode,gridOfNodes,maxRows,maxCols);
                     //add Nodes in array of neighbors to the queue
                     for(int i = 0;i<arrayOfNeighbors.size();++i){
-                        //set the level for each neighbor
-                        arrayOfNeighbors.get(i).setLevel(level);
-                        neighborQ.add(arrayOfNeighbors.get(i));
+                        //check if any of the neighbors have been visited
+                        if(visitedMatrix[arrayOfNeighbors.get(i).getRowPos()][arrayOfNeighbors.get(i).getColPos()]==1){
+                            continue;
+                        }else{
+                            //set the level for each neighbor
+                            arrayOfNeighbors.get(i).setLevel(level);
+                            neighborQ.add(arrayOfNeighbors.get(i));
+
+                        }
                     }
                     //increment the level
                     level+=1;
