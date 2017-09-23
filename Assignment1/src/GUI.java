@@ -357,6 +357,71 @@ public class GUI extends JFrame {
             }
         });
 
+        //generate button for hill climbing pressed
+        iterationsButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //grab the text field contents
+                String numOfIterations = iterationsTextField.getText();
+                //set a boolean to check if the string is a valid number
+                boolean validString = true;
+                int numberOfIterations=0;
+                //loop through the string checking if each character is a digit
+                for (int i = 0; i < numOfIterations.length(); i++) {
+                    if (!Character.isDigit(numOfIterations.charAt(i))) {
+                        validString=false;
+                        break;
+                    }
+                }
+                if(!validString){
+                    //throw an error
+                    JOptionPane.showMessageDialog(frame,"You've entered an invalid number.");
+
+                }else{
+                    //check if the number of iterations is less than 50
+                    numberOfIterations = Integer.parseInt(numOfIterations);
+                    if(numberOfIterations<50){
+                        //throw an error
+                        JOptionPane.showMessageDialog(frame,"Iterations must be 50 or more.");
+
+                    }
+                }//end validating string text field contents
+
+
+                //check if there is a grid
+                if(thereIsNoGrid(mainPanel)){
+                    //throw an error
+                    JOptionPane.showMessageDialog(frame,"Generate a grid to perform a hill climb first");
+                    return;
+                }
+
+                //start a timer
+                long startTime = System.nanoTime();
+                //loop the amount of iterations
+                for(int i = 0;i<numberOfIterations;i++){
+
+                    //calculate the grid's current evaluation function
+                    //and store it to compare to the newer evaluation function
+
+                    //pick a random cell in the grid of nodes
+
+                    //store the node in a temp variable so we can hold onto it if we need to change the grid back
+
+                    //generate a valid random number for that cells position
+
+                    //change the node's cell value to that new number
+
+                    //evaluate the current grid's function value
+
+                    //write the new value function to a file
+
+
+                }
+                long endTime = System.nanoTime();
+                long totalTime = endTime-startTime;
+            }
+        });
+
 
 
 
@@ -533,16 +598,29 @@ public class GUI extends JFrame {
                     visitedMatrix[rowPos][colPos] = 1;
                     //add all the neighbors of the current node to the queue
                     ArrayList<Node> arrayOfNeighbors = getNeighborsOfCurrentNode(currNode, gridOfNodes, maxRows, maxCols);
+                    //sort
+                    Collections.sort(arrayOfNeighbors, new Comparator<Node>(){
+                        public int compare(Node o1, Node o2){
+                            if(o1.getCellValue() == o2.getCellValue())
+                                return 0;
+                            return o1.getCellValue() < o2.getCellValue() ? -1 : 1;
+                        }
+                    });
+
                     //add Nodes in array of neighbors to the queue
                     System.out.println("Current node: "+currNode.getCellValue());
+                    System.out.println("Current node position : "+currNode.getRowPos()+currNode.getColPos());
+
                     for (int i = 0; i < arrayOfNeighbors.size(); i++) {
                         System.out.println("Neighbor of current node: "+arrayOfNeighbors.get(i).getCellValue());
                         //check if any of the neighbors have been visited
                         if (visitedMatrix[arrayOfNeighbors.get(i).getRowPos()][arrayOfNeighbors.get(i).getColPos()] == 1) {
                             System.out.println("already visited neighbor: "+arrayOfNeighbors.get(i).getCellValue());
                             continue;
+//                            neighborQ.add(arrayOfNeighbors.get(i));
                         } else {
                             arrayOfNeighbors.get(i).setLevel(currNode.getLevel() + 1);
+//                            arrayOfNeighbors.get(i).setLevel(arrayOfNeighbors.get(i).getParent().getLevel() + 1);
 //                            arrayOfNeighbors.get(i).setLevel(level);
                             System.out.println(arrayOfNeighbors.get(i).getLevel());
                             neighborQ.add(arrayOfNeighbors.get(i));
