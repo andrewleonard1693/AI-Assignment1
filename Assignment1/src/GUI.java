@@ -50,10 +50,12 @@ public class GUI extends JFrame {
 
 
         JTextField textField = new JTextField("Input matrix dimensions",20);
-        //create the submit button and add it to the text panel
+        //create the generate button and add it to the text panel
         JButton generateButton = new JButton("Generate");
+        JButton solveButton = new JButton("Solve");
         gridBuild.add(textField);
         gridBuild.add(generateButton);
+        gridBuild.add(solveButton);
 
         buttonPanel.add(gridBuild);
 
@@ -63,6 +65,9 @@ public class GUI extends JFrame {
         JButton iterationsButton = new JButton("Generate");
         iteratePanel.add(iterationsTextField);
         iteratePanel.add(iterationsButton);
+
+
+
         buttonPanel.add(iteratePanel);
 
         //add the button panels to the main panel
@@ -152,6 +157,20 @@ public class GUI extends JFrame {
                 }
             }
         });
+
+
+        //listen for solve button pressed
+        solveButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                return;
+            }
+        });
+
+
+
+
+        //add the main panel to the fram
         this.add(mainPanel);
 
 //      show the window

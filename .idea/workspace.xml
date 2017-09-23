@@ -2,9 +2,6 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="f067d3e8-a390-484f-875a-7f691c3c6473" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Assignment1/GUI$1.class" afterPath="$PROJECT_DIR$/out/production/Assignment1/GUI$1.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Assignment1/GUI.class" afterPath="$PROJECT_DIR$/out/production/Assignment1/GUI.class" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/out/production/Assignment1/Node.class" afterPath="$PROJECT_DIR$/out/production/Assignment1/Node.class" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/Assignment1/src/GUI.java" afterPath="$PROJECT_DIR$/Assignment1/src/GUI.java" />
     </list>
@@ -21,13 +18,15 @@
       <file leaf-file-name="GUI.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Assignment1/src/GUI.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="288">
-              <caret line="123" column="32" lean-forward="false" selection-start-line="123" selection-start-column="32" selection-end-line="123" selection-end-column="32" />
+            <state relative-caret-position="636">
+              <caret line="166" column="13" lean-forward="true" selection-start-line="166" selection-start-column="13" selection-end-line="166" selection-end-column="13" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#381#382#0" expanded="true" />
                 <element signature="e#406#407#0" expanded="true" />
-                <element signature="e#11927#11933#0" expanded="true" />
+                <element signature="e#6895#6896#0" expanded="true" />
+                <element signature="e#6933#6934#0" expanded="true" />
+                <element signature="e#12299#12305#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -82,9 +81,9 @@
     </option>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="1194" />
+    <option name="x" value="920" />
     <option name="y" value="23" />
-    <option name="width" value="1366" />
+    <option name="width" value="1640" />
     <option name="height" value="1412" />
   </component>
   <component name="ProjectLevelVcsManager">
@@ -298,11 +297,18 @@
       <option name="project" value="LOCAL" />
       <updated>1506124400926</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="Updated GUI format and checked for visited neighbors in BFS when assigning levels">
+      <created>1506127146429</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1506127146429</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="1194" y="23" width="1366" height="1412" extended-state="0" />
+    <frame x="920" y="23" width="1640" height="1412" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -318,7 +324,7 @@
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.09443631" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.078658536" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -388,7 +394,8 @@
     <MESSAGE value="BFS works indicating whether there is a path from the start node to the goal node" />
     <MESSAGE value="added numVisits field to node class" />
     <MESSAGE value="set the level for each node in the BFS process" />
-    <option name="LAST_COMMIT_MESSAGE" value="set the level for each node in the BFS process" />
+    <MESSAGE value="Updated GUI format and checked for visited neighbors in BFS when assigning levels" />
+    <option name="LAST_COMMIT_MESSAGE" value="Updated GUI format and checked for visited neighbors in BFS when assigning levels" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -405,7 +412,9 @@
             <element signature="imports" expanded="true" />
             <element signature="e#381#382#0" expanded="true" />
             <element signature="e#406#407#0" expanded="true" />
-            <element signature="e#11927#11933#0" expanded="true" />
+            <element signature="e#6895#6896#0" expanded="true" />
+            <element signature="e#6933#6934#0" expanded="true" />
+            <element signature="e#12299#12305#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -418,7 +427,9 @@
             <element signature="imports" expanded="true" />
             <element signature="e#381#382#0" expanded="true" />
             <element signature="e#406#407#0" expanded="true" />
-            <element signature="e#11927#11933#0" expanded="true" />
+            <element signature="e#6895#6896#0" expanded="true" />
+            <element signature="e#6933#6934#0" expanded="true" />
+            <element signature="e#12299#12305#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -431,7 +442,9 @@
             <element signature="imports" expanded="true" />
             <element signature="e#381#382#0" expanded="true" />
             <element signature="e#406#407#0" expanded="true" />
-            <element signature="e#11927#11933#0" expanded="true" />
+            <element signature="e#6895#6896#0" expanded="true" />
+            <element signature="e#6933#6934#0" expanded="true" />
+            <element signature="e#12299#12305#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -444,7 +457,9 @@
             <element signature="imports" expanded="true" />
             <element signature="e#381#382#0" expanded="true" />
             <element signature="e#406#407#0" expanded="true" />
-            <element signature="e#11927#11933#0" expanded="true" />
+            <element signature="e#6895#6896#0" expanded="true" />
+            <element signature="e#6933#6934#0" expanded="true" />
+            <element signature="e#12299#12305#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -457,7 +472,9 @@
             <element signature="imports" expanded="true" />
             <element signature="e#381#382#0" expanded="true" />
             <element signature="e#406#407#0" expanded="true" />
-            <element signature="e#11927#11933#0" expanded="true" />
+            <element signature="e#6895#6896#0" expanded="true" />
+            <element signature="e#6933#6934#0" expanded="true" />
+            <element signature="e#12299#12305#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -470,7 +487,9 @@
             <element signature="imports" expanded="true" />
             <element signature="e#381#382#0" expanded="true" />
             <element signature="e#406#407#0" expanded="true" />
-            <element signature="e#11927#11933#0" expanded="true" />
+            <element signature="e#6895#6896#0" expanded="true" />
+            <element signature="e#6933#6934#0" expanded="true" />
+            <element signature="e#12299#12305#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -483,7 +502,9 @@
             <element signature="imports" expanded="true" />
             <element signature="e#381#382#0" expanded="true" />
             <element signature="e#406#407#0" expanded="true" />
-            <element signature="e#11927#11933#0" expanded="true" />
+            <element signature="e#6895#6896#0" expanded="true" />
+            <element signature="e#6933#6934#0" expanded="true" />
+            <element signature="e#12299#12305#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -507,7 +528,9 @@
             <element signature="imports" expanded="true" />
             <element signature="e#381#382#0" expanded="true" />
             <element signature="e#406#407#0" expanded="true" />
-            <element signature="e#11927#11933#0" expanded="true" />
+            <element signature="e#6895#6896#0" expanded="true" />
+            <element signature="e#6933#6934#0" expanded="true" />
+            <element signature="e#12299#12305#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -531,7 +554,9 @@
             <element signature="imports" expanded="true" />
             <element signature="e#381#382#0" expanded="true" />
             <element signature="e#406#407#0" expanded="true" />
-            <element signature="e#11927#11933#0" expanded="true" />
+            <element signature="e#6895#6896#0" expanded="true" />
+            <element signature="e#6933#6934#0" expanded="true" />
+            <element signature="e#12299#12305#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -544,7 +569,9 @@
             <element signature="imports" expanded="true" />
             <element signature="e#381#382#0" expanded="true" />
             <element signature="e#406#407#0" expanded="true" />
-            <element signature="e#11927#11933#0" expanded="true" />
+            <element signature="e#6895#6896#0" expanded="true" />
+            <element signature="e#6933#6934#0" expanded="true" />
+            <element signature="e#12299#12305#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -557,7 +584,9 @@
             <element signature="imports" expanded="true" />
             <element signature="e#381#382#0" expanded="true" />
             <element signature="e#406#407#0" expanded="true" />
-            <element signature="e#11927#11933#0" expanded="true" />
+            <element signature="e#6895#6896#0" expanded="true" />
+            <element signature="e#6933#6934#0" expanded="true" />
+            <element signature="e#12299#12305#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -570,7 +599,9 @@
             <element signature="imports" expanded="true" />
             <element signature="e#381#382#0" expanded="true" />
             <element signature="e#406#407#0" expanded="true" />
-            <element signature="e#11927#11933#0" expanded="true" />
+            <element signature="e#6895#6896#0" expanded="true" />
+            <element signature="e#6933#6934#0" expanded="true" />
+            <element signature="e#12299#12305#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -583,7 +614,9 @@
             <element signature="imports" expanded="true" />
             <element signature="e#381#382#0" expanded="true" />
             <element signature="e#406#407#0" expanded="true" />
-            <element signature="e#11927#11933#0" expanded="true" />
+            <element signature="e#6895#6896#0" expanded="true" />
+            <element signature="e#6933#6934#0" expanded="true" />
+            <element signature="e#12299#12305#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -607,7 +640,9 @@
             <element signature="imports" expanded="true" />
             <element signature="e#381#382#0" expanded="true" />
             <element signature="e#406#407#0" expanded="true" />
-            <element signature="e#11927#11933#0" expanded="true" />
+            <element signature="e#6895#6896#0" expanded="true" />
+            <element signature="e#6933#6934#0" expanded="true" />
+            <element signature="e#12299#12305#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -620,7 +655,9 @@
             <element signature="imports" expanded="true" />
             <element signature="e#381#382#0" expanded="true" />
             <element signature="e#406#407#0" expanded="true" />
-            <element signature="e#11927#11933#0" expanded="true" />
+            <element signature="e#6895#6896#0" expanded="true" />
+            <element signature="e#6933#6934#0" expanded="true" />
+            <element signature="e#12299#12305#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -644,7 +681,9 @@
             <element signature="imports" expanded="true" />
             <element signature="e#381#382#0" expanded="true" />
             <element signature="e#406#407#0" expanded="true" />
-            <element signature="e#11927#11933#0" expanded="true" />
+            <element signature="e#6895#6896#0" expanded="true" />
+            <element signature="e#6933#6934#0" expanded="true" />
+            <element signature="e#12299#12305#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -668,7 +707,9 @@
             <element signature="imports" expanded="true" />
             <element signature="e#381#382#0" expanded="true" />
             <element signature="e#406#407#0" expanded="true" />
-            <element signature="e#11927#11933#0" expanded="true" />
+            <element signature="e#6895#6896#0" expanded="true" />
+            <element signature="e#6933#6934#0" expanded="true" />
+            <element signature="e#12299#12305#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -681,7 +722,9 @@
             <element signature="imports" expanded="true" />
             <element signature="e#381#382#0" expanded="true" />
             <element signature="e#406#407#0" expanded="true" />
-            <element signature="e#11927#11933#0" expanded="true" />
+            <element signature="e#6895#6896#0" expanded="true" />
+            <element signature="e#6933#6934#0" expanded="true" />
+            <element signature="e#12299#12305#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -694,7 +737,9 @@
             <element signature="imports" expanded="true" />
             <element signature="e#381#382#0" expanded="true" />
             <element signature="e#406#407#0" expanded="true" />
-            <element signature="e#11927#11933#0" expanded="true" />
+            <element signature="e#6895#6896#0" expanded="true" />
+            <element signature="e#6933#6934#0" expanded="true" />
+            <element signature="e#12299#12305#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -707,7 +752,9 @@
             <element signature="imports" expanded="true" />
             <element signature="e#381#382#0" expanded="true" />
             <element signature="e#406#407#0" expanded="true" />
-            <element signature="e#11927#11933#0" expanded="true" />
+            <element signature="e#6895#6896#0" expanded="true" />
+            <element signature="e#6933#6934#0" expanded="true" />
+            <element signature="e#12299#12305#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -720,7 +767,9 @@
             <element signature="imports" expanded="true" />
             <element signature="e#381#382#0" expanded="true" />
             <element signature="e#406#407#0" expanded="true" />
-            <element signature="e#11927#11933#0" expanded="true" />
+            <element signature="e#6895#6896#0" expanded="true" />
+            <element signature="e#6933#6934#0" expanded="true" />
+            <element signature="e#12299#12305#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -738,13 +787,15 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/Assignment1/src/GUI.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="288">
-          <caret line="123" column="32" lean-forward="false" selection-start-line="123" selection-start-column="32" selection-end-line="123" selection-end-column="32" />
+        <state relative-caret-position="636">
+          <caret line="166" column="13" lean-forward="true" selection-start-line="166" selection-start-column="13" selection-end-line="166" selection-end-column="13" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="e#381#382#0" expanded="true" />
             <element signature="e#406#407#0" expanded="true" />
-            <element signature="e#11927#11933#0" expanded="true" />
+            <element signature="e#6895#6896#0" expanded="true" />
+            <element signature="e#6933#6934#0" expanded="true" />
+            <element signature="e#12299#12305#0" expanded="true" />
           </folding>
         </state>
       </provider>
