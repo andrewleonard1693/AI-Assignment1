@@ -172,21 +172,11 @@ public class GUI extends JFrame {
                     JOptionPane.showMessageDialog(frame,"You haven't generated a grid to solve.");
                     return;
                 }
-                //loop through the grid of nodes and create a 2d matrix from the
-//                for(int i = 0;i<maxRows;++i){
-//                    for(int j = 0;j<maxColumns;++j){
-//                        //grab the level value and set the current cell to that value
-//                        gridRepresentation[i][j] = gridOfNodes[i][j].getLevel();
-//
-//                    }
-//                }
-                //remove the grid panel
-                Component[] comp = mainPanel.getComponents();
-                for(int i=1;i<comp.length;++i){
-                    mainPanel.remove(comp[i]);
-                }
+                //removed the grid and revalidate the frame
+                removeGrid(mainPanel);
                 frame.revalidate();
                 frame.repaint();
+
                 //create a new grid from the grid representation numbers
                 JPanel gridPanel = new JPanel();
                 //set the grid layout for the grid panel using the converted input
@@ -232,6 +222,13 @@ public class GUI extends JFrame {
 
     /*---------UTILITY METHODS---------*/
 
+    public static void removeGrid(JPanel mainPanel){
+        //remove the grid panel
+        Component[] comp = mainPanel.getComponents();
+        for(int i=1;i<comp.length;++i){
+            mainPanel.remove(comp[i]);
+        }
+    }
     public static int getPuzzleValueFunction(){
         return 0;
     }
