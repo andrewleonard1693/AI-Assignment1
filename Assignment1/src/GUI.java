@@ -15,6 +15,7 @@ public class GUI extends JFrame {
     public static Node[][] gridOfNodes = null;
     public static int maxRows = 0;
     public static int maxColumns = 0;
+    public static int[][] gridRepresentation = null;
     public static void main(String[] args) {
         new GUI();
     }
@@ -108,6 +109,7 @@ public class GUI extends JFrame {
                     gridPanel.setLayout(new GridLayout(maxRows,maxColumns,0,0));
                     //create the 2d array
                     gridOfNodes = create2DArrayOfNodes(maxRows,maxColumns);
+                    gridRepresentation = new int[maxRows][maxColumns];
                     Node startNode = gridOfNodes[0][0];
                     Node goalNode = gridOfNodes[maxRows-1][maxColumns-1];
                     //add labels
@@ -115,6 +117,7 @@ public class GUI extends JFrame {
                         for(int j = 0;j<maxColumns;++j){
                             //create a label and add it to the layout
                             String labelNum = Integer.toString(gridOfNodes[i][j].getCellValue());
+//                            gridRepresentation[i][j]= gridOfNodes[i][j].getLevel();
                             JLabel label = new JLabel(labelNum,SwingConstants.CENTER);
                             //set the border for each cell
                             label.setBorder(BorderFactory.createLineBorder(Color.black));
@@ -135,6 +138,7 @@ public class GUI extends JFrame {
                     mainPanel.add(pathSuccessPanel, BorderLayout.SOUTH);
                     //call BFS to see if there is a path
                     if(BFS(startNode,goalNode, gridOfNodes,visitedMatrix,maxRows,maxColumns)){
+//                        gridRepresentation[0][0]=0;
                         if(pathSuccessPanel.getComponentCount()==1){
                             pathSuccessPanel.remove(0);
                         }
@@ -149,6 +153,14 @@ public class GUI extends JFrame {
                         pathSuccessLabel.setText("There is no path.");
                         pathSuccessLabel.setForeground(Color.red);
                         pathSuccessPanel.add(pathSuccessLabel);
+                    }
+                    //update the grid representation
+                    for(int i = 0;i<maxRows;++i){
+                        for(int j= 0;j<maxColumns;++j){
+                            gridRepresentation[i][j]=gridOfNodes[i][j].getLevel();
+//                            gridRepresentation[0][0]=0;
+
+                        }
                     }
                     frame.revalidate();
 
@@ -168,11 +180,50 @@ public class GUI extends JFrame {
                     //the user hasnt added a grid yet
                     //throw an error window
                     JOptionPane.showMessageDialog(frame,"You haven't generated a grid to solve.");
-
-
+                    return;
                 }
                 //loop through the grid of nodes and create a 2d matrix from the
-                return;
+//                for(int i = 0;i<maxRows;++i){
+//                    for(int j = 0;j<maxColumns;++j){
+//                        //grab the level value and set the current cell to that value
+//                        gridRepresentation[i][j] = gridOfNodes[i][j].getLevel();
+//
+//                    }
+//                }
+                //remove the grid panel
+                Component[] comp = mainPanel.getComponents();
+                for(int i=1;i<comp.length;++i){
+                    mainPanel.remove(comp[i]);
+                }
+                frame.revalidate();
+                frame.repaint();
+                //create a new grid from the grid representation numbers
+                JPanel gridPanel = new JPanel();
+                //set the grid layout for the grid panel using the converted input
+                gridPanel.setLayout(new GridLayout(maxRows,maxColumns,0,0));
+                for(int i=0;i<maxRows;++i){
+                    for(int j = 0;j<maxColumns;++j){
+                        String labelNum = Integer.toString(gridRepresentation[i][j]);
+                        //check for -1 meaning the node was never visited
+                        if(gridRepresentation[i][j]==0){
+                            labelNum="X";
+                        }
+                        if(i==0&&j==0){
+                            labelNum="0";
+                        }
+                        JLabel label = new JLabel(labelNum,SwingConstants.CENTER);
+                        //set the border for each cell
+                        label.setBorder(BorderFactory.createLineBorder(Color.black));
+                        //add the label to the grid
+                        gridPanel.add(label);
+                    }
+                }
+//                gridRepresentation[]
+                mainPanel.add(gridPanel);
+                frame.revalidate();
+                frame.repaint();
+
+                //create a new grid
             }
         });
 
@@ -190,6 +241,10 @@ public class GUI extends JFrame {
 
 
     /*---------UTILITY METHODS---------*/
+
+    public static int getPuzzleValueFunction(){
+        return 0;
+    }
     //get the grid number depending on the current row and column
     public static int generateGridNumber(int currentRow, int currentColumn,int maxRows, int maxColumns){
         int[] findMaxNumberOfMoves = new int[4];
@@ -283,38 +338,35 @@ public class GUI extends JFrame {
         neighborQ.add(startNode);
         //set the level number for the start node
         startNode.setLevel(0);
-        int level = 1;
-
         while(!(neighborQ.isEmpty())){
             Node currNode = neighborQ.remove();
             if(currNode.equals(goalNode)) {
                 return true;
-            }else{
+            }else {
                 int rowPos = currNode.getRowPos();
                 int colPos = currNode.getColPos();
                 //check if visited
-                if(visitedMatrix[rowPos][colPos]==1){
+                if (visitedMatrix[rowPos][colPos] == 1) {
                     //the node has already been visited
                     continue;
-                }else{
+                } else {
                     //mark the node as visited
-                    visitedMatrix[rowPos][colPos]=1;
+                    visitedMatrix[rowPos][colPos] = 1;
                     //add all the neighbors of the current node to the queue
-                    ArrayList<Node> arrayOfNeighbors = getNeighborsOfCurrentNode(currNode,gridOfNodes,maxRows,maxCols);
+                    ArrayList<Node> arrayOfNeighbors = getNeighborsOfCurrentNode(currNode, gridOfNodes, maxRows, maxCols);
                     //add Nodes in array of neighbors to the queue
-                    for(int i = 0;i<arrayOfNeighbors.size();++i){
+                    for (int i = 0; i < arrayOfNeighbors.size(); ++i) {
                         //check if any of the neighbors have been visited
-                        if(visitedMatrix[arrayOfNeighbors.get(i).getRowPos()][arrayOfNeighbors.get(i).getColPos()]==1){
+                        if (visitedMatrix[arrayOfNeighbors.get(i).getRowPos()][arrayOfNeighbors.get(i).getColPos()] == 1) {
                             continue;
-                        }else{
+                        } else {
                             //set the level for each neighbor
-                            arrayOfNeighbors.get(i).setLevel(level);
+                            arrayOfNeighbors.get(i).setLevel(currNode.getLevel() + 1);
                             neighborQ.add(arrayOfNeighbors.get(i));
 
                         }
                     }
                     //increment the level
-                    level+=1;
 
                 }
             }

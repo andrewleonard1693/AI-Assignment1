@@ -4,7 +4,7 @@ public class Node {
     private int colPos;
     private Node parent;
     private int cellValue;
-    private int level;
+    private int level=0;
 
     public Node(int rowPos, int colPos, int cellValue){
         this.rowPos = rowPos;
