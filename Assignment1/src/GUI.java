@@ -401,77 +401,145 @@ public class GUI extends JFrame {
                 int newEvaluationScore=0;
 
                 //calculate the evaluation score for the starting grid
-                evaluationScore = evaluationFunction(gridOfNodes,gridOfNodes.length,gridOfNodes.length);
-                System.out.println("Initial evalutation score: "+evaluationScore);
-                //loop the amount of iterations
-                for(int i = 0;i<numberOfIterations;i++){
-                    Random rand = new Random();
-                    int randomRow = rand.nextInt(gridOfNodes.length);
-                    int randomCol = rand.nextInt(gridOfNodes.length);
-                    //loop until the random cell is not the goal node
-                    while(randomRow==gridOfNodes.length-1 && randomCol==gridOfNodes.length-1){
-                        randomRow=rand.nextInt(gridOfNodes.length);
-                        randomCol=rand.nextInt(gridOfNodes.length);
-                    }
-                    //reset the grid's node levels
-                    gridOfNodes = clearGridNodeLevels(gridOfNodes);
+                int initialEvalScore = evaluationFunction(gridOfNodes,gridOfNodes.length,gridOfNodes.length);
+                evaluationScore = initialEvalScore;
+                    System.out.println("Initial evalutation score: "+evaluationScore);
+                    //loop the amount of iterations
+                    for(int i = 0;i<numberOfIterations;i++){
+                        Random rand = new Random();
+                        int randomRow = rand.nextInt(gridOfNodes.length);
+                        int randomCol = rand.nextInt(gridOfNodes.length);
+                        //loop until the random cell is not the goal node
+                        while(randomRow==gridOfNodes.length-1 && randomCol==gridOfNodes.length-1){
+                            randomRow=rand.nextInt(gridOfNodes.length);
+                            randomCol=rand.nextInt(gridOfNodes.length);
+                        }
+                        //reset the grid's node levels
+                        gridOfNodes = clearGridNodeLevels(gridOfNodes);
 //                    System.out.println("random row: "+randomRow);
 //                    System.out.println("random col: "+randomCol);
-                    //store the node in a temp variable so we can hold onto it if we need to change the grid back
-                    int oldCellNumber = gridOfNodes[randomRow][randomCol].getCellValue();
+                        //store the node in a temp variable so we can hold onto it if we need to change the grid back
+                        int oldCellNumber = gridOfNodes[randomRow][randomCol].getCellValue();
 //                    System.out.println("old cell number: "+oldCellNumber);
-                    //generate a valid random number for that cells position
-                    int newCellNumber = generateGridNumber(randomRow,randomCol,gridOfNodes.length,gridOfNodes.length);
+                        //generate a valid random number for that cells position
+                        int newCellNumber = generateGridNumber(randomRow,randomCol,gridOfNodes.length,gridOfNodes.length);
 //                    System.out.println("new cell number: "+newCellNumber);
 
-                    //change the node's cell value to that new number
-                    gridOfNodes[randomRow][randomCol].setCellValue(newCellNumber);
-                    //run BFS to set the grid node levels with the possibly new cell value number
-                    boolean isSolvable = BFS(gridOfNodes[0][0],gridOfNodes[gridOfNodes.length-1][gridOfNodes.length-1],gridOfNodes,create2DVisitedMatrix(gridOfNodes.length,gridOfNodes.length),gridOfNodes.length,gridOfNodes.length);
-                    if(isSolvable){//puzzle can be solved
-                        //evaluate the new grid's function value
-//                        System.out.println("old eval score: "+evaluationScore);
-                        newEvaluationScore = evaluationFunction(gridOfNodes,gridOfNodes.length,gridOfNodes.length);
-//                        System.out.println("new eval score: "+newEvaluationScore);
-                        //if the new evaluation score is better than the previous one, change the node's cell value
-                        if(newEvaluationScore<evaluationScore){
-                            gridOfNodes[randomRow][randomCol].setCellValue(newCellNumber);
-                            evaluationScore=newEvaluationScore;
-                        }else{
-                            gridOfNodes[randomRow][randomCol].setCellValue(oldCellNumber);
-                        }
+                        //change the node's cell value to that new number
+                        gridOfNodes[randomRow][randomCol].setCellValue(newCellNumber);
+                        //run BFS to set the grid node levels with the possibly new cell value number
+                        boolean isSolvable = BFS(gridOfNodes[0][0],gridOfNodes[gridOfNodes.length-1][gridOfNodes.length-1],gridOfNodes,create2DVisitedMatrix(gridOfNodes.length,gridOfNodes.length),gridOfNodes.length,gridOfNodes.length);
+                        if(isSolvable){//puzzle can be solved
+                            //evaluate the new grid's function value
+                        System.out.println("old eval score: "+evaluationScore);
+                            newEvaluationScore = evaluationFunction(gridOfNodes,gridOfNodes.length,gridOfNodes.length);
+                        System.out.println("new eval score: "+newEvaluationScore);
+                            //if the new evaluation score is better than the previous one, change the node's cell value
+                            if(evaluationScore<0){//eval is negative
+                                if(newEvaluationScore>evaluationScore){
+                                    gridOfNodes[randomRow][randomCol].setCellValue(newCellNumber);
+                                    evaluationScore=newEvaluationScore;
 
-                    }else{
-                        newEvaluationScore = evaluationFunction(gridOfNodes,gridOfNodes.length,gridOfNodes.length);
-                        if(newEvaluationScore>evaluationScore){
-                            gridOfNodes[randomRow][randomCol].setCellValue(newCellNumber);
-                            evaluationScore=newEvaluationScore;
-                        }else{
-                            gridOfNodes[randomRow][randomCol].setCellValue(oldCellNumber);
+                                }else{
+                                    gridOfNodes[randomRow][randomCol].setCellValue(oldCellNumber);
+
+                                }
+                            }else {
+                                if (newEvaluationScore < evaluationScore) {
+                                    gridOfNodes[randomRow][randomCol].setCellValue(newCellNumber);
+                                    evaluationScore = newEvaluationScore;
+                                } else {
+                                    gridOfNodes[randomRow][randomCol].setCellValue(oldCellNumber);
+
+                                }
+                            }
+
+                        }else{ //puzzle cant be solved
+                            newEvaluationScore = evaluationFunction(gridOfNodes,gridOfNodes.length,gridOfNodes.length);
+                            if(evaluationScore<0){
+                                if(newEvaluationScore>evaluationScore){
+                                    System.out.println("not solvable");
+//                                System.out.println(evaluation);
+                                    gridOfNodes[randomRow][randomCol].setCellValue(newCellNumber);
+                                    evaluationScore=newEvaluationScore;
+                                }else{
+                                    gridOfNodes[randomRow][randomCol].setCellValue(oldCellNumber);
+                                }
+
+                            }
                         }
-                    }
 //                    System.out.println("new eval score: "+newEvaluationScore);
 
 
 
-                    //write the new value function to a file
-                    //TODO
+                        //write the new value function to a file
+                        //TODO
 
 
-                }
+                    }
+                System.out.println("Ending evaluation score: "+evaluationScore);
+                //remove the current grid and create a new one and add it
+                removeGrid(mainPanel);
+                addGridToLayout(mainPanel, gridOfNodes);
+                long endTime = System.nanoTime();
+                long totalTime = endTime-startTime;
+                double seconds = (double)totalTime / 1000000000.0;
+
                 System.out.println("Ending evaluation score: "+newEvaluationScore);
                 //remove the current grid and create a new one and add it
                 removeGrid(mainPanel);
                 addGridToLayout(mainPanel, gridOfNodes);
-                //add a penal showing the evaluation function and
-                frame.revalidate();
-                frame.repaint();
-
-
-                //create a new grid from the grid of nodes and add it to the
-                long endTime = System.nanoTime();
-                long totalTime = endTime-startTime;
-                System.out.println(totalTime);
+//                //add a penal showing the evaluation function and
+//                JPanel statPanel = new JPanel();
+////                mainPanel.add(statPanel);
+//                //add a path success label, the old evaluation score, the new evaluation score and the time it took to calculate
+//                Font font = new Font("Arial Black",Font.BOLD,20);
+//
+//                //path success label
+//                JLabel pathSuccess = new JLabel("There is no path.", JLabel.CENTER);
+//                pathSuccess.setFont(font);
+//                pathSuccess.setBackground(Color.BLACK);
+//                pathSuccess.setForeground(Color.RED);
+//
+//                //initial eval score label
+//                JLabel initialEvalScoreLabel = new JLabel(Integer.toString(initialEvaluationScore),JLabel.CENTER);
+//                initialEvalScoreLabel.setFont(font);
+//                initialEvalScoreLabel.setBackground(Color.BLACK);
+//                initialEvalScoreLabel.setForeground(Color.RED);
+//
+//                //new eval score label
+//                JLabel newEvalScoreLabel = new JLabel(Integer.toString(newEvaluationScore),JLabel.CENTER);
+//                newEvalScoreLabel.setFont(font);
+//                newEvalScoreLabel.setBackground(Color.BLACK);
+//                newEvalScoreLabel.setForeground(Color.RED);
+//
+//                //time taken label
+//                JLabel timeTaken = new JLabel(Double.toString(seconds),JLabel.CENTER);
+//                timeTaken.setFont(font);
+//                timeTaken.setBackground(Color.BLACK);
+//                timeTaken.setForeground(Color.RED);
+//
+//                if(isSolvable){
+//                    pathSuccess.setText("There is a path.");
+//                    pathSuccess.setForeground(Color.GREEN);
+//                    initialEvalScoreLabel.setForeground(Color.GREEN);
+//                    newEvalScoreLabel.setForeground(Color.GREEN);
+//                    timeTaken.setForeground(Color.GREEN);
+//                }
+//                statPanel.add(pathSuccess);
+//                statPanel.add(initialEvalScoreLabel);
+//                statPanel.add(newEvalScoreLabel);
+//                statPanel.add(timeTaken);
+//
+//                //add a penal showing the evaluation function and
+//                frame.revalidate();
+////                frame.repaint();
+//
+//
+//                //create a new grid from the grid of nodes and add it to the
+//                long endTime = System.nanoTime();
+//                long totalTime = endTime-startTime;
+//                System.out.println(totalTime);
             }
         });
 
@@ -521,7 +589,92 @@ public class GUI extends JFrame {
 //
 //        }
 //    }
+    public static void createDataForTask3(){
+        Node[][] five;
+        Node[][] seven = new Node[7][7];
+        Node[][] nine = new Node[9][9];
+        Node[][] eleven = new Node[11][11];
+        int[] numberOfIterations = {50,250,500,1000,2000,5000,10000,50000,100000,250000,500000,1000000};
 
+        five = create2DArrayOfNodes(5,5);
+        Node[][] copyOfFive = five.clone();
+        seven = create2DArrayOfNodes(7,7);
+        nine = create2DArrayOfNodes(9,9);
+        eleven = create2DArrayOfNodes(11,11);
+        try{
+            PrintWriter wr = new PrintWriter("task3-plotResults.txt", "UTF-8");
+            //write the grid
+            wr.println("grid rep");
+            for(int b=0;b<5;b++){
+                for(int c = 0;c<5;c++){
+                    wr.print(five[b][c].getCellValue()+" ");
+                }
+                wr.println();
+
+            }
+            Node startNode = five[0][0];
+            Node goalNode = five[4][4];
+            boolean start = BFS(five[0][0],five[4][4],five,create2DVisitedMatrix(5,5),5,5);
+            for(int a=0;a<numberOfIterations.length;a++){
+                int iterations = numberOfIterations[a];
+                wr.println("Number of iteration: "+iterations);
+                int initialEval = evaluationFunction(five,5,5);
+                wr.println("Initial function value :"+initialEval);
+                int evaluationScore = initialEval;
+                int newEvalScore=0;
+
+                for(int f=0;f<5;f++){
+                    for(int g = 0;g<5;g++){
+                        wr.print(five[f][g].getCellValue()+" ");
+                    }
+                    wr.println();
+
+                }
+
+                for(int i=0;i<iterations;i++){
+                    Random rand = new Random();
+                    int randomRow = rand.nextInt(5);
+                    int randomCol = rand.nextInt(5);
+                    //loop until the random cell is not the goal node
+                    while(randomRow==4 && randomCol==4){
+                        randomRow=rand.nextInt(5);
+                        randomCol=rand.nextInt(5);
+                    }
+                    //reset the grid's node levels
+                    five = clearGridNodeLevels(five);
+                    int oldCellNumber = five[randomRow][randomRow].getCellValue();
+                    int newCellNumber = generateGridNumber(randomRow,randomCol,5,5);
+                    five[randomRow][randomCol].setCellValue(newCellNumber);
+                    boolean isSolvable = BFS(startNode,goalNode,five,create2DVisitedMatrix(5,5),5,5);
+                    if(isSolvable){
+                        newEvalScore = evaluationFunction(five,5,5);
+                        if(newEvalScore<evaluationScore){
+                        five[randomRow][randomCol].setCellValue(newCellNumber);
+                        evaluationScore=newEvalScore;
+                        }else{
+                        five[randomRow][randomCol].setCellValue(oldCellNumber);
+                        }
+                    }else{
+                        newEvalScore = evaluationFunction(five,5,5);
+                        if(newEvalScore>evaluationScore){
+                            five[randomRow][randomCol].setCellValue(newCellNumber);
+                            evaluationScore=newEvalScore;
+                        }else{
+                            five[randomRow][randomCol].setCellValue(oldCellNumber);
+                        }
+                    }
+
+                }
+                wr.println("Final function value: "+newEvalScore);
+            }
+
+            wr.close();
+        } catch (IOException e) {
+            System.out.println("error writing file");
+        }
+
+
+    }
     public static void addGridToLayout(JPanel mainPanel, Node[][] gridOfNodes){
         //create panel for grid
         JPanel gridPanel = new JPanel();
