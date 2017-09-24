@@ -110,9 +110,9 @@ public class GUI extends JFrame {
                     //check if the user already pressed the submit button so we don't keep adding grids to the layout
                     if(!(thereIsNoGrid(mainPanel))){
                         //the user already added a grid so delete the grid and revalidate
-                        Component[] comp = mainPanel.getComponents();
-                        mainPanel.remove(comp[1]);
-                        frame.revalidate();
+                       removeGrid(mainPanel);
+                       frame.revalidate();
+                       frame.repaint();
                     }
                     //p
                     int n = Integer.parseInt(textFieldString);
@@ -403,6 +403,7 @@ public class GUI extends JFrame {
                 int newEvaluationScore=0;
 
                 //calculate the evaluation score for the starting grid
+                boolean isSolvable=false;
                 int initialEvalScore = evaluationFunction(gridOfNodes,gridOfNodes.length,gridOfNodes.length);
                 evaluationScore = initialEvalScore;
                     System.out.println("Initial evalutation score: "+evaluationScore);
@@ -430,53 +431,29 @@ public class GUI extends JFrame {
                         //change the node's cell value to that new number
                         gridOfNodes[randomRow][randomCol].setCellValue(newCellNumber);
                         //run BFS to set the grid node levels with the possibly new cell value number
-                        boolean isSolvable = BFS(gridOfNodes[0][0],gridOfNodes[gridOfNodes.length-1][gridOfNodes.length-1],gridOfNodes,create2DVisitedMatrix(gridOfNodes.length,gridOfNodes.length),gridOfNodes.length,gridOfNodes.length);
+                        isSolvable = BFS(gridOfNodes[0][0],gridOfNodes[gridOfNodes.length-1][gridOfNodes.length-1],gridOfNodes,create2DVisitedMatrix(gridOfNodes.length,gridOfNodes.length),gridOfNodes.length,gridOfNodes.length);
+                        newEvaluationScore = evaluationFunction(gridOfNodes,gridOfNodes.length,gridOfNodes.length);
                         if(isSolvable){//puzzle can be solved
-                            //evaluate the new grid's function value
-                        System.out.println("old eval score: "+evaluationScore);
-                            newEvaluationScore = evaluationFunction(gridOfNodes,gridOfNodes.length,gridOfNodes.length);
-                        System.out.println("new eval score: "+newEvaluationScore);
-                            //if the new evaluation score is better than the previous one, change the node's cell value
-                            if(evaluationScore<0){//eval is negative
-                                if(newEvaluationScore>=evaluationScore){
-                                    gridOfNodes[randomRow][randomCol].setCellValue(newCellNumber);
-                                    evaluationScore=newEvaluationScore;
-
-                                }else{
-                                    gridOfNodes[randomRow][randomCol].setCellValue(oldCellNumber);
-
-                                }
-                            }else {
-                                if (newEvaluationScore <= evaluationScore) {
-                                    gridOfNodes[randomRow][randomCol].setCellValue(newCellNumber);
-                                    evaluationScore = newEvaluationScore;
-                                } else {
-                                    gridOfNodes[randomRow][randomCol].setCellValue(oldCellNumber);
-
-                                }
+                            if(evaluationScore<0||newEvaluationScore<evaluationScore){//newEvaluation will be positive so we immediately set evaluation score to new evaluation score
+                                evaluationScore=newEvaluationScore;
+                            }else{
+                                gridOfNodes[randomRow][randomCol].setCellValue(oldCellNumber);
                             }
-
                         }else{ //puzzle cant be solved
-                            newEvaluationScore = evaluationFunction(gridOfNodes,gridOfNodes.length,gridOfNodes.length);
-                            if(evaluationScore<0){
-                                if(newEvaluationScore>=evaluationScore){
-                                    System.out.println("not solvable");
-//                                System.out.println(evaluation);
-                                    gridOfNodes[randomRow][randomCol].setCellValue(newCellNumber);
+                            if(evaluationScore>0){
+                                gridOfNodes[randomRow][randomCol].setCellValue(oldCellNumber);
+
+
+                            }else{
+                                if(newEvaluationScore>evaluationScore){
                                     evaluationScore=newEvaluationScore;
-                                }else{
+                                }
+                                else{
                                     gridOfNodes[randomRow][randomCol].setCellValue(oldCellNumber);
                                 }
-
                             }
+
                         }
-//                    System.out.println("new eval score: "+newEvaluationScore);
-
-
-
-                        //write the new value function to a file
-                        //TODO
-
 
                     }
                 System.out.println("Ending evaluation score: "+evaluationScore);
@@ -486,62 +463,54 @@ public class GUI extends JFrame {
                 long endTime = System.nanoTime();
                 long totalTime = endTime-startTime;
                 double seconds = (double)totalTime / 1000000000.0;
+                frame.revalidate();
+                frame.repaint();
+                //add a penal showing the evaluation function and
+                JPanel statPanel = new JPanel();
+                statPanel.setLayout(new BoxLayout(statPanel,BoxLayout.Y_AXIS));
+//                mainPanel.add(statPanel);
+                //add a path success label, the old evaluation score, the new evaluation score and the time it took to calculate
+                Font font = new Font("Arial Black",Font.BOLD,20);
 
-                System.out.println("Ending evaluation score: "+newEvaluationScore);
-                //remove the current grid and create a new one and add it
-                removeGrid(mainPanel);
-                addGridToLayout(mainPanel, gridOfNodes);
-//                //add a penal showing the evaluation function and
-//                JPanel statPanel = new JPanel();
-////                mainPanel.add(statPanel);
-//                //add a path success label, the old evaluation score, the new evaluation score and the time it took to calculate
-//                Font font = new Font("Arial Black",Font.BOLD,20);
-//
-//                //path success label
-//                JLabel pathSuccess = new JLabel("There is no path.", JLabel.CENTER);
-//                pathSuccess.setFont(font);
-//                pathSuccess.setBackground(Color.BLACK);
-//                pathSuccess.setForeground(Color.RED);
-//
-//                //initial eval score label
-//                JLabel initialEvalScoreLabel = new JLabel(Integer.toString(initialEvaluationScore),JLabel.CENTER);
-//                initialEvalScoreLabel.setFont(font);
-//                initialEvalScoreLabel.setBackground(Color.BLACK);
-//                initialEvalScoreLabel.setForeground(Color.RED);
-//
-//                //new eval score label
-//                JLabel newEvalScoreLabel = new JLabel(Integer.toString(newEvaluationScore),JLabel.CENTER);
-//                newEvalScoreLabel.setFont(font);
-//                newEvalScoreLabel.setBackground(Color.BLACK);
-//                newEvalScoreLabel.setForeground(Color.RED);
-//
-//                //time taken label
-//                JLabel timeTaken = new JLabel(Double.toString(seconds),JLabel.CENTER);
-//                timeTaken.setFont(font);
-//                timeTaken.setBackground(Color.BLACK);
-//                timeTaken.setForeground(Color.RED);
-//
-//                if(isSolvable){
-//                    pathSuccess.setText("There is a path.");
-//                    pathSuccess.setForeground(Color.GREEN);
-//                    initialEvalScoreLabel.setForeground(Color.GREEN);
-//                    newEvalScoreLabel.setForeground(Color.GREEN);
-//                    timeTaken.setForeground(Color.GREEN);
-//                }
-//                statPanel.add(pathSuccess);
-//                statPanel.add(initialEvalScoreLabel);
-//                statPanel.add(newEvalScoreLabel);
-//                statPanel.add(timeTaken);
-//
-//                //add a penal showing the evaluation function and
-//                frame.revalidate();
-////                frame.repaint();
-//
-//
-//                //create a new grid from the grid of nodes and add it to the
-//                long endTime = System.nanoTime();
-//                long totalTime = endTime-startTime;
-//                System.out.println(totalTime);
+                //path success label
+                JLabel pathSuccess = new JLabel("There is no path.", JLabel.CENTER);
+                pathSuccess.setFont(font);
+                pathSuccess.setBackground(Color.BLACK);
+                pathSuccess.setForeground(Color.RED);
+
+                //initial eval score label
+                JLabel initialEvalScoreLabel = new JLabel("Initial Evaluation Score: "+Integer.toString(initialEvalScore),JLabel.CENTER);
+                initialEvalScoreLabel.setFont(font);
+
+
+                //new eval score label
+                JLabel newEvalScoreLabel = new JLabel("New Evaluation Score: "+Integer.toString(newEvaluationScore),JLabel.CENTER);
+                newEvalScoreLabel.setFont(font);
+
+
+                //time taken label
+                JLabel timeTaken = new JLabel("Time Elapsed: "+Double.toString(seconds),JLabel.CENTER);
+                timeTaken.setFont(font);
+
+
+                if(isSolvable){
+                    pathSuccess.setText("There is a path.");
+                    pathSuccess.setForeground(Color.GREEN);
+                    initialEvalScoreLabel.setForeground(Color.GREEN);
+                    newEvalScoreLabel.setForeground(Color.GREEN);
+                    timeTaken.setForeground(Color.GREEN);
+                }
+                statPanel.add(pathSuccess);
+                statPanel.add(initialEvalScoreLabel);
+                statPanel.add(newEvalScoreLabel);
+                statPanel.add(timeTaken);
+
+                mainPanel.add(statPanel, BorderLayout.SOUTH);
+
+                //add a penal showing the evaluation function and
+                frame.revalidate();
+                frame.repaint();
+
             }
         });
 
