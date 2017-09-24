@@ -20,6 +20,8 @@ public class GUI extends JFrame {
     public static int maxColumns = 0;
     public static void main(String[] args) {
         new GUI();
+        createDataForTask3();
+
     }
 
     public GUI(){
@@ -436,7 +438,7 @@ public class GUI extends JFrame {
                         System.out.println("new eval score: "+newEvaluationScore);
                             //if the new evaluation score is better than the previous one, change the node's cell value
                             if(evaluationScore<0){//eval is negative
-                                if(newEvaluationScore>evaluationScore){
+                                if(newEvaluationScore>=evaluationScore){
                                     gridOfNodes[randomRow][randomCol].setCellValue(newCellNumber);
                                     evaluationScore=newEvaluationScore;
 
@@ -445,7 +447,7 @@ public class GUI extends JFrame {
 
                                 }
                             }else {
-                                if (newEvaluationScore < evaluationScore) {
+                                if (newEvaluationScore <= evaluationScore) {
                                     gridOfNodes[randomRow][randomCol].setCellValue(newCellNumber);
                                     evaluationScore = newEvaluationScore;
                                 } else {
@@ -457,7 +459,7 @@ public class GUI extends JFrame {
                         }else{ //puzzle cant be solved
                             newEvaluationScore = evaluationFunction(gridOfNodes,gridOfNodes.length,gridOfNodes.length);
                             if(evaluationScore<0){
-                                if(newEvaluationScore>evaluationScore){
+                                if(newEvaluationScore>=evaluationScore){
                                     System.out.println("not solvable");
 //                                System.out.println(evaluation);
                                     gridOfNodes[randomRow][randomCol].setCellValue(newCellNumber);
@@ -596,76 +598,102 @@ public class GUI extends JFrame {
         Node[][] eleven = new Node[11][11];
         int[] numberOfIterations = {50,250,500,1000,2000,5000,10000,50000,100000,250000,500000,1000000};
 
-        five = create2DArrayOfNodes(5,5);
-        Node[][] copyOfFive = five.clone();
+        five = create2DArrayOfNodes(11,11);
+        Node[][] copyOfFive = new Node[11][11];
+        for(int x = 0;x<11;x++){
+            for(int y=0;y<11;y++){
+                copyOfFive[x][y]= new Node(x,y,five[x][y].getCellValue());
+            }
+        }
         seven = create2DArrayOfNodes(7,7);
         nine = create2DArrayOfNodes(9,9);
         eleven = create2DArrayOfNodes(11,11);
         try{
-            PrintWriter wr = new PrintWriter("task3-plotResults.txt", "UTF-8");
+            PrintWriter wr = new PrintWriter("task3-plotResults-for-n=11.txt", "UTF-8");
             //write the grid
             wr.println("grid rep");
-            for(int b=0;b<5;b++){
-                for(int c = 0;c<5;c++){
+            for(int b=0;b<11;b++){
+                for(int c = 0;c<11;c++){
                     wr.print(five[b][c].getCellValue()+" ");
                 }
                 wr.println();
 
             }
             Node startNode = five[0][0];
-            Node goalNode = five[4][4];
-            boolean start = BFS(five[0][0],five[4][4],five,create2DVisitedMatrix(5,5),5,5);
+            Node goalNode = five[10][10];
+            int evaluationScore = 0;
+            boolean start = BFS(five[0][0],five[10][10],five,create2DVisitedMatrix(11,11),11,11);
+            int initialEval = evaluationFunction(five,11,11);
             for(int a=0;a<numberOfIterations.length;a++){
                 int iterations = numberOfIterations[a];
                 wr.println("Number of iteration: "+iterations);
-                int initialEval = evaluationFunction(five,5,5);
                 wr.println("Initial function value :"+initialEval);
-                int evaluationScore = initialEval;
+                evaluationScore = initialEval;
                 int newEvalScore=0;
-
-                for(int f=0;f<5;f++){
-                    for(int g = 0;g<5;g++){
+                for(int l=0;l<11;l++){
+                    for(int m=0;m<11;m++){
+                        five[l][m].setCellValue(copyOfFive[l][m].getCellValue());
+                    }
+                }
+//                five = copyOfFive.clone();
+                for(int f=0;f<11;f++){
+                    for(int g = 0;g<11;g++){
                         wr.print(five[f][g].getCellValue()+" ");
                     }
                     wr.println();
 
                 }
 
+
                 for(int i=0;i<iterations;i++){
                     Random rand = new Random();
-                    int randomRow = rand.nextInt(5);
-                    int randomCol = rand.nextInt(5);
+                    int randomRow = rand.nextInt(11);
+                    int randomCol = rand.nextInt(11);
                     //loop until the random cell is not the goal node
-                    while(randomRow==4 && randomCol==4){
-                        randomRow=rand.nextInt(5);
-                        randomCol=rand.nextInt(5);
+                    while(randomRow==10 && randomCol==10){
+                        randomRow=rand.nextInt(11);
+                        randomCol=rand.nextInt(11);
                     }
                     //reset the grid's node levels
                     five = clearGridNodeLevels(five);
                     int oldCellNumber = five[randomRow][randomRow].getCellValue();
-                    int newCellNumber = generateGridNumber(randomRow,randomCol,5,5);
+                    int newCellNumber = generateGridNumber(randomRow,randomCol,11,11);
                     five[randomRow][randomCol].setCellValue(newCellNumber);
-                    boolean isSolvable = BFS(startNode,goalNode,five,create2DVisitedMatrix(5,5),5,5);
+                    boolean isSolvable = BFS(startNode,goalNode,five,create2DVisitedMatrix(11,11),11,11);
                     if(isSolvable){
-                        newEvalScore = evaluationFunction(five,5,5);
-                        if(newEvalScore<evaluationScore){
-                        five[randomRow][randomCol].setCellValue(newCellNumber);
-                        evaluationScore=newEvalScore;
+                        newEvalScore = evaluationFunction(five,11,11);
+                        if(evaluationScore<0){
+                            if(newEvalScore>=evaluationScore){
+                                five[randomRow][randomCol].setCellValue(newCellNumber);
+                                evaluationScore=newEvalScore;
+                            }else{
+                                five[randomRow][randomCol].setCellValue(oldCellNumber);
+
+                            }
                         }else{
-                        five[randomRow][randomCol].setCellValue(oldCellNumber);
+                            if(newEvalScore<=evaluationScore){
+                                five[randomRow][randomCol].setCellValue(newCellNumber);
+                                evaluationScore=newEvalScore;
+                            }else{
+                                five[randomRow][randomCol].setCellValue(oldCellNumber);
+
+                            }
                         }
                     }else{
-                        newEvalScore = evaluationFunction(five,5,5);
-                        if(newEvalScore>evaluationScore){
-                            five[randomRow][randomCol].setCellValue(newCellNumber);
-                            evaluationScore=newEvalScore;
-                        }else{
-                            five[randomRow][randomCol].setCellValue(oldCellNumber);
+                        newEvalScore = evaluationFunction(five,11,11);
+                        if(evaluationScore<0){
+                            if(newEvalScore>=evaluationScore){
+                                five[randomRow][randomCol].setCellValue(newCellNumber);
+                                evaluationScore=newEvalScore;
+                            }else{
+                                five[randomRow][randomCol].setCellValue(oldCellNumber);
+
+                            }
                         }
                     }
 
                 }
-                wr.println("Final function value: "+newEvalScore);
+                wr.println("Final function value: "+evaluationScore);
             }
 
             wr.close();
