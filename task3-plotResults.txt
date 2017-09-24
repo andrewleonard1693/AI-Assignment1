@@ -1,0 +1,102 @@
+grid rep
+2 2 2 3 3 
+4 2 3 2 1 
+4 1 1 1 1 
+2 2 2 2 2 
+3 2 3 4 0 
+Number of iteration: 50
+Initial function value :-4
+2 2 2 3 3 
+4 2 3 2 1 
+4 1 1 1 1 
+2 2 2 2 2 
+3 2 3 4 0 
+Final function value: 2
+Number of iteration: 250
+Initial function value :-4
+2 2 2 3 3 
+4 2 3 2 1 
+4 1 1 1 1 
+2 2 2 2 2 
+3 2 3 4 0 
+Final function value: 4
+Number of iteration: 500
+Initial function value :-4
+2 2 2 3 3 
+4 2 3 2 1 
+4 1 1 1 1 
+2 2 2 2 2 
+3 2 3 4 0 
+Final function value: 2
+Number of iteration: 1000
+Initial function value :-4
+2 2 2 3 3 
+4 2 3 2 1 
+4 1 1 1 1 
+2 2 2 2 2 
+3 2 3 4 0 
+Final function value: 2
+Number of iteration: 2000
+Initial function value :-4
+2 2 2 3 3 
+4 2 3 2 1 
+4 1 1 1 1 
+2 2 2 2 2 
+3 2 3 4 0 
+Final function value: 2
+Number of iteration: 5000
+Initial function value :-4
+2 2 2 3 3 
+4 2 3 2 1 
+4 1 1 1 1 
+2 2 2 2 2 
+3 2 3 4 0 
+Final function value: 2
+Number of iteration: 10000
+Initial function value :-4
+2 2 2 3 3 
+4 2 3 2 1 
+4 1 1 1 1 
+2 2 2 2 2 
+3 2 3 4 0 
+Final function value: 2
+Number of iteration: 50000
+Initial function value :-4
+2 2 2 3 3 
+4 2 3 2 1 
+4 1 1 1 1 
+2 2 2 2 2 
+3 2 3 4 0 
+Final function value: 2
+Number of iteration: 100000
+Initial function value :-4
+2 2 2 3 3 
+4 2 3 2 1 
+4 1 1 1 1 
+2 2 2 2 2 
+3 2 3 4 0 
+Final function value: 2
+Number of iteration: 250000
+Initial function value :-4
+2 2 2 3 3 
+4 2 3 2 1 
+4 1 1 1 1 
+2 2 2 2 2 
+3 2 3 4 0 
+Final function value: 2
+Number of iteration: 500000
+Initial function value :-4
+2 2 2 3 3 
+4 2 3 2 1 
+4 1 1 1 1 
+2 2 2 2 2 
+3 2 3 4 0 
+Final function value: 2
+Number of iteration: 1000000
+Initial function value :-4
+2 2 2 3 3 
+4 2 3 2 1 
+4 1 1 1 1 
+2 2 2 2 2 
+3 2 3 4 0 
+Final function value: 2
