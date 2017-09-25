@@ -565,6 +565,8 @@ public class GUI extends JFrame {
                     JOptionPane.showMessageDialog(frame,"You have not input valid numbers.");
                     return;
                 }
+                int numberOfRestartsInteger = Integer.parseInt(numOfRestartsInput);
+                int numberOfHillClimbsInteger = Integer.parseInt(numOfIterationsInput);
                 //at this point there are valid numbers inputted and there is a grid to solve
                 int dim = gridOfNodes.length;
                 Node[][] pureHillClimbingGrid = new Node[dim][dim];
@@ -576,6 +578,30 @@ public class GUI extends JFrame {
                         hillClimbingWithRestartsGrid[i][j]= new Node(i,j,gridOfNodes[i][j].getCellValue());
                     }
                 }
+                //initialize array list of grids
+                ArrayList<Node[][]> arrayOfGrids = new ArrayList<>();
+                //corresponding evaluation functions
+                ArrayList<Integer> evaluationFunctionValues = new ArrayList();
+
+                //font used for
+                Font font = new Font("Arial Black",Font.BOLD,20);
+                int initialEvalScore = evaluationFunction(gridOfNodes,dim,dim);
+
+                //PureHillClimbingSolution
+
+                long pureHillStartTime = System.nanoTime();
+                pureHillClimbingGrid = hillClimb(pureHillClimbingGrid,numberOfHillClimbsInteger,dim);
+                long pureHillEndTime = System.nanoTime();
+                long totalTime = pureHillEndTime-pureHillStartTime;
+                double totalTimeForPureHillClimbing = (double)totalTime/1000000000.0;
+
+                //at this point the pure hill climbing solution is done
+                //create labels from the initial eval func, solution eval func and the time taken
+                JPanel pureHillStatPanel = new JPanel();
+                pureHillStatPanel.setLayout(new BoxLayout(pureHillStatPanel,BoxLayout.Y_AXIS));
+
+
+
 
 
 
@@ -958,6 +984,65 @@ public class GUI extends JFrame {
         }
         return hasPath;
 
+    }
+    public static Node[][] hillClimb(Node[][] grid, int iterations,int dimension){
+        int evaluationScore = 0;
+        int newEvaluationScore=0;
+
+        //calculate the evaluation score for the starting grid
+        boolean isSolvable=false;
+        int initialEvalScore = evaluationFunction(grid,dimension,dimension);
+        evaluationScore = initialEvalScore;
+        //loop the amount of iterations
+        for(int i = 0;i<iterations;i++){
+            Random rand = new Random();
+            int randomRow = rand.nextInt(dimension);
+            int randomCol = rand.nextInt(dimension);
+            //loop until the random cell is not the goal node
+            while(randomRow==dimension-1 && randomCol==dimension-1){
+                randomRow=rand.nextInt(dimension);
+                randomCol=rand.nextInt(dimension);
+            }
+            //reset the grid's node levels
+            grid = clearGridNodeLevels(grid);
+//                    System.out.println("random row: "+randomRow);
+//                    System.out.println("random col: "+randomCol);
+            //store the node in a temp variable so we can hold onto it if we need to change the grid back
+            int oldCellNumber = grid[randomRow][randomCol].getCellValue();
+//                    System.out.println("old cell number: "+oldCellNumber);
+            //generate a valid random number for that cells position
+            int newCellNumber = generateGridNumber(randomRow,randomCol,dimension,dimension);
+//                    System.out.println("new cell number: "+newCellNumber);
+
+            //change the node's cell value to that new number
+            grid[randomRow][randomCol].setCellValue(newCellNumber);
+            //run BFS to set the grid nodegrid levels with the possibly new cell value number
+            isSolvable = BFS(grid[0][0],grid[dimension-1][dimension-1],grid,create2DVisitedMatrix(dimension,dimension),dimension,dimension);
+            newEvaluationScore = evaluationFunction(grid,dimension,dimension);
+            if(isSolvable){//puzzle can be solved
+                if(evaluationScore<0||newEvaluationScore<evaluationScore){//newEvaluation will be positive so we immediately set evaluation score to new evaluation score
+                    evaluationScore=newEvaluationScore;
+                }else{
+                    grid[randomRow][randomCol].setCellValue(oldCellNumber);
+                }
+            }else{ //puzzle cant be solved
+                if(evaluationScore>0){
+                    grid[randomRow][randomCol].setCellValue(oldCellNumber);
+
+
+                }else{
+                    if(newEvaluationScore>evaluationScore){
+                        evaluationScore=newEvaluationScore;
+                    }
+                    else{
+                        grid[randomRow][randomCol].setCellValue(oldCellNumber);
+                    }
+                }
+
+            }
+
+        }
+        return grid;
     }
 
 }
