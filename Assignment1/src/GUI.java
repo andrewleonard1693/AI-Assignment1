@@ -607,7 +607,7 @@ public class GUI extends JFrame {
                 //hill Climbing with random restarts
                 long restartsTime = System.nanoTime();
                 for(int i=0;i<numberOfRestartsInteger;i++){
-                    hillClimbingWithRestartsGrid = hillClimb(hillClimbingWithRestartsGrid,numberOfHillClimbsForRestartProcessz, dim);
+                    hillClimbingWithRestartsGrid = hillClimb(hillClimbingWithRestartsGrid,numberOfHillClimbsForRestartProcess, dim);
                     arrayOfGrids.add(hillClimbingWithRestartsGrid);
                     evaluationFunctionValues.add(evaluationFunction(hillClimbingWithRestartsGrid,dim,dim));
                     hillClimbingWithRestartsGrid=create2DArrayOfNodes(dim,dim);
