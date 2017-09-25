@@ -567,6 +567,7 @@ public class GUI extends JFrame {
                 }
                 int numberOfRestartsInteger = Integer.parseInt(numOfRestartsInput);
                 int numberOfHillClimbsInteger = Integer.parseInt(numOfIterationsInput);
+                int numberOfHillClimbsForRestartProcess= numberOfHillClimbsInteger/numberOfRestartsInteger;
                 if(numberOfRestartsInteger>numberOfHillClimbsInteger){
                     JOptionPane.showMessageDialog(frame,"Restarts cannot be greater than iterations");
 
@@ -606,7 +607,7 @@ public class GUI extends JFrame {
                 //hill Climbing with random restarts
                 long restartsTime = System.nanoTime();
                 for(int i=0;i<numberOfRestartsInteger;i++){
-                    hillClimbingWithRestartsGrid = hillClimb(hillClimbingWithRestartsGrid,numberOfHillClimbsInteger, dim);
+                    hillClimbingWithRestartsGrid = hillClimb(hillClimbingWithRestartsGrid,numberOfHillClimbsForRestartProcessz, dim);
                     arrayOfGrids.add(hillClimbingWithRestartsGrid);
                     evaluationFunctionValues.add(evaluationFunction(hillClimbingWithRestartsGrid,dim,dim));
                     hillClimbingWithRestartsGrid=create2DArrayOfNodes(dim,dim);
