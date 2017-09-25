@@ -55,11 +55,13 @@ public class GUI extends JFrame {
         //gridBuild panel
         JPanel gridBuild = new JPanel();
 
-
+        //Add labels for tasks
+        JLabel task1Label = new JLabel("Task 1");
         JTextField textField = new JTextField("Input matrix dimensions",20);
         //create the generate button and add it to the text panel
         JButton generateButton = new JButton("Generate");
         JButton solveButton = new JButton("Solve");
+        gridBuild.add(task1Label);
         gridBuild.add(textField);
         gridBuild.add(generateButton);
         gridBuild.add(solveButton);
@@ -69,9 +71,11 @@ public class GUI extends JFrame {
 
         //parse text file panel
         JPanel textFileInputPanel = new JPanel();
+        JLabel task2Label = new JLabel("Task 2");
         JTextField fileTextField = new JTextField("Enter the name of the file containing the puzzle to be solved");
         JButton generatePuzzleButton = new JButton("Generate");
         JButton fileSolveButton = new JButton("Solve");
+        textFileInputPanel.add(task2Label);
         textFileInputPanel.add(fileTextField);
         textFileInputPanel.add(generatePuzzleButton);
         textFileInputPanel.add(fileSolveButton);
@@ -81,14 +85,33 @@ public class GUI extends JFrame {
 
         //iterate panel
         JPanel iteratePanel = new JPanel();
+        JLabel task3Label = new JLabel("Task 3");
         JTextField iterationsTextField = new JTextField("Iterations for Hill Climb",20);
         JButton iterationsButton = new JButton("Generate");
+        iteratePanel.add(task3Label);
         iteratePanel.add(iterationsTextField);
         iteratePanel.add(iterationsButton);
 
 
 
         buttonPanel.add(iteratePanel);
+
+        //hill climbing vs hill climbing with restarts panel (task 4)
+        JPanel hillClimbingVsHillClimbingWithRestarts = new JPanel();
+        JLabel task4Label = new JLabel("Task 4");
+        JTextField numOfRestarts = new JTextField("Number of restarts",20);
+        JTextField numOfHillClimbIterations = new JTextField("Number of hill climb iterations",20);
+        JButton hillClimbWithRestartsSolveButton = new JButton("Solve");
+        //add elements to panel
+        hillClimbingVsHillClimbingWithRestarts.add(task4Label);
+        hillClimbingVsHillClimbingWithRestarts.add(numOfRestarts);
+        hillClimbingVsHillClimbingWithRestarts.add(numOfHillClimbIterations);
+        hillClimbingVsHillClimbingWithRestarts.add(hillClimbWithRestartsSolveButton);
+        //add panel to overall button panel
+        buttonPanel.add(hillClimbingVsHillClimbingWithRestarts);
+
+
+
 
         //add the button panels to the main panel
         mainPanel.add(buttonPanel, BorderLayout.NORTH);
@@ -510,6 +533,51 @@ public class GUI extends JFrame {
                 //add a penal showing the evaluation function and
                 frame.revalidate();
                 frame.repaint();
+
+            }
+        });
+
+        hillClimbWithRestartsSolveButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //check if there is a grid for us to run on
+                if(thereIsNoGrid(mainPanel)){
+                    JOptionPane.showMessageDialog(frame,"You haven't generated a grid to solve.");
+                    return;
+
+                }
+                boolean fieldsAreValid = true;
+                String numOfRestartsInput = numOfRestarts.getText();
+                String numOfIterationsInput = numOfHillClimbIterations.getText();
+                for (int i = 0; i < numOfRestartsInput.length(); i++) {
+                    if (!Character.isDigit(numOfRestartsInput.charAt(i))) {
+                        fieldsAreValid=false;
+                        break;
+                    }
+                }
+                for (int i = 0; i < numOfIterationsInput.length(); i++) {
+                    if (!Character.isDigit(numOfIterationsInput.charAt(i))) {
+                        fieldsAreValid=false;
+                        break;
+                    }
+                }
+                if(!fieldsAreValid){
+                    JOptionPane.showMessageDialog(frame,"You have not input valid numbers.");
+                    return;
+                }
+                //at this point there are valid numbers inputted and there is a grid to solve
+                int dim = gridOfNodes.length;
+                Node[][] pureHillClimbingGrid = new Node[dim][dim];
+                Node[][] hillClimbingWithRestartsGrid = new Node[dim][dim];
+                //copy the generated grid of nodes
+                for(int i = 0;i<dim;i++){
+                    for(int j = 0;j<dim;j++){
+                        pureHillClimbingGrid[i][j]= new Node(i,j,gridOfNodes[i][j].getCellValue());
+                        hillClimbingWithRestartsGrid[i][j]= new Node(i,j,gridOfNodes[i][j].getCellValue());
+                    }
+                }
+
+
 
             }
         });
