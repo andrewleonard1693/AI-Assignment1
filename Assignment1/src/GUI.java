@@ -567,6 +567,10 @@ public class GUI extends JFrame {
                 }
                 int numberOfRestartsInteger = Integer.parseInt(numOfRestartsInput);
                 int numberOfHillClimbsInteger = Integer.parseInt(numOfIterationsInput);
+                if(numberOfRestartsInteger>numberOfHillClimbsInteger){
+                    JOptionPane.showMessageDialog(frame,"Restarts cannot be greater than iterations");
+
+                }
                 //at this point there are valid numbers inputted and there is a grid to solve
                 int dim = gridOfNodes.length;
                 Node[][] pureHillClimbingGrid = new Node[dim][dim];
@@ -585,6 +589,7 @@ public class GUI extends JFrame {
 
                 //font used for
                 Font font = new Font("Arial Black",Font.BOLD,20);
+
                 int initialEvalScore = evaluationFunction(gridOfNodes,dim,dim);
 
                 //PureHillClimbingSolution
@@ -684,13 +689,22 @@ public class GUI extends JFrame {
 
                 }
 
+                //create titles of the grids that are side by side
+
+                JLabel hillTitle = new JLabel("Pure Hill Climbing");
+                hillTitle.setFont(font);
+                JLabel restartTitle = new JLabel("Hill Climbing with Random Restarts");
+                restartTitle.setFont(font);
+
+
+
 
 
                 //add both grids to the layout
                 removeGrid(mainPanel);
                 //create a panel to add both of the grids side by side
                 JPanel sideBySideGrids = new JPanel();
-                sideBySideGrids.setLayout(new GridLayout(2,2));
+                sideBySideGrids.setLayout(new GridLayout(3,3));
                 //create the panels for the stats for each process
                 JPanel pureHillStats = new JPanel();
                 pureHillStats.setLayout(new BoxLayout(pureHillStats,BoxLayout.Y_AXIS));
@@ -699,14 +713,18 @@ public class GUI extends JFrame {
 
                 //add stat labels to the stat panels
                 //add pure hill climbing stats
+                pureHillStats.add(hillTitle);
                 pureHillStats.add(initialEvalHill);
                 pureHillStats.add(pureHillEval);
                 pureHillStats.add(pureHillRunTime);
 
                 //add hill climbing with restarts stats
+                hillRestartsStats.add(restartTitle);
                 hillRestartsStats.add(initialEvalRestart);
                 hillRestartsStats.add(restartsEval);
                 hillRestartsStats.add(restartsRunTime);
+
+
 
                 addGridToLayout(sideBySideGrids,pureHillClimbingGrid);
                 addGridToLayout(sideBySideGrids,restartGrid);
