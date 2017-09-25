@@ -401,14 +401,14 @@ public class GUI extends JFrame {
                 if(!validString){
                     //throw an error
                     JOptionPane.showMessageDialog(frame,"You've entered an invalid number.");
-
+                    return;
                 }else{
                     //check if the number of iterations is less than 50
                     numberOfIterations = Integer.parseInt(numOfIterations);
                     if(numberOfIterations<50){
                         //throw an error
                         JOptionPane.showMessageDialog(frame,"Iterations must be 50 or more.");
-
+                        return;
                     }
                 }//end validating string text field contents
 
@@ -591,14 +591,135 @@ public class GUI extends JFrame {
 
                 long pureHillStartTime = System.nanoTime();
                 pureHillClimbingGrid = hillClimb(pureHillClimbingGrid,numberOfHillClimbsInteger,dim);
+                int pureHillResultingEvalFunc = evaluationFunction(pureHillClimbingGrid,dim,dim);
                 long pureHillEndTime = System.nanoTime();
                 long totalTime = pureHillEndTime-pureHillStartTime;
                 double totalTimeForPureHillClimbing = (double)totalTime/1000000000.0;
 
                 //at this point the pure hill climbing solution is done
-                //create labels from the initial eval func, solution eval func and the time taken
-                JPanel pureHillStatPanel = new JPanel();
-                pureHillStatPanel.setLayout(new BoxLayout(pureHillStatPanel,BoxLayout.Y_AXIS));
+
+                //hill Climbing with random restarts
+                long restartsTime = System.nanoTime();
+                for(int i=0;i<numberOfRestartsInteger;i++){
+                    hillClimbingWithRestartsGrid = hillClimb(hillClimbingWithRestartsGrid,numberOfHillClimbsInteger, dim);
+                    arrayOfGrids.add(hillClimbingWithRestartsGrid);
+                    evaluationFunctionValues.add(evaluationFunction(hillClimbingWithRestartsGrid,dim,dim));
+                    hillClimbingWithRestartsGrid=create2DArrayOfNodes(dim,dim);
+                }
+                long restartsEndTime = System.nanoTime();
+                long totalRestartsTime = restartsEndTime-restartsTime;
+                double totalRestartTimeInSeconds = (double)totalRestartsTime/1000000000.0;
+
+                //find the location of the best evaluation function
+                int num = Integer.MAX_VALUE;
+                boolean hasPositiveInt = false;
+                for(int i = 0;i<evaluationFunctionValues.size();i++){
+                    if(num>evaluationFunctionValues.get(i)&&evaluationFunctionValues.get(i)>0){
+                        num = evaluationFunctionValues.get(i);
+                        hasPositiveInt=true;
+                    }
+                }
+                if(!hasPositiveInt){
+                    num=Integer.MIN_VALUE;
+                    for(int i = 0;i<evaluationFunctionValues.size();i++){
+                        if(evaluationFunctionValues.get(i)>num){
+                            num = evaluationFunctionValues.get(i);
+                        }
+                    }
+                }
+                //get the grid at the position of num
+                Node[][] restartGrid = arrayOfGrids.get(num);
+                int hillCLimbWithRestartsResultingEval = evaluationFunction(restartGrid,dim,dim);
+                //pure hill labels
+                JLabel initialEvalHill = new JLabel("Initial evaluation function: "+Integer.toString(initialEvalScore));
+                JLabel initialEvalRestart = new JLabel("Initial evaluation function: "+Integer.toString(initialEvalScore));
+                //set styles for thew initial eval function
+                initialEvalHill.setBackground(Color.BLACK);
+                initialEvalHill.setForeground(Color.GREEN);
+                initialEvalHill.setFont(font);
+                initialEvalHill.setOpaque(true);
+                initialEvalRestart.setBackground(Color.BLACK);
+                initialEvalRestart.setForeground(Color.GREEN);
+                initialEvalRestart.setFont(font);
+                initialEvalRestart.setOpaque(true);
+
+                JLabel pureHillEval = new JLabel("Resulting evaluation function: "+Integer.toString(pureHillResultingEvalFunc));
+                JLabel pureHillRunTime = new JLabel("Time elapsed: "+Double.toString(totalTimeForPureHillClimbing));
+                //pure hill styling
+                pureHillEval.setForeground(Color.GREEN);
+                pureHillEval.setBackground(Color.BLACK);
+                pureHillEval.setFont(font);
+                pureHillEval.setOpaque(true);
+
+                pureHillRunTime.setForeground(Color.GREEN);
+                pureHillRunTime.setBackground(Color.BLACK);
+                pureHillRunTime.setFont(font);
+                pureHillRunTime.setOpaque(true);
+
+
+                //restaarts labels
+                JLabel restartsEval = new JLabel("Resulting evaluation function: "+Integer.toString(hillCLimbWithRestartsResultingEval));
+                JLabel restartsRunTime = new JLabel("Time elapsed: "+Double.toString(totalRestartTimeInSeconds));
+                //restarts styling
+                restartsEval.setForeground(Color.GREEN);
+                restartsEval.setBackground(Color.BLACK);
+                restartsEval.setFont(font);
+                restartsEval.setOpaque(true);
+
+                restartsRunTime.setForeground(Color.GREEN);
+                restartsRunTime.setBackground(Color.BLACK);
+                restartsRunTime.setFont(font);
+                restartsRunTime.setOpaque(true);
+
+                //check if the pure hill climbing approch is  not solvable
+                if(pureHillResultingEvalFunc<0){
+                    initialEvalHill.setForeground(Color.RED);
+                    pureHillEval.setForeground(Color.RED);
+                    pureHillRunTime.setForeground(Color.RED);
+                }
+                if(hillCLimbWithRestartsResultingEval<0){
+                    initialEvalRestart.setForeground(Color.RED);
+                    restartsEval.setForeground(Color.RED);
+                    restartsEval.setForeground(Color.RED);
+
+                }
+
+
+
+                //add both grids to the layout
+                removeGrid(mainPanel);
+                //create a panel to add both of the grids side by side
+                JPanel sideBySideGrids = new JPanel();
+                sideBySideGrids.setLayout(new GridLayout(2,2));
+                //create the panels for the stats for each process
+                JPanel pureHillStats = new JPanel();
+                pureHillStats.setLayout(new BoxLayout(pureHillStats,BoxLayout.Y_AXIS));
+                JPanel hillRestartsStats = new JPanel();
+                hillRestartsStats.setLayout(new BoxLayout(hillRestartsStats,BoxLayout.Y_AXIS));
+
+                //add stat labels to the stat panels
+                //add pure hill climbing stats
+                pureHillStats.add(initialEvalHill);
+                pureHillStats.add(pureHillEval);
+                pureHillStats.add(pureHillRunTime);
+
+                //add hill climbing with restarts stats
+                hillRestartsStats.add(initialEvalRestart);
+                hillRestartsStats.add(restartsEval);
+                hillRestartsStats.add(restartsRunTime);
+
+                addGridToLayout(sideBySideGrids,pureHillClimbingGrid);
+                addGridToLayout(sideBySideGrids,restartGrid);
+                //add stats panels to the grid panels
+                sideBySideGrids.add(pureHillStats);
+                sideBySideGrids.add(hillRestartsStats);
+
+                mainPanel.add(sideBySideGrids,BorderLayout.CENTER);
+                frame.revalidate();
+                frame.repaint();
+
+
+
 
 
 
