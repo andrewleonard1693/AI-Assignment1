@@ -618,23 +618,42 @@ public class GUI extends JFrame {
 
                 //find the location of the best evaluation function
                 int num = Integer.MAX_VALUE;
+                int pos = -1;
                 boolean hasPositiveInt = false;
-                for(int i = 0;i<evaluationFunctionValues.size();i++){
-                    if(num>evaluationFunctionValues.get(i)&&evaluationFunctionValues.get(i)>0){
-                        num = evaluationFunctionValues.get(i);
+
+                //loop through and check for a positive integer
+
+                for(int i = 0;i<arrayOfGrids.size();i++){
+                    if(evaluationFunction(arrayOfGrids.get(i),dim, dim)>0){
                         hasPositiveInt=true;
+                        break;
                     }
                 }
-                if(!hasPositiveInt){
-                    num=Integer.MIN_VALUE;
-                    for(int i = 0;i<evaluationFunctionValues.size();i++){
-                        if(evaluationFunctionValues.get(i)>num){
-                            num = evaluationFunctionValues.get(i);
+                if(hasPositiveInt){
+                    for(int i = 0;i<arrayOfGrids.size();i++){
+                        int eval = evaluationFunction(arrayOfGrids.get(i),dim,dim);
+                        if(eval>0 && eval<num){
+                            num=eval;
+                            pos = i;
+
                         }
                     }
                 }
+                else{
+                    num = Integer.MIN_VALUE;
+                    for(int i = 0;i<arrayOfGrids.size();i++){
+                        int eval=evaluationFunction(arrayOfGrids.get(i),dim,dim);
+                        if(eval>num){
+                            num=eval;
+                            pos=i;
+                        }
+                    }
+                }
+
                 //get the grid at the position of num
-                Node[][] restartGrid = arrayOfGrids.get(num);
+                Node[][] restartGrid = arrayOfGrids.get(pos);
+                System.out.println(arrayOfGrids.size());
+                System.out.println(evaluationFunctionValues.size());
                 int hillCLimbWithRestartsResultingEval = evaluationFunction(restartGrid,dim,dim);
                 //pure hill labels
                 JLabel initialEvalHill = new JLabel("Initial evaluation function: "+Integer.toString(initialEvalScore));
@@ -686,7 +705,7 @@ public class GUI extends JFrame {
                 if(hillCLimbWithRestartsResultingEval<0){
                     initialEvalRestart.setForeground(Color.RED);
                     restartsEval.setForeground(Color.RED);
-                    restartsEval.setForeground(Color.RED);
+                    restartsRunTime.setForeground(Color.RED);
 
                 }
 
@@ -705,7 +724,7 @@ public class GUI extends JFrame {
                 removeGrid(mainPanel);
                 //create a panel to add both of the grids side by side
                 JPanel sideBySideGrids = new JPanel();
-                sideBySideGrids.setLayout(new GridLayout(3,3));
+                sideBySideGrids.setLayout(new GridLayout(2,2));
                 //create the panels for the stats for each process
                 JPanel pureHillStats = new JPanel();
                 pureHillStats.setLayout(new BoxLayout(pureHillStats,BoxLayout.Y_AXIS));
@@ -1160,28 +1179,32 @@ public class GUI extends JFrame {
             isSolvable = BFS(grid[0][0],grid[dimension-1][dimension-1],grid,create2DVisitedMatrix(dimension,dimension),dimension,dimension);
             newEvaluationScore = evaluationFunction(grid,dimension,dimension);
             if(isSolvable){//puzzle can be solved
-                if(evaluationScore<0||newEvaluationScore<evaluationScore){//newEvaluation will be positive so we immediately set evaluation score to new evaluation score
+                if(evaluationScore<0){
                     evaluationScore=newEvaluationScore;
                 }else{
-                    grid[randomRow][randomCol].setCellValue(oldCellNumber);
+                    if(evaluationScore<newEvaluationScore){
+                        grid[randomRow][randomCol].setCellValue(oldCellNumber);
+                    }else{
+                        evaluationScore=newEvaluationScore;
+                    }
                 }
             }else{ //puzzle cant be solved
                 if(evaluationScore>0){
                     grid[randomRow][randomCol].setCellValue(oldCellNumber);
-
-
                 }else{
-                    if(newEvaluationScore>evaluationScore){
+                    if(evaluationScore>newEvaluationScore){
+                        grid[randomRow][randomCol].setCellValue((oldCellNumber));
+                    }else{
                         evaluationScore=newEvaluationScore;
                     }
-                    else{
-                        grid[randomRow][randomCol].setCellValue(oldCellNumber);
-                    }
                 }
+
 
             }
 
         }
+        grid=clearGridNodeLevels(grid);
+        boolean result = BFS(grid[0][0],grid[dimension-1][dimension-1],grid, create2DVisitedMatrix(dimension,dimension),dimension,dimension);
         return grid;
     }
 
