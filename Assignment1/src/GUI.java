@@ -597,9 +597,9 @@ public class GUI extends JFrame {
 
                 }
                 //check if the probability is less than 1
-                if(probability<1||probability<0){
+                if(probability>1||probability<0){
                     JOptionPane.showMessageDialog(frame,"Your probability should be between 0 and 1");
-
+                    return;
                 }
                 //check if the temperature is a valid number
                 try{
