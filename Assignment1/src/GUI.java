@@ -391,8 +391,15 @@ public class GUI extends JFrame {
                         gridPanel.add(label);
                     }
                 }
-//                gridRepresentation[]
+                JPanel evaluationPanel=new JPanel();
+                int evalFunc=evaluationFunction(gridOfNodes, rows, columns);
+                System.out.println("eval function is: "+evalFunc);
+                JLabel evaluationLabel= new JLabel("The value function is: "+evalFunc,JLabel.CENTER);
+                Font font = new Font ("Arial Black", Font.BOLD, 20);
+                evaluationLabel.setFont(font);
+                evaluationPanel.add(evaluationLabel);
                 mainPanel.add(gridPanel);
+                mainPanel.add(evaluationPanel,BorderLayout.SOUTH);
                 frame.revalidate();
                 frame.repaint();
 
