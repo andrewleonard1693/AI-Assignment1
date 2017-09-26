@@ -810,7 +810,7 @@ public class GUI extends JFrame {
 
                 //hill climb with probability labels
                 JLabel probabilityEval = new JLabel("Resulting evaluation function: "+Integer.toString(probabilityEvalFunc));
-                JLabel probabilityRunTime = new JLabel(Double.toString(totalTimeForProbabilityInSeconds));
+                JLabel probabilityRunTime = new JLabel("Time elapsed: "+Double.toString(totalTimeForProbabilityInSeconds));
 
                 //hill climb styles
                 probabilityEval.setFont(font);
@@ -863,7 +863,7 @@ public class GUI extends JFrame {
                 hillTitle.setFont(font);
                 JLabel restartTitle = new JLabel("Hill Climbing with Random Restarts");
                 restartTitle.setFont(font);
-                JLabel probabilityTitle = new JLabel("Hill climbing with probability of downsteps");
+                JLabel probabilityTitle = new JLabel("Hill Climbing with Random Walk");
                 probabilityTitle.setFont(font);
                 JLabel simulatedAnnealingTitle = new JLabel("Simulated Annealing");
                 simulatedAnnealingTitle.setFont(font);
