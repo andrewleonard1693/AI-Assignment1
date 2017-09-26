@@ -668,7 +668,6 @@ public class GUI extends JFrame {
                         }
                     }
                 }
-
                 //get the grid at the position of num
                 Node[][] restartGrid = arrayOfGrids.get(pos);
                 System.out.println(arrayOfGrids.size());
@@ -1221,6 +1220,79 @@ public class GUI extends JFrame {
         }
         grid=clearGridNodeLevels(grid);
         boolean result = BFS(grid[0][0],grid[dimension-1][dimension-1],grid, create2DVisitedMatrix(dimension,dimension),dimension,dimension);
+        return grid;
+    }
+    public static Node[][] hillClimbWithProbability(Node[][] grid, int iterations,int dimension, double probability) {
+        int evaluationScore = 0;
+        int newEvaluationScore = 0;
+
+        //calculate the evaluation score for the starting grid
+        boolean isSolvable = false;
+        int initialEvalScore = evaluationFunction(grid, dimension, dimension);
+        evaluationScore = initialEvalScore;
+        //loop the amount of iterations
+        for (int i = 0; i < iterations; i++) {
+            Random rand = new Random();
+            int randomRow = rand.nextInt(dimension);
+            int randomCol = rand.nextInt(dimension);
+            //loop until the random cell is not the goal node
+            while (randomRow == dimension - 1 && randomCol == dimension - 1) {
+                randomRow = rand.nextInt(dimension);
+                randomCol = rand.nextInt(dimension);
+            }
+            //reset the grid's node levels
+            grid = clearGridNodeLevels(grid);
+//                    System.out.println("random row: "+randomRow);
+//                    System.out.println("random col: "+randomCol);
+            //store the node in a temp variable so we can hold onto it if we need to change the grid back
+            int oldCellNumber = grid[randomRow][randomCol].getCellValue();
+//                    System.out.println("old cell number: "+oldCellNumber);
+            //generate a valid random number for that cells position
+            int newCellNumber = generateGridNumber(randomRow, randomCol, dimension, dimension);
+//                    System.out.println("new cell number: "+newCellNumber);
+
+            //change the node's cell value to that new number
+            grid[randomRow][randomCol].setCellValue(newCellNumber);
+            //run BFS to set the grid nodegrid levels with the possibly new cell value number
+            isSolvable = BFS(grid[0][0], grid[dimension - 1][dimension - 1], grid, create2DVisitedMatrix(dimension, dimension), dimension, dimension);
+            newEvaluationScore = evaluationFunction(grid, dimension, dimension);
+            double probabilityBound = Math.random();
+            if (isSolvable) {//puzzle can be solved
+                if (evaluationScore < 0) {
+                    evaluationScore = newEvaluationScore;
+                } else {
+                    if (evaluationScore < newEvaluationScore) {
+                        //accept this downward step with a certain probability
+                        if(probability>probabilityBound){
+                            evaluationScore=newEvaluationScore;
+                        }else{
+                            grid[randomRow][randomCol].setCellValue(oldCellNumber);
+                        }
+                    } else {
+                        evaluationScore = newEvaluationScore;
+                    }
+                }
+            } else { //puzzle cant be solved
+                if (evaluationScore > 0) {
+                    grid[randomRow][randomCol].setCellValue(oldCellNumber);
+                } else {
+                    if (evaluationScore > newEvaluationScore) {
+                        if(probability>probabilityBound){
+                            evaluationScore=newEvaluationScore;
+                        }else{
+                            grid[randomRow][randomCol].setCellValue((oldCellNumber));
+                        }
+                    } else {
+                        evaluationScore = newEvaluationScore;
+                    }
+                }
+
+
+            }
+
+        }
+        grid = clearGridNodeLevels(grid);
+        boolean result = BFS(grid[0][0], grid[dimension - 1][dimension - 1], grid, create2DVisitedMatrix(dimension, dimension), dimension, dimension);
         return grid;
     }
 
