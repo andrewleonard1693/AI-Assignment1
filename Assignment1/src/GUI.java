@@ -98,14 +98,17 @@ public class GUI extends JFrame {
 
         //hill climbing vs hill climbing with restarts panel (task 4)
         JPanel hillClimbingVsHillClimbingWithRestarts = new JPanel();
-        JLabel task4Label = new JLabel("Task 4");
+        JLabel task4And5Label = new JLabel("Task 4 & 5");
+
         JTextField numOfRestarts = new JTextField("Number of restarts",20);
         JTextField numOfHillClimbIterations = new JTextField("Number of hill climb iterations",20);
+        JTextField probabilityOfDownstep = new JTextField("Probability of a down step",20);
         JButton hillClimbWithRestartsSolveButton = new JButton("Solve");
         //add elements to panel
-        hillClimbingVsHillClimbingWithRestarts.add(task4Label);
+        hillClimbingVsHillClimbingWithRestarts.add(task4And5Label);
         hillClimbingVsHillClimbingWithRestarts.add(numOfRestarts);
         hillClimbingVsHillClimbingWithRestarts.add(numOfHillClimbIterations);
+        hillClimbingVsHillClimbingWithRestarts.add(probabilityOfDownstep);
         hillClimbingVsHillClimbingWithRestarts.add(hillClimbWithRestartsSolveButton);
         //add panel to overall button panel
         buttonPanel.add(hillClimbingVsHillClimbingWithRestarts);
@@ -336,6 +339,7 @@ public class GUI extends JFrame {
 
             }
         });
+        //solve button pressed for a specific text file
         fileSolveButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -536,7 +540,7 @@ public class GUI extends JFrame {
 
             }
         });
-
+        //solve button clicked for task4/5
         hillClimbWithRestartsSolveButton.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -549,6 +553,8 @@ public class GUI extends JFrame {
                 boolean fieldsAreValid = true;
                 String numOfRestartsInput = numOfRestarts.getText();
                 String numOfIterationsInput = numOfHillClimbIterations.getText();
+                String probabilityInput = probabilityOfDownstep.getText();
+                double probability = 0;
                 for (int i = 0; i < numOfRestartsInput.length(); i++) {
                     if (!Character.isDigit(numOfRestartsInput.charAt(i))) {
                         fieldsAreValid=false;
@@ -560,6 +566,17 @@ public class GUI extends JFrame {
                         fieldsAreValid=false;
                         break;
                     }
+                }
+                try
+                {
+                    probability = Double.parseDouble(probabilityOfDownstep.getText());
+                }
+                catch(NumberFormatException ex)
+                {
+                    //throw an error if the probability is not a floating point number
+                    JOptionPane.showMessageDialog(frame,"Your probability input is not correctly formatted. Input should be of the form '0.05' ranging from 0 to 1");
+                    return;
+
                 }
                 if(!fieldsAreValid){
                     JOptionPane.showMessageDialog(frame,"You have not input valid numbers.");
@@ -576,11 +593,13 @@ public class GUI extends JFrame {
                 int dim = gridOfNodes.length;
                 Node[][] pureHillClimbingGrid = new Node[dim][dim];
                 Node[][] hillClimbingWithRestartsGrid = new Node[dim][dim];
+                Node[][] hillClimbingWithProbability = new Node[dim][dim];
                 //copy the generated grid of nodes
                 for(int i = 0;i<dim;i++){
                     for(int j = 0;j<dim;j++){
                         pureHillClimbingGrid[i][j]= new Node(i,j,gridOfNodes[i][j].getCellValue());
                         hillClimbingWithRestartsGrid[i][j]= new Node(i,j,gridOfNodes[i][j].getCellValue());
+                        hillClimbingWithProbability[i][j]= new Node(i,j,gridOfNodes[i][j].getCellValue());
                     }
                 }
                 //initialize array list of grids
@@ -682,7 +701,7 @@ public class GUI extends JFrame {
                 pureHillRunTime.setOpaque(true);
 
 
-                //restaarts labels
+                //restarts labels
                 JLabel restartsEval = new JLabel("Resulting evaluation function: "+Integer.toString(hillCLimbWithRestartsResultingEval));
                 JLabel restartsRunTime = new JLabel("Time elapsed: "+Double.toString(totalRestartTimeInSeconds));
                 //restarts styling
@@ -827,9 +846,6 @@ public class GUI extends JFrame {
                 copyOfFive[x][y]= new Node(x,y,five[x][y].getCellValue());
             }
         }
-        seven = create2DArrayOfNodes(7,7);
-        nine = create2DArrayOfNodes(9,9);
-        eleven = create2DArrayOfNodes(11,11);
         try{
             PrintWriter wr = new PrintWriter("task3-plotResults-for-n=11.txt", "UTF-8");
             //write the grid
