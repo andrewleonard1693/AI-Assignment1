@@ -100,11 +100,11 @@ public class GUI extends JFrame {
         JPanel hillClimbingVsHillClimbingWithRestarts = new JPanel();
         JLabel task4through6Label = new JLabel("Task 4 - 6");
 
-        JTextField numOfRestarts = new JTextField("Number of restarts",20);
-        JTextField numOfHillClimbIterations = new JTextField("Number of hill climb iterations",20);
-        JTextField probabilityOfDownstep = new JTextField("Probability of a down step",20);
-        JTextField initialTemperatureTextField = new JTextField("Initial Temperature",20);
-        JTextField temperatureDecayRate = new JTextField("Temperature decay rate",20);
+        JTextField numOfRestarts = new JTextField("Number of restarts",15);
+        JTextField numOfHillClimbIterations = new JTextField("Number of hill climb iterations",15);
+        JTextField probabilityOfDownstep = new JTextField("Probability of a down step",15);
+        JTextField initialTemperatureTextField = new JTextField("Initial Temperature",15);
+        JTextField temperatureDecayRate = new JTextField("Temperature decay rate",15);
         JButton hillClimbWithRestartsSolveButton = new JButton("Solve");
         //add elements to panel
         hillClimbingVsHillClimbingWithRestarts.add(task4through6Label);
@@ -235,7 +235,6 @@ public class GUI extends JFrame {
                 Font font = new Font ("Arial Black", Font.BOLD, 20);
                 evaluationLabel.setFont(font);
                 evaluationPanel.add(evaluationLabel);
-//                gridRepresentation[]
                 mainPanel.add(gridPanel);
                 mainPanel.add(evaluationPanel,BorderLayout.SOUTH);
                 frame.revalidate();
@@ -570,7 +569,7 @@ public class GUI extends JFrame {
                 String numOfIterationsInput = numOfHillClimbIterations.getText();
                 String probabilityInput = probabilityOfDownstep.getText();
                 double probability = 0;
-                int initialTemperatureInt = 0;
+                double initialTemperatureDouble = 0;
                 double tempDecayRate = 0;
                 String initialTemperature = initialTemperatureTextField.getText();
                 String decayRate = temperatureDecayRate.getText();
@@ -604,13 +603,13 @@ public class GUI extends JFrame {
                 }
                 //check if the temperature is a valid number
                 try{
-                initialTemperatureInt = Integer.parseInt(initialTemperature);
+                initialTemperatureDouble = Double.parseDouble(initialTemperature);
                 }catch(NumberFormatException ex){
                     JOptionPane.showMessageDialog(frame,"Your temperature is not a valid number.");
                     return;
                 }
                 //check if the user inputted a negative number
-                if(initialTemperatureInt<=0){
+                if(initialTemperatureDouble<=0){
                     JOptionPane.showMessageDialog(frame,"Your temperature must be greater than 1");
                     return;
                 }
@@ -729,10 +728,20 @@ public class GUI extends JFrame {
                 //grab the new eval func for the grid with the probability input by the user
                 int probabilityEvalFunc = evaluationFunction(hillClimbingWithProbability,dim,dim);
 
+                //simulated annealing
+                long simulatedAnnealingStartTime = System.nanoTime();
+                simulatedAnnealingGrid = simulatedAnnealing(simulatedAnnealingGrid,numberOfHillClimbsInteger,dim, initialTemperatureDouble,tempDecayRate);
+                long simulayedAnnealingEndTime = System.nanoTime();
+                long totalLongSimulatedAnnealingTime = simulayedAnnealingEndTime-simulatedAnnealingStartTime;
+                double totalSimulatedAnnealingRunTime = (double)totalLongSimulatedAnnealingTime/1000000000.0;
+                int simulatedAnnealingEvalFunc = evaluationFunction(simulatedAnnealingGrid,dim,dim);
+
                 //pure hill labels
                 JLabel initialEvalHill = new JLabel("Initial evaluation function: "+Integer.toString(initialEvalScore));
                 JLabel initialEvalRestart = new JLabel("Initial evaluation function: "+Integer.toString(initialEvalScore));
-                JLabel initialEvalProbability = new JLabel("Initial evaluation function: "+Double.toString(initialEvalScore));
+                JLabel initialEvalProbability = new JLabel("Initial evaluation function: "+Integer.toString(initialEvalScore));
+                JLabel initialEvalSimulatedAnnealing = new JLabel("Initial evaluation function: "+Integer.toString(initialEvalScore));
+
 
                 //set styles for thew initial eval function
                 initialEvalHill.setBackground(Color.BLACK);
@@ -747,6 +756,10 @@ public class GUI extends JFrame {
                 initialEvalProbability.setForeground(Color.GREEN);
                 initialEvalProbability.setFont(font);
                 initialEvalProbability.setOpaque(true);
+                initialEvalSimulatedAnnealing.setBackground(Color.BLACK);
+                initialEvalSimulatedAnnealing.setForeground(Color.GREEN);
+                initialEvalSimulatedAnnealing.setFont(font);
+                initialEvalSimulatedAnnealing.setOpaque(true);
 
                 JLabel pureHillEval = new JLabel("Resulting evaluation function: "+Integer.toString(pureHillResultingEvalFunc));
                 JLabel pureHillRunTime = new JLabel("Time elapsed: "+Double.toString(totalTimeForPureHillClimbing));
@@ -777,7 +790,7 @@ public class GUI extends JFrame {
                 restartsRunTime.setOpaque(true);
 
                 //hill climb with probability labels
-                JLabel probabilityEval = new JLabel("Resulting evaluation function: "+Double.toString(probabilityEvalFunc));
+                JLabel probabilityEval = new JLabel("Resulting evaluation function: "+Integer.toString(probabilityEvalFunc));
                 JLabel probabilityRunTime = new JLabel(Double.toString(totalTimeForProbabilityInSeconds));
 
                 //hill climb styles
@@ -790,6 +803,18 @@ public class GUI extends JFrame {
                 probabilityRunTime.setBackground(Color.BLACK);
                 probabilityRunTime.setOpaque(true);
 
+                JLabel simulatedAnnealingEval = new JLabel("Resulting evaluation function: "+Integer.toString(simulatedAnnealingEvalFunc));
+                JLabel simulatedAnnealingRunTime = new JLabel("Time elapsed: "+Double.toString(totalSimulatedAnnealingRunTime));
+
+                //simulated annealing styles
+                simulatedAnnealingEval.setFont(font);
+                simulatedAnnealingEval.setForeground(Color.GREEN);
+                simulatedAnnealingEval.setBackground(Color.BLACK);
+                simulatedAnnealingEval.setOpaque(true);
+                simulatedAnnealingRunTime.setFont(font);
+                simulatedAnnealingRunTime.setForeground(Color.GREEN);
+                simulatedAnnealingRunTime.setBackground(Color.BLACK);
+                simulatedAnnealingRunTime.setOpaque(true);
                 //check if the pure hill climbing approch is  not solvable
                 if(pureHillResultingEvalFunc<0){
                     initialEvalHill.setForeground(Color.RED);
@@ -807,6 +832,11 @@ public class GUI extends JFrame {
                     probabilityEval.setForeground(Color.RED);
                     probabilityRunTime.setForeground(Color.RED);
                 }
+                if(simulatedAnnealingEvalFunc<0){
+                    initialEvalSimulatedAnnealing.setForeground(Color.RED);
+                    simulatedAnnealingEval.setForeground(Color.RED);
+                    simulatedAnnealingRunTime.setForeground(Color.RED);
+                }
 
                 //create titles of the grids that are side by side
 
@@ -816,6 +846,8 @@ public class GUI extends JFrame {
                 restartTitle.setFont(font);
                 JLabel probabilityTitle = new JLabel("Hill climbing with probability of downsteps");
                 probabilityTitle.setFont(font);
+                JLabel simulatedAnnealingTitle = new JLabel("Simulated Annealing");
+                simulatedAnnealingTitle.setFont(font);
 
 
 
@@ -824,7 +856,7 @@ public class GUI extends JFrame {
                 removeGrid(mainPanel);
                 //create a panel to add both of the grids side by side
                 JPanel sideBySideGrids = new JPanel();
-                sideBySideGrids.setLayout(new GridLayout(2,3));
+                sideBySideGrids.setLayout(new GridLayout(4,4));
                 //create the panels for the stats for each process
                 JPanel pureHillStats = new JPanel();
                 pureHillStats.setLayout(new BoxLayout(pureHillStats,BoxLayout.Y_AXIS));
@@ -832,6 +864,8 @@ public class GUI extends JFrame {
                 hillRestartsStats.setLayout(new BoxLayout(hillRestartsStats,BoxLayout.Y_AXIS));
                 JPanel probabilityHillStats = new JPanel();
                 probabilityHillStats.setLayout(new BoxLayout(probabilityHillStats,BoxLayout.Y_AXIS));
+                JPanel simulatedAnnealingStats = new JPanel();
+                simulatedAnnealingStats.setLayout(new BoxLayout(simulatedAnnealingStats,BoxLayout.Y_AXIS));
 
                 //add stat labels to the stat panels
                 //add pure hill climbing stats
@@ -852,15 +886,23 @@ public class GUI extends JFrame {
                 probabilityHillStats.add(probabilityEval);
                 probabilityHillStats.add(probabilityRunTime);
 
+                //add simulated annealing stats
+                simulatedAnnealingStats.add(simulatedAnnealingTitle);
+                simulatedAnnealingStats.add(initialEvalSimulatedAnnealing);
+                simulatedAnnealingStats.add(simulatedAnnealingEval);
+                simulatedAnnealingStats.add(simulatedAnnealingRunTime);
+
 
 
                 addGridToLayout(sideBySideGrids,pureHillClimbingGrid);
                 addGridToLayout(sideBySideGrids,restartGrid);
-                addGridToLayout(sideBySideGrids,hillClimbingWithProbability);
                 //add stats panels to the grid panels
                 sideBySideGrids.add(pureHillStats);
                 sideBySideGrids.add(hillRestartsStats);
+                addGridToLayout(sideBySideGrids,hillClimbingWithProbability);
+                addGridToLayout(sideBySideGrids,simulatedAnnealingGrid);
                 sideBySideGrids.add(probabilityHillStats);
+                sideBySideGrids.add(simulatedAnnealingStats);
 
                 mainPanel.add(sideBySideGrids,BorderLayout.CENTER);
                 frame.revalidate();
@@ -928,7 +970,7 @@ public class GUI extends JFrame {
         Node[][] seven = new Node[7][7];
         Node[][] nine = new Node[9][9];
         Node[][] eleven = new Node[11][11];
-        int[] numberOfIterations = {50,250,500,1000,2000,5000,10000,50000,100000,250000,500000,1000000};
+        int[] numberOfIterations = {50,250,500,1000,2000,3000,4000,5000,10000,50000};
 
         five = create2DArrayOfNodes(11,11);
         Node[][] copyOfFive = new Node[11][11];
@@ -1385,6 +1427,83 @@ public class GUI extends JFrame {
         }
         grid = clearGridNodeLevels(grid);
         boolean result = BFS(grid[0][0], grid[dimension - 1][dimension - 1], grid, create2DVisitedMatrix(dimension, dimension), dimension, dimension);
+        return grid;
+    }
+    public static Node[][] simulatedAnnealing(Node[][] grid, int iterations,int dimension,double temperature,double decayRate){
+        int evaluationScore = 0;
+        int newEvaluationScore=0;
+
+        //calculate the evaluation score for the starting grid
+        boolean isSolvable=false;
+        int initialEvalScore = evaluationFunction(grid,dimension,dimension);
+        evaluationScore = initialEvalScore;
+        //loop the amount of iterations
+        for(int i = 0;i<iterations;i++){
+            Random rand = new Random();
+            int randomRow = rand.nextInt(dimension);
+            int randomCol = rand.nextInt(dimension);
+            //loop until the random cell is not the goal node
+            while(randomRow==dimension-1 && randomCol==dimension-1){
+                randomRow=rand.nextInt(dimension);
+                randomCol=rand.nextInt(dimension);
+            }
+            //reset the grid's node levels
+            grid = clearGridNodeLevels(grid);
+//                    System.out.println("random row: "+randomRow);
+//                    System.out.println("random col: "+randomCol);
+            //store the node in a temp variable so we can hold onto it if we need to change the grid back
+            int oldCellNumber = grid[randomRow][randomCol].getCellValue();
+//                    System.out.println("old cell number: "+oldCellNumber);
+            //generate a valid random number for that cells position
+            int newCellNumber = generateGridNumber(randomRow,randomCol,dimension,dimension);
+//                    System.out.println("new cell number: "+newCellNumber);
+
+            //change the node's cell value to that new number
+            grid[randomRow][randomCol].setCellValue(newCellNumber);
+            //run BFS to set the grid nodegrid levels with the possibly new cell value number
+            isSolvable = BFS(grid[0][0],grid[dimension-1][dimension-1],grid,create2DVisitedMatrix(dimension,dimension),dimension,dimension);
+            newEvaluationScore = evaluationFunction(grid,dimension,dimension);
+            if(isSolvable){//puzzle can be solved
+                if(evaluationScore<0){
+                    evaluationScore=newEvaluationScore;
+                }else{
+                    if(evaluationScore<newEvaluationScore){
+                        //simulate annealing
+                        int numerator =  newEvaluationScore-evaluationScore;
+                        double power = (double)numerator/temperature;
+                        if(Math.random()<Math.exp(power)){
+                            evaluationScore=newEvaluationScore;
+                            temperature*=decayRate;
+                        }else{
+                            grid[randomRow][randomCol].setCellValue(oldCellNumber);
+                        }
+                    }else{
+                        evaluationScore=newEvaluationScore;
+                    }
+                }
+            }else{ //puzzle cant be solved
+                if(evaluationScore>0){
+                    grid[randomRow][randomCol].setCellValue(oldCellNumber);
+                }else{
+                    if(evaluationScore>newEvaluationScore){
+                        int numerator = newEvaluationScore-evaluationScore;
+                        double power = (double)numerator/temperature;
+                        if(Math.random()<Math.exp(power)){
+                            evaluationScore=newEvaluationScore;
+                        }else{
+                            grid[randomRow][randomCol].setCellValue((oldCellNumber));
+                        }
+                    }else{
+                        evaluationScore=newEvaluationScore;
+                    }
+                }
+
+
+            }
+
+        }
+        grid=clearGridNodeLevels(grid);
+        boolean result = BFS(grid[0][0],grid[dimension-1][dimension-1],grid, create2DVisitedMatrix(dimension,dimension),dimension,dimension);
         return grid;
     }
 
