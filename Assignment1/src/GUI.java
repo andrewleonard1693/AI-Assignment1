@@ -635,7 +635,7 @@ public class GUI extends JFrame {
                 long totalRestartsTime = restartsEndTime-restartsTime;
                 double totalRestartTimeInSeconds = (double)totalRestartsTime/1000000000.0;
 
-                //find the location of the best evaluation function
+                //find the location of the best evaluation function for hill climb with restarts
                 int num = Integer.MAX_VALUE;
                 int pos = -1;
                 boolean hasPositiveInt = false;
@@ -670,12 +670,23 @@ public class GUI extends JFrame {
                 }
                 //get the grid at the position of num
                 Node[][] restartGrid = arrayOfGrids.get(pos);
-                System.out.println(arrayOfGrids.size());
-                System.out.println(evaluationFunctionValues.size());
                 int hillCLimbWithRestartsResultingEval = evaluationFunction(restartGrid,dim,dim);
+
+
+                //create grid for hill climbing with specific probability of a down step
+                long probabilityStartTime = System.nanoTime();
+                hillClimbingWithProbability = hillClimbWithProbability(hillClimbingWithProbability,numberOfHillClimbsInteger,dim,probability);
+                long probabilityEndTime = System.nanoTime();
+                long total = probabilityEndTime-probabilityStartTime;
+                double totalTimeForProbabilityInSeconds = (double)total/1000000000.0;
+                //grab the new eval func for the grid with the probability input by the user
+                int probabilityEvalFunc = evaluationFunction(hillClimbingWithProbability,dim,dim);
+
                 //pure hill labels
                 JLabel initialEvalHill = new JLabel("Initial evaluation function: "+Integer.toString(initialEvalScore));
                 JLabel initialEvalRestart = new JLabel("Initial evaluation function: "+Integer.toString(initialEvalScore));
+                JLabel initialEvalProbability = new JLabel("Initial evaluation function: "+Double.toString(initialEvalScore));
+
                 //set styles for thew initial eval function
                 initialEvalHill.setBackground(Color.BLACK);
                 initialEvalHill.setForeground(Color.GREEN);
@@ -685,6 +696,10 @@ public class GUI extends JFrame {
                 initialEvalRestart.setForeground(Color.GREEN);
                 initialEvalRestart.setFont(font);
                 initialEvalRestart.setOpaque(true);
+                initialEvalProbability.setBackground(Color.BLACK);
+                initialEvalProbability.setForeground(Color.GREEN);
+                initialEvalProbability.setFont(font);
+                initialEvalProbability.setOpaque(true);
 
                 JLabel pureHillEval = new JLabel("Resulting evaluation function: "+Integer.toString(pureHillResultingEvalFunc));
                 JLabel pureHillRunTime = new JLabel("Time elapsed: "+Double.toString(totalTimeForPureHillClimbing));
@@ -714,6 +729,11 @@ public class GUI extends JFrame {
                 restartsRunTime.setFont(font);
                 restartsRunTime.setOpaque(true);
 
+                //hill climb with probability labels
+                JLabel probabilityEval = new JLabel("Resulting evaluation function: "+Double.toString(probabilityEvalFunc));
+                JLabel probabilityRunTime = new JLabel(Double.toString(totalTimeForProbabilityInSeconds));
+                //TODO:
+
                 //check if the pure hill climbing approch is  not solvable
                 if(pureHillResultingEvalFunc<0){
                     initialEvalHill.setForeground(Color.RED);
@@ -726,6 +746,11 @@ public class GUI extends JFrame {
                     restartsRunTime.setForeground(Color.RED);
 
                 }
+                if(probabilityEvalFunc<0){
+                    initialEvalProbability.setForeground(Color.RED);
+                    probabilityEval.setForeground(Color.RED);
+                    probabilityRunTime.setForeground(Color.RED);
+                }
 
                 //create titles of the grids that are side by side
 
@@ -733,7 +758,8 @@ public class GUI extends JFrame {
                 hillTitle.setFont(font);
                 JLabel restartTitle = new JLabel("Hill Climbing with Random Restarts");
                 restartTitle.setFont(font);
-
+                JLabel probabilityTitle = new JLabel("Hill climbing with probability of downsteps");
+                probabilityTitle.setFont(font);
 
 
 
