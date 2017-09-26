@@ -1296,7 +1296,13 @@ public class GUI extends JFrame {
                             continue;
 //                            neighborQ.add(arrayOfNeighbors.get(i));
                         } else {
-                            arrayOfNeighbors.get(i).setLevel(currNode.getLevel() + 1);
+                            if(arrayOfNeighbors.get(i).getLevel()==0){
+                                arrayOfNeighbors.get(i).setLevel(currNode.getLevel() + 1);
+                            }else{
+                                if(arrayOfNeighbors.get(i).getLevel()>currNode.getLevel()+1){
+                                    arrayOfNeighbors.get(i).setLevel(currNode.getLevel() + 1);
+                                }
+                            }
 //                            arrayOfNeighbors.get(i).setLevel(arrayOfNeighbors.get(i).getParent().getLevel() + 1);
 //                            arrayOfNeighbors.get(i).setLevel(level);
 //                            System.out.println(arrayOfNeighbors.get(i).getLevel());
