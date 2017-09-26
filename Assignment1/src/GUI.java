@@ -98,17 +98,21 @@ public class GUI extends JFrame {
 
         //hill climbing vs hill climbing with restarts panel (task 4)
         JPanel hillClimbingVsHillClimbingWithRestarts = new JPanel();
-        JLabel task4And5Label = new JLabel("Task 4 & 5");
+        JLabel task4through6Label = new JLabel("Task 4 - 6");
 
         JTextField numOfRestarts = new JTextField("Number of restarts",20);
         JTextField numOfHillClimbIterations = new JTextField("Number of hill climb iterations",20);
         JTextField probabilityOfDownstep = new JTextField("Probability of a down step",20);
+        JTextField initialTemperatureTextField = new JTextField("Initial Temperature",20);
+        JTextField temperatureDecayRate = new JTextField("Temperature decay rate",20);
         JButton hillClimbWithRestartsSolveButton = new JButton("Solve");
         //add elements to panel
-        hillClimbingVsHillClimbingWithRestarts.add(task4And5Label);
+        hillClimbingVsHillClimbingWithRestarts.add(task4through6Label);
         hillClimbingVsHillClimbingWithRestarts.add(numOfRestarts);
         hillClimbingVsHillClimbingWithRestarts.add(numOfHillClimbIterations);
         hillClimbingVsHillClimbingWithRestarts.add(probabilityOfDownstep);
+        hillClimbingVsHillClimbingWithRestarts.add(initialTemperatureTextField);
+        hillClimbingVsHillClimbingWithRestarts.add(temperatureDecayRate);
         hillClimbingVsHillClimbingWithRestarts.add(hillClimbWithRestartsSolveButton);
         //add panel to overall button panel
         buttonPanel.add(hillClimbingVsHillClimbingWithRestarts);
@@ -266,6 +270,9 @@ public class GUI extends JFrame {
                             if(currentLine.charAt(i)==' '){
                                 continue;
                             }else{
+                                if(currentColumn==gridDimension||currentRow==gridDimension){
+                                    break;
+                                }
 //                                System.out.print(currentLine.charAt(i)+" ");
                                 gridOfNodes[currentRow][currentColumn]= new Node(currentRow,currentColumn,Character.getNumericValue(currentLine.charAt(i)));
 //                                System.out.println(gridOfNodesFromTextFile[currentRow][currentColumn].getCellValue());
@@ -555,6 +562,10 @@ public class GUI extends JFrame {
                 String numOfIterationsInput = numOfHillClimbIterations.getText();
                 String probabilityInput = probabilityOfDownstep.getText();
                 double probability = 0;
+                int initialTemperatureInt = 0;
+                double tempDecayRate = 0;
+                String initialTemperature = initialTemperatureTextField.getText();
+                String decayRate = temperatureDecayRate.getText();
                 for (int i = 0; i < numOfRestartsInput.length(); i++) {
                     if (!Character.isDigit(numOfRestartsInput.charAt(i))) {
                         fieldsAreValid=false;
@@ -569,13 +580,40 @@ public class GUI extends JFrame {
                 }
                 try
                 {
-                    probability = Double.parseDouble(probabilityOfDownstep.getText());
+                    probability = Double.parseDouble(probabilityInput);
                 }
                 catch(NumberFormatException ex)
                 {
                     //throw an error if the probability is not a floating point number
                     JOptionPane.showMessageDialog(frame,"Your probability input is not correctly formatted. Input should be of the form '0.05' ranging from 0 to 1");
                     return;
+
+                }
+                //check if the probability is less than 1
+                if(probability<1||probability<0){
+                    JOptionPane.showMessageDialog(frame,"Your probability should be between 0 and 1");
+
+                }
+                //check if the temperature is a valid number
+                try{
+                initialTemperatureInt = Integer.parseInt(initialTemperature);
+                }catch(NumberFormatException ex){
+                    JOptionPane.showMessageDialog(frame,"Your temperature is not a valid number.");
+                    return;
+                }
+                //check if the user inputted a negative number
+                if(initialTemperatureInt<=0){
+                    JOptionPane.showMessageDialog(frame,"Your temperature must be greater than 1");
+                    return;
+                }
+                try{
+                    tempDecayRate=Double.parseDouble(decayRate);
+                }catch(NumberFormatException ex ){
+                    JOptionPane.showMessageDialog(frame,"Your decay rate is not a valid number.");
+                    return;
+                }
+                if(tempDecayRate>1||tempDecayRate<0){
+                    JOptionPane.showMessageDialog(frame,"Your decay rate must be between 0 and 1");
 
                 }
                 if(!fieldsAreValid){
@@ -587,19 +625,20 @@ public class GUI extends JFrame {
                 int numberOfHillClimbsForRestartProcess= numberOfHillClimbsInteger/numberOfRestartsInteger;
                 if(numberOfRestartsInteger>numberOfHillClimbsInteger){
                     JOptionPane.showMessageDialog(frame,"Restarts cannot be greater than iterations");
-
                 }
                 //at this point there are valid numbers inputted and there is a grid to solve
                 int dim = gridOfNodes.length;
                 Node[][] pureHillClimbingGrid = new Node[dim][dim];
                 Node[][] hillClimbingWithRestartsGrid = new Node[dim][dim];
                 Node[][] hillClimbingWithProbability = new Node[dim][dim];
+                Node[][] simulatedAnnealingGrid = new Node[dim][dim];
                 //copy the generated grid of nodes
                 for(int i = 0;i<dim;i++){
                     for(int j = 0;j<dim;j++){
                         pureHillClimbingGrid[i][j]= new Node(i,j,gridOfNodes[i][j].getCellValue());
                         hillClimbingWithRestartsGrid[i][j]= new Node(i,j,gridOfNodes[i][j].getCellValue());
                         hillClimbingWithProbability[i][j]= new Node(i,j,gridOfNodes[i][j].getCellValue());
+                        simulatedAnnealingGrid[i][j]= new Node(i,j,gridOfNodes[i][j].getCellValue());
                     }
                 }
                 //initialize array list of grids
