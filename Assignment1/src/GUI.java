@@ -117,6 +117,20 @@ public class GUI extends JFrame {
         //add panel to overall button panel
         buttonPanel.add(hillClimbingVsHillClimbingWithRestarts);
 
+        //task 7 genetic algorithm panel
+        JPanel geneticAlgorithmPanel = new JPanel();
+        JTextField populationSize = new JTextField("Population size",20);
+        JTextField numberOfGenerations = new JTextField("Number of generations",20);
+        JButton geneticSolveButton = new JButton("Solve");
+        JLabel task7Label = new JLabel("Task 7");
+
+        geneticAlgorithmPanel.add(task7Label);
+        geneticAlgorithmPanel.add(populationSize);
+        geneticAlgorithmPanel.add(numberOfGenerations);
+        geneticAlgorithmPanel.add(geneticSolveButton);
+
+        buttonPanel.add(geneticAlgorithmPanel);
+
 
 
 
@@ -274,16 +288,14 @@ public class GUI extends JFrame {
                     //loop through the lines
                     while ((currentLine = br.readLine()) != null) {
                         for(int i=0;i<currentLine.length();i++){
-                            if(currentLine.charAt(i)==' '){
-                                continue;
-                            }else{
-                                if(currentColumn==gridDimension||currentRow==gridDimension){
+                            StringTokenizer tokenizer = new StringTokenizer(currentLine," ");
+                            while(tokenizer.hasMoreTokens()){
+                                if(currentRow==gridDimension||currentColumn==gridDimension){
                                     break;
                                 }
-//                                System.out.print(currentLine.charAt(i)+" ");
-                                gridOfNodes[currentRow][currentColumn]= new Node(currentRow,currentColumn,Character.getNumericValue(currentLine.charAt(i)));
-//                                System.out.println(gridOfNodesFromTextFile[currentRow][currentColumn].getCellValue());
+                                gridOfNodes[currentRow][currentColumn]= new Node(currentRow,currentColumn,Integer.parseInt(tokenizer.nextToken()));
                                 currentColumn+=1;
+
                             }
                         }
                         currentRow+=1;
@@ -1513,5 +1525,28 @@ public class GUI extends JFrame {
         boolean result = BFS(grid[0][0],grid[dimension-1][dimension-1],grid, create2DVisitedMatrix(dimension,dimension),dimension,dimension);
         return grid;
     }
-
+//    public static Node[][] geneticAlgorithm(ArrayList<Node[][]> arrayOfGrids, int dimension, int initialEvaluationFunction,int iterations){
+//        ArrayList<Node[][]> currentGeneration = new ArrayList<>();
+//        ArrayList<Node[][]> newGeneration = new ArrayList<>();
+//        //copy elements of array of grids into current generation
+//        for(int k=0;k<arrayOfGrids.size();k++){
+//            currentGeneration.add(arrayOfGrids.get(k));
+//        }
+//        //loop for a certain amount of iterations
+//        for(int i = 0;i<iterations;i++){
+//            Random rand = new Random();
+//        //pick a random row and random column
+//            int randomRow = rand.nextInt(dimension);
+//            int randomCol = rand.nextInt(dimension);
+//            //edge case where the random row and random column are the goal node
+//            while(randomRow==dimension-1 && randomCol == dimension-1){
+//                randomRow = rand.nextInt(dimension);
+//                randomCol = rand.nextInt(dimension);
+//            }
+//            //loop through the grid of nodes
+//            for(int j = 0;j<currentGeneration.size()-1;j++){//loop until size minus one because we are grabbing pairs
+//                //
+//            }
+//        }
+//    }
 }
