@@ -732,7 +732,16 @@ public class GUI extends JFrame {
                 //hill climb with probability labels
                 JLabel probabilityEval = new JLabel("Resulting evaluation function: "+Double.toString(probabilityEvalFunc));
                 JLabel probabilityRunTime = new JLabel(Double.toString(totalTimeForProbabilityInSeconds));
-                //TODO:
+
+                //hill climb styles
+                probabilityEval.setFont(font);
+                probabilityEval.setForeground(Color.GREEN);
+                probabilityEval.setBackground(Color.BLACK);
+                probabilityEval.setOpaque(true);
+                probabilityRunTime.setFont(font);
+                probabilityRunTime.setForeground(Color.GREEN);
+                probabilityRunTime.setBackground(Color.BLACK);
+                probabilityRunTime.setOpaque(true);
 
                 //check if the pure hill climbing approch is  not solvable
                 if(pureHillResultingEvalFunc<0){
@@ -768,12 +777,14 @@ public class GUI extends JFrame {
                 removeGrid(mainPanel);
                 //create a panel to add both of the grids side by side
                 JPanel sideBySideGrids = new JPanel();
-                sideBySideGrids.setLayout(new GridLayout(2,2));
+                sideBySideGrids.setLayout(new GridLayout(2,3));
                 //create the panels for the stats for each process
                 JPanel pureHillStats = new JPanel();
                 pureHillStats.setLayout(new BoxLayout(pureHillStats,BoxLayout.Y_AXIS));
                 JPanel hillRestartsStats = new JPanel();
                 hillRestartsStats.setLayout(new BoxLayout(hillRestartsStats,BoxLayout.Y_AXIS));
+                JPanel probabilityHillStats = new JPanel();
+                probabilityHillStats.setLayout(new BoxLayout(probabilityHillStats,BoxLayout.Y_AXIS));
 
                 //add stat labels to the stat panels
                 //add pure hill climbing stats
@@ -788,13 +799,21 @@ public class GUI extends JFrame {
                 hillRestartsStats.add(restartsEval);
                 hillRestartsStats.add(restartsRunTime);
 
+                //add probability stats
+                probabilityHillStats.add(probabilityTitle);
+                probabilityHillStats.add(initialEvalProbability);
+                probabilityHillStats.add(probabilityEval);
+                probabilityHillStats.add(probabilityRunTime);
+
 
 
                 addGridToLayout(sideBySideGrids,pureHillClimbingGrid);
                 addGridToLayout(sideBySideGrids,restartGrid);
+                addGridToLayout(sideBySideGrids,hillClimbingWithProbability);
                 //add stats panels to the grid panels
                 sideBySideGrids.add(pureHillStats);
                 sideBySideGrids.add(hillRestartsStats);
+                sideBySideGrids.add(probabilityHillStats);
 
                 mainPanel.add(sideBySideGrids,BorderLayout.CENTER);
                 frame.revalidate();
