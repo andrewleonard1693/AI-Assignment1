@@ -1008,13 +1008,13 @@ public class GUI extends JFrame {
                 JPanel geneticStats = new JPanel();
                 JLabel geneticTitle = new JLabel("Genetic Algorithm");
                 JLabel geneticRunTime = new JLabel("Elapsed time:"+Double.toString(totalGeneticTimeInSeconds));
-                JLabel geneticEvalFunc = new JLabel("Evaluation function: "+Integer.toString(evaluationFunction(geneticGridToAddToGUI,geneticGridToAddToGUI.length,geneticGridToAddToGUI.length)));
+//                JLabel geneticEvalFunc = new JLabel("Evaluation function: "+Integer.toString(evaluationFunction(geneticGridToAddToGUI,geneticGridToAddToGUI.length,geneticGridToAddToGUI.length)));
                 geneticStats.add(geneticTitle);
-                geneticStats.add(geneticEvalFunc);
+//                geneticStats.add(geneticEvalFunc);
                 geneticStats.add(geneticRunTime);
                 //add the grid to the layout
                 addGridToLayout(mainPanel,geneticGridToAddToGUI);
-                mainPanel.add(geneticStats,BorderLayout.SOUTH);
+//                mainPanel.add(geneticStats,BorderLayout.SOUTH);
 
                 frame.revalidate();
                 frame.repaint();
@@ -1623,7 +1623,9 @@ public class GUI extends JFrame {
         for(int i = 0;i<generations;i++){
             //pick two parents at random
             ArrayList<Node[][]> parents = new ArrayList<>();
-            while(parents.size()!=2){
+            int xx=0;
+            while(xx<2){
+                System.out.println("while loop");
                 //choose two random parents and accept them with a probabiility proportional to the evaluation function
                 Node[][] parent = population.get(rand.nextInt(population.size()));
                 //calculate the probability of accepting the parent
@@ -1631,6 +1633,12 @@ public class GUI extends JFrame {
                     //we add the parent to the parent arraylist
                     parents.add(parent);
                 }
+                System.out.println(parents.size());
+                System.out.println(population.size());
+                xx++;
+            }
+            if(parents.size()<2){
+                continue;
             }
             //get the parents
             Node[][] parent1 = parents.get(0);
