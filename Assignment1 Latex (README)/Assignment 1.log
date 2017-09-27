@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.5.23)  26 SEP 2017 22:43
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017) (preloaded format=pdflatex 2017.5.23)  26 SEP 2017 23:28
 entering extended mode
  restricted \write18 enabled.
  file:line:error style messages enabled.
@@ -151,6 +151,150 @@ LaTeX Warning: Label `fig:method' multiply defined.
 
 
 LaTeX Warning: Label `fig:method' multiply defined.
+
+
+LaTeX Warning: Label `fig:method' multiply defined.
+
+
+LaTeX Warning: Label `sub@fig:method' multiply defined.
+
+
+LaTeX Warning: Label `fig:method' multiply defined.
+
+
+LaTeX Warning: Label `sub@fig:method' multiply defined.
+
+
+LaTeX Warning: Label `fig:method' multiply defined.
+
+
+LaTeX Warning: Label `sub@fig:method' multiply defined.
+
+
+LaTeX Warning: Label `fig:method' multiply defined.
+
+
+LaTeX Warning: Label `sub@fig:method' multiply defined.
+
+
+LaTeX Warning: Label `fig:method' multiply defined.
+
+
+LaTeX Warning: Label `sub@fig:method' multiply defined.
+
+
+LaTeX Warning: Label `fig:method' multiply defined.
+
+
+LaTeX Warning: Label `sub@fig:method' multiply defined.
+
+
+LaTeX Warning: Label `fig:method' multiply defined.
+
+
+LaTeX Warning: Label `sub@fig:method' multiply defined.
+
+
+LaTeX Warning: Label `fig:method' multiply defined.
+
+
+LaTeX Warning: Label `sub@fig:method' multiply defined.
+
+
+LaTeX Warning: Label `fig:method' multiply defined.
+
+
+LaTeX Warning: Label `sub@fig:method' multiply defined.
+
+
+LaTeX Warning: Label `fig:method' multiply defined.
+
+
+LaTeX Warning: Label `sub@fig:method' multiply defined.
+
+
+LaTeX Warning: Label `fig:method' multiply defined.
+
+
+LaTeX Warning: Label `sub@fig:method' multiply defined.
+
+
+LaTeX Warning: Label `fig:method' multiply defined.
+
+
+LaTeX Warning: Label `sub@fig:method' multiply defined.
+
+
+LaTeX Warning: Label `fig:method' multiply defined.
+
+
+LaTeX Warning: Label `sub@fig:method' multiply defined.
+
+
+LaTeX Warning: Label `fig:method' multiply defined.
+
+
+LaTeX Warning: Label `sub@fig:method' multiply defined.
+
+
+LaTeX Warning: Label `fig:method' multiply defined.
+
+
+LaTeX Warning: Label `sub@fig:method' multiply defined.
+
+
+LaTeX Warning: Label `fig:method' multiply defined.
+
+
+LaTeX Warning: Label `sub@fig:method' multiply defined.
+
+
+LaTeX Warning: Label `fig:method' multiply defined.
+
+
+LaTeX Warning: Label `sub@fig:method' multiply defined.
+
+
+LaTeX Warning: Label `fig:method' multiply defined.
+
+
+LaTeX Warning: Label `sub@fig:method' multiply defined.
+
+
+LaTeX Warning: Label `fig:method' multiply defined.
+
+
+LaTeX Warning: Label `sub@fig:method' multiply defined.
+
+
+LaTeX Warning: Label `fig:method' multiply defined.
+
+
+LaTeX Warning: Label `sub@fig:method' multiply defined.
+
+
+LaTeX Warning: Label `fig:method' multiply defined.
+
+
+LaTeX Warning: Label `sub@fig:method' multiply defined.
+
+
+LaTeX Warning: Label `fig:method' multiply defined.
+
+
+LaTeX Warning: Label `sub@fig:method' multiply defined.
+
+
+LaTeX Warning: Label `fig:method' multiply defined.
+
+
+LaTeX Warning: Label `sub@fig:method' multiply defined.
+
+
+LaTeX Warning: Label `fig:method' multiply defined.
+
+
+LaTeX Warning: Label `sub@fig:method' multiply defined.
 
 
 LaTeX Warning: Label `fig:method' multiply defined.
@@ -925,30 +1069,130 @@ Package pdftex.def Info: 7x7highIhighTPath.png used on input line 801.
 (pdftex.def)             Requested size: 142.26378pt x 94.65018pt.
 
 [13 <./7x7lowIlowT.png> <./7x7lowIlowTPath.png> <./7x7highIhighT.png> <./7x7hig
-hIhighTPath.png> <./7x7lowIhighT.png> <./7x7lowIhighTPath.png>] [14]
-(./Assignment 1.aux)
+hIhighTPath.png> <./7x7lowIhighT.png> <./7x7lowIhighTPath.png>]
+<9x9lowIlowT.png, id=155, 757.83125pt x 504.88625pt>
+File: 9x9lowIlowT.png Graphic file (type png)
+ <use 9x9lowIlowT.png>
+Package pdftex.def Info: 9x9lowIlowT.png used on input line 814.
+(pdftex.def)             Requested size: 142.26378pt x 94.77379pt.
+
+<9x9lowIlowTPath.png, id=156, 759.83875pt x 503.8825pt>
+File: 9x9lowIlowTPath.png Graphic file (type png)
+
+<use 9x9lowIlowTPath.png>
+Package pdftex.def Info: 9x9lowIlowTPath.png used on input line 820.
+(pdftex.def)             Requested size: 142.26378pt x 94.33934pt.
+
+<9x9highIhighT.png, id=157, 757.83125pt x 507.8975pt>
+File: 9x9highIhighT.png Graphic file (type png)
+ <use 9x9highIhighT.png>
+Package pdftex.def Info: 9x9highIhighT.png used on input line 833.
+(pdftex.def)             Requested size: 142.26378pt x 95.33904pt.
+
+<9x9highIhighTPath.png, id=158, 756.8275pt x 504.88625pt>
+File: 9x9highIhighTPath.png Graphic file (type png)
+
+<use 9x9highIhighTPath.png>
+Package pdftex.def Info: 9x9highIhighTPath.png used on input line 839.
+(pdftex.def)             Requested size: 142.26378pt x 94.90475pt.
+
+<9x9lowIhighT.png, id=159, 761.84625pt x 504.88625pt>
+File: 9x9lowIhighT.png Graphic file (type png)
+ <use 9x9lowIhighT.png>
+Package pdftex.def Info: 9x9lowIhighT.png used on input line 852.
+(pdftex.def)             Requested size: 142.26378pt x 94.27303pt.
+
+<9x9lowIhighTPath.png, id=160, 759.83875pt x 504.88625pt>
+File: 9x9lowIhighTPath.png Graphic file (type png)
+
+<use 9x9lowIhighTPath.png>
+Package pdftex.def Info: 9x9lowIhighTPath.png used on input line 858.
+(pdftex.def)             Requested size: 142.26378pt x 94.52725pt.
+File: 9x9highIhighT.png Graphic file (type png)
+ <use 9x9highIhighT.png>
+Package pdftex.def Info: 9x9highIhighT.png used on input line 871.
+(pdftex.def)             Requested size: 142.26378pt x 95.33904pt.
+File: 9x9highIhighTPath.png Graphic file (type png)
+ <use 9x9highIhighTPath.png>
+Package pdftex.def Info: 9x9highIhighTPath.png used on input line 877.
+(pdftex.def)             Requested size: 142.26378pt x 94.90475pt.
+
+[14 <./9x9lowIlowT.png> <./9x9lowIlowTPath.png> <./9x9highIhighT.png> <./9x9hig
+hIhighTPath.png> <./9x9lowIhighT.png> <./9x9lowIhighTPath.png>]
+<11x11lowIlowT.png, id=170, 761.84625pt x 505.89pt>
+File: 11x11lowIlowT.png Graphic file (type png)
+ <use 11x11lowIlowT.png>
+Package pdftex.def Info: 11x11lowIlowT.png used on input line 890.
+(pdftex.def)             Requested size: 142.26378pt x 94.46045pt.
+
+<11x11lowIlowTPath.png, id=171, 758.835pt x 512.91624pt>
+File: 11x11lowIlowTPath.png Graphic file (type png)
+
+<use 11x11lowIlowTPath.png>
+Package pdftex.def Info: 11x11lowIlowTPath.png used on input line 896.
+(pdftex.def)             Requested size: 142.26378pt x 96.1559pt.
+
+<11x11highIhighT.png, id=172, 758.835pt x 503.8825pt>
+File: 11x11highIhighT.png Graphic file (type png)
+
+<use 11x11highIhighT.png>
+Package pdftex.def Info: 11x11highIhighT.png used on input line 909.
+(pdftex.def)             Requested size: 142.26378pt x 94.46236pt.
+
+<11x11highIhighTPath.png, id=173, 758.835pt x 510.90875pt>
+File: 11x11highIhighTPath.png Graphic file (type png)
+
+<use 11x11highIhighTPath.png>
+Package pdftex.def Info: 11x11highIhighTPath.png used on input line 915.
+(pdftex.def)             Requested size: 142.26378pt x 95.77956pt.
+
+<11x11lowIhighT.png, id=174, 761.84625pt x 504.88625pt>
+File: 11x11lowIhighT.png Graphic file (type png)
+
+<use 11x11lowIhighT.png>
+Package pdftex.def Info: 11x11lowIhighT.png used on input line 928.
+(pdftex.def)             Requested size: 142.26378pt x 94.27303pt.
+
+<11x11lowIhighTPath.png, id=175, 757.83125pt x 504.88625pt>
+File: 11x11lowIhighTPath.png Graphic file (type png)
+
+<use 11x11lowIhighTPath.png>
+Package pdftex.def Info: 11x11lowIhighTPath.png used on input line 934.
+(pdftex.def)             Requested size: 142.26378pt x 94.77379pt.
+File: 11x11highIhighT.png Graphic file (type png)
+ <use 11x11highIhighT.png>
+Package pdftex.def Info: 11x11highIhighT.png used on input line 947.
+(pdftex.def)             Requested size: 142.26378pt x 94.46236pt.
+File: 11x11highIhighTPath.png Graphic file (type png)
+
+<use 11x11highIhighTPath.png>
+Package pdftex.def Info: 11x11highIhighTPath.png used on input line 953.
+(pdftex.def)             Requested size: 142.26378pt x 95.77956pt.
+ [15 <./11x11lowIlowT.png> <./11x11lowIlowTPath.png> <./11x11highIhighT.png> <.
+/11x11highIhighTPath.png> <./11x11lowIhighT.png> <./11x11lowIhighTPath.png>] [1
+6] (./Assignment 1.aux)
 
 LaTeX Warning: There were multiply-defined labels.
 
  ) 
 Here is how much of TeX's memory you used:
- 3715 strings out of 492995
- 58214 string characters out of 6132704
+ 3775 strings out of 492995
+ 59582 string characters out of 6132704
  182270 words of memory out of 5000000
- 7181 multiletter control sequences out of 15000+600000
+ 7229 multiletter control sequences out of 15000+600000
  11044 words of font info for 42 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 42i,8n,40p,569b,440s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 42i,8n,40p,654b,440s stack positions out of 5000i,500n,10000p,200000b,80000s
 </usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb
 ></usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb>
 </usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmmi10.pfb><
 /usr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr10.pfb></u
 sr/local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb></usr
 /local/texlive/2017/texmf-dist/fonts/type1/public/amsfonts/cm/cmr17.pfb>
-Output written on "Assignment 1.pdf" (14 pages, 1679335 bytes).
+Output written on "Assignment 1.pdf" (16 pages, 2122796 bytes).
 PDF statistics:
- 179 PDF objects out of 1000 (max. 8388607)
- 52 compressed objects within 1 object stream
+ 209 PDF objects out of 1000 (max. 8388607)
+ 56 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
- 261 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 321 words of extra memory for PDF output out of 10000 (max. 10000000)
 

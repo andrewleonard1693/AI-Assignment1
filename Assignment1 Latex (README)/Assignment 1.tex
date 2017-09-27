@@ -805,14 +805,162 @@ We have plotted data for each of the different sized grids.
 \caption{1000 Iterations and 500 Degrees}
 \end{figure}
 
-%9x9 Grid
+%9x9 Grid with Path
+%Low Iterations and Low Temperature
+\begin{figure}[H]
+\centering
+\begin{subfigure}{.5\textwidth}
+	\centering
+	\includegraphics[width=50mm]{9x9lowIlowT.png}
+	\caption{9x9 Data with Initial Path}
+	\label{fig:method}
+\end{subfigure}%
+\begin{subfigure}{.5\textwidth}
+	\centering
+	\includegraphics[width=50mm]{9x9lowIlowTPath.png}
+	\caption{9x9 Data with No Initial Path}
+	\label{fig:method}
+\end{subfigure}
+\caption{100 Iterations and 50 Degrees}
+\end{figure}
 
-%11x11 Grid 
+%9x9 Grid with Path
+%High Iterations and Low Temperature
+\begin{figure}[H]
+\centering
+\begin{subfigure}{.5\textwidth}
+	\centering
+	\includegraphics[width=50mm]{9x9highIhighT.png}
+	\caption{9x9 Data with Initial Path}
+	\label{fig:method}
+\end{subfigure}%
+\begin{subfigure}{.5\textwidth}
+	\centering
+	\includegraphics[width=50mm]{9x9highIhighTPath.png}
+	\caption{9x9 Data with No Initial Path}
+	\label{fig:method}
+\end{subfigure}
+\caption{1000 Iterations and 50 Degrees}
+\end{figure}
+
+%9x9 Grid with Path
+%Low Iterations and High Temperature
+\begin{figure}[H]
+\centering
+\begin{subfigure}{.5\textwidth}
+	\centering
+	\includegraphics[width=50mm]{9x9lowIhighT.png}
+	\caption{9x9 Data with Initial Path}
+	\label{fig:method}
+\end{subfigure}%
+\begin{subfigure}{.5\textwidth}
+	\centering
+	\includegraphics[width=50mm]{9x9lowIhighTPath.png}
+	\caption{9x9 Data with No Initial Path}
+	\label{fig:method}
+\end{subfigure}
+\caption{100 Iterations and 500 Degrees}
+\end{figure}
+
+%9x9 Grid with Path
+%High Iterations and High Temperature
+\begin{figure}[H]
+\centering
+\begin{subfigure}{.5\textwidth}
+	\centering
+	\includegraphics[width=50mm]{9x9highIhighT.png}
+	\caption{9x9 Data with Initial Path}
+	\label{fig:method}
+\end{subfigure}%
+\begin{subfigure}{.5\textwidth}
+	\centering
+	\includegraphics[width=50mm]{9x9highIhighTPath.png}
+	\caption{9x9 Data with No Initial Path}
+	\label{fig:method}
+\end{subfigure}
+\caption{1000 Iterations and 500 Degrees}
+\end{figure}
+
+%11x11 Grid with Path
+%Low Iterations and Low Temperature
+\begin{figure}[H]
+\centering
+\begin{subfigure}{.5\textwidth}
+	\centering
+	\includegraphics[width=50mm]{11x11lowIlowT.png}
+	\caption{11x11 Data with Initial Path}
+	\label{fig:method}
+\end{subfigure}%
+\begin{subfigure}{.5\textwidth}
+	\centering
+	\includegraphics[width=50mm]{11x11lowIlowTPath.png}
+	\caption{11x11 Data with No Initial Path}
+	\label{fig:method}
+\end{subfigure}
+\caption{100 Iterations and 50 Degrees}
+\end{figure}
+
+%11x11 Grid with Path
+%High Iterations and Low Temperature
+\begin{figure}[H]
+\centering
+\begin{subfigure}{.5\textwidth}
+	\centering
+	\includegraphics[width=50mm]{11x11highIhighT.png}
+	\caption{11x11 Data with Initial Path}
+	\label{fig:method}
+\end{subfigure}%
+\begin{subfigure}{.5\textwidth}
+	\centering
+	\includegraphics[width=50mm]{11x11highIhighTPath.png}
+	\caption{11x11 Data with No Initial Path}
+	\label{fig:method}
+\end{subfigure}
+\caption{1000 Iterations and 50 Degrees}
+\end{figure}
+
+%11x11 Grid with Path
+%Low Iterations and High Temperature
+\begin{figure}[H]
+\centering
+\begin{subfigure}{.5\textwidth}
+	\centering
+	\includegraphics[width=50mm]{11x11lowIhighT.png}
+	\caption{11x11 Data with Initial Path}
+	\label{fig:method}
+\end{subfigure}%
+\begin{subfigure}{.5\textwidth}
+	\centering
+	\includegraphics[width=50mm]{11x11lowIhighTPath.png}
+	\caption{11x11 Data with No Initial Path}
+	\label{fig:method}
+\end{subfigure}
+\caption{100 Iterations and 500 Degrees}
+\end{figure}
+
+%11x11 Grid with Path
+%High Iterations and High Temperature
+\begin{figure}[H]
+\centering
+\begin{subfigure}{.5\textwidth}
+	\centering
+	\includegraphics[width=50mm]{11x11highIhighT.png}
+	\caption{11x11 Data with Initial Path}
+	\label{fig:method}
+\end{subfigure}%
+\begin{subfigure}{.5\textwidth}
+	\centering
+	\includegraphics[width=50mm]{11x11highIhighTPath.png}
+	\caption{11x11 Data with No Initial Path}
+	\label{fig:method}
+\end{subfigure}
+\caption{1000 Iterations and 500 Degrees}
+\end{figure}
+
+We concluded that with higher temperature and lower decay rate, Local Search optimizes faster but when the decay rate is higher we notice that the evaluation function becomes worse.
 
 \section{Task 7}
 
-%\subsection{}
-
-
+For task 7, we used a genetic algorithm that accepts a randomly generated node with a probability proportional to its evaluation function. Two random puzzles were chosen with this probability to be deemed as parents for the upcoming generation. These parents would create two children in the crossover phase with a certain probability and these children would be added back into the population. Finally, the children would be mutated by a single grid cell value with a probability inputted by the user before being added back to the population. After a certain amount of generations, the most optimal puzzle configuration was chosen.
 
 \end{document}  
