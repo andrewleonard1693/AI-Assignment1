@@ -1,6 +1,8 @@
 
 //awt allows us to ask questions of the OS
 
+import org.omg.PortableInterceptor.INACTIVE;
+
 import java.awt.*;
 import javax.swing.*;
 import javax.swing.border.Border;
@@ -120,13 +122,19 @@ public class GUI extends JFrame {
         //task 7 genetic algorithm panel
         JPanel geneticAlgorithmPanel = new JPanel();
         JTextField populationSize = new JTextField("Population size",20);
-        JTextField numberOfGenerations = new JTextField("Number of generations",20);
+        JTextField puzzleSize = new JTextField("Puzzle size",20);
         JButton geneticSolveButton = new JButton("Solve");
         JLabel task7Label = new JLabel("Task 7");
+        JTextField probOfCrossover = new JTextField("Probability of crossovers");
+        JTextField numOfGenerations = new JTextField("Number of generations");
+        JTextField probOfMutation = new JTextField("Probability of mutations");
 
         geneticAlgorithmPanel.add(task7Label);
+        geneticAlgorithmPanel.add(puzzleSize);
         geneticAlgorithmPanel.add(populationSize);
-        geneticAlgorithmPanel.add(numberOfGenerations);
+        geneticAlgorithmPanel.add(numOfGenerations);
+        geneticAlgorithmPanel.add(probOfCrossover);
+        geneticAlgorithmPanel.add(probOfMutation);
         geneticAlgorithmPanel.add(geneticSolveButton);
 
         buttonPanel.add(geneticAlgorithmPanel);
@@ -937,6 +945,69 @@ public class GUI extends JFrame {
 
             }
         });
+        geneticSolveButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //error checking for user input
+                int populationSizeInt=0;
+                int generations = 0;
+                double probOfCrossoverDouble = 0;
+                double probOfMutationsDouble=0;
+                String puzzleSizeString = puzzleSize.getText();
+                if(!(puzzleSizeString.equals("5")) && !(puzzleSizeString.equals("7"))&&!(puzzleSizeString.equals("9"))&&!(puzzleSizeString.equals("11"))) {
+                    // handle error case here with a error window?
+                    JOptionPane.showMessageDialog(frame, "You've entered an invalid grid size. Valid sizes: 5, 7, 9, 11");
+                    return;
+                }
+                int puzzleSizeInt = Integer.parseInt(puzzleSizeString);
+
+                try{
+                    populationSizeInt = Integer.parseInt(populationSize.getText());
+                    if(populationSizeInt<0){
+                        JOptionPane.showMessageDialog(frame,"Your population size is not valid");
+
+                    }
+                }catch(NumberFormatException exc){
+                    JOptionPane.showMessageDialog(frame,"Your population size is not valid");
+                    return;
+                }
+                try{
+                    generations = Integer.parseInt(numOfGenerations.getText());
+                }catch(NumberFormatException exc){
+                    //throw error for invalid input
+                    JOptionPane.showMessageDialog(frame,"Your number of generations is not an integer");
+                    return;
+
+                }
+                try{
+                    probOfCrossoverDouble = Double.parseDouble(probOfCrossover.getText());
+                }catch(NumberFormatException exc){
+                    JOptionPane.showMessageDialog(frame,"Your crossover probability is not valid");
+
+                }
+                try{
+                    probOfMutationsDouble = Double.parseDouble(probOfMutation.getText());
+                }catch(NumberFormatException exc){
+                    JOptionPane.showMessageDialog(frame,"Your mutation probability is not valid");
+
+                }
+                ArrayList<Node[][]> population = new ArrayList<>();
+                for(int i = 0;i<populationSizeInt;i++){
+                    Node[][] gridToAdd = create2DArrayOfNodes(puzzleSizeInt,puzzleSizeInt);
+                    boolean addLevels = BFS(gridToAdd[0][0],gridToAdd[puzzleSizeInt-1][puzzleSizeInt-1],gridToAdd,create2DVisitedMatrix(puzzleSizeInt,puzzleSizeInt),puzzleSizeInt,puzzleSizeInt);
+                    population.add(gridToAdd);
+
+                }
+                Node [][] geneticGridToAddToGUI = geneticAlgorithm(population,puzzleSizeInt,generations,probOfCrossoverDouble,probOfMutationsDouble);
+
+                //clear the grid
+                removeGrid(mainPanel);
+                //add the grid to the layout
+                addGridToLayout(mainPanel,geneticGridToAddToGUI);
+                frame.revalidate();
+                frame.repaint();
+            }
+        });
 
 
 
@@ -1531,28 +1602,126 @@ public class GUI extends JFrame {
         boolean result = BFS(grid[0][0],grid[dimension-1][dimension-1],grid, create2DVisitedMatrix(dimension,dimension),dimension,dimension);
         return grid;
     }
-//    public static Node[][] geneticAlgorithm(ArrayList<Node[][]> arrayOfGrids, int dimension, int initialEvaluationFunction,int iterations){
-//        ArrayList<Node[][]> currentGeneration = new ArrayList<>();
-//        ArrayList<Node[][]> newGeneration = new ArrayList<>();
-//        //copy elements of array of grids into current generation
-//        for(int k=0;k<arrayOfGrids.size();k++){
-//            currentGeneration.add(arrayOfGrids.get(k));
-//        }
-//        //loop for a certain amount of iterations
-//        for(int i = 0;i<iterations;i++){
-//            Random rand = new Random();
-//        //pick a random row and random column
-//            int randomRow = rand.nextInt(dimension);
-//            int randomCol = rand.nextInt(dimension);
-//            //edge case where the random row and random column are the goal node
-//            while(randomRow==dimension-1 && randomCol == dimension-1){
-//                randomRow = rand.nextInt(dimension);
-//                randomCol = rand.nextInt(dimension);
-//            }
-//            //loop through the grid of nodes
-//            for(int j = 0;j<currentGeneration.size()-1;j++){//loop until size minus one because we are grabbing pairs
-//                //
-//            }
-//        }
-//    }
+    public static Node[][] geneticAlgorithm(ArrayList<Node[][]> population, int dimension,int generations,double probOfCrossover,double probOfMutation){
+        //all grids are solvable and have evaluation functions at this point
+        Node[][] result = null;
+        int optimalEvalFunction = 2;
+        Random rand = new Random();
+        //loop for a certain amount of iterations
+        for(int i = 0;i<generations;i++){
+            //pick two parents at random
+            ArrayList<Node[][]> parents = new ArrayList<>();
+            while(parents.size()!=2){
+                //choose two random parents and accept them with a probabiility proportional to the evaluation function
+                Node[][] parent = population.get(rand.nextInt(population.size()));
+                //calculate the probability of accepting the parent
+                if(Math.random()<optimalEvalFunction/evaluationFunction(parent,dimension,dimension)){
+                    //we add the parent to the parent arraylist
+                    parents.add(parent);
+                }
+            }
+            //get the parents
+            Node[][] parent1 = parents.get(0);
+            Node[][] parent2 = parents.get(1);
+            Node[][] childGrid1 = new Node[dimension][dimension];
+            Node[][] childGrid2 = new Node[dimension][dimension];
+            //at this point we have our random parents
+            //perform a crossover with a certain probability
+            if(Math.random()<probOfCrossover){
+                //find a random cell
+                int randomRow = rand.nextInt(dimension);
+                int randomCol = rand.nextInt(dimension);
+                //perform the crossover
+                //TODO: logic for the crossover goes here
+                //perform the crossover on the children
+                //grab first half of parent 1 and put it in child 1 not including the crossover point
+                for(int a = 0;a<parent1.length;a++){
+                    for(int b = 0;b<parent1.length;b++){
+                        if(a == randomRow && b == randomCol){
+                            //here we are at the crossover point
+                            break;
+                        }
+                        childGrid1[a][b]=new Node(a,b,parent1[a][b].getCellValue());
+                    }
+                }
+                //grab the second half of parent 2 and put it in child 1 including the crossover point
+                for(int c=randomRow;c<parent2.length;c++){
+                    for(int d=randomCol;d<parent2.length;d++){
+                        childGrid1[c][d]=new Node(c,d,parent2[c][d].getCellValue());
+                    }
+                }
+                //grab the first half of parent 2 and put it in child 2 not including the crossover point
+
+                for(int g = 0;g<parent2.length;g++){
+                    for(int h = 0;h<parent2.length;h++){
+                        if(g == randomRow && h == randomCol){
+                            break;
+                        }
+                        childGrid2[g][h]= new Node(g,h,parent2[g][h].getCellValue());
+                    }
+                }
+                //grab the second half of parent 1 and put it in child 2
+                for(int e = randomRow;e<parent1.length;e++){
+                    for(int f = randomCol;f<parent2.length;f++){
+                        childGrid2[e][f]= new Node(e,f,parent2[e][f].getCellValue());
+                    }
+                }
+                //calculate BFS on each child so the levels will be set
+                boolean addLevelsToChildren = BFS(childGrid1[0][0],childGrid1[dimension-1][dimension-1],childGrid1,create2DVisitedMatrix(dimension,dimension),dimension,dimension);
+                addLevelsToChildren = BFS(childGrid2[0][0],childGrid2[dimension-1][dimension-1],childGrid2,create2DVisitedMatrix(dimension,dimension),dimension,dimension);
+
+            }else{ //there is not a crossover
+                continue;
+            }
+                //perform a mutation with a certain probability
+            if(Math.random()<probOfMutation){//we perform the mutation
+                int randomRow = rand.nextInt(dimension);
+                int randomCol = rand.nextInt(dimension);
+                //perform the mutation and of the random cell and put the children back into the population
+                int newCellValue = generateGridNumber(randomRow,randomCol,dimension,dimension);
+                childGrid1[randomRow][randomCol].setCellValue(newCellValue);
+                childGrid2[randomRow][randomCol].setCellValue(newCellValue);
+                //add the levels for the children
+                boolean addLevels = BFS(childGrid1[0][0],childGrid1[dimension-1][dimension-1],childGrid1,create2DVisitedMatrix(dimension,dimension),dimension,dimension);
+                addLevels = BFS(childGrid2[0][0],childGrid2[dimension-1][dimension-1],childGrid2,create2DVisitedMatrix(dimension,dimension),dimension,dimension);
+            }
+            //add the children back to the population
+            population.add(childGrid1);
+            population.add(childGrid2);
+
+        }
+        //return the solution with the most optimal solution
+        //check if there is a positive solution
+        boolean isPos = false;
+        for(int search = 0;search<population.size();search++){
+            if(evaluationFunction(population.get(search),dimension,dimension)>0){
+                isPos=true;
+                break;
+            }
+        }
+
+        if(isPos){
+            //there is a solvable grid in the population
+            int max = Integer.MAX_VALUE;
+            for(int opt = 0;opt<population.size();opt++){
+                int eval = evaluationFunction(population.get(opt),dimension,dimension);
+                if(eval< max && eval>0 ){
+                    max=eval;
+                    result = population.get(opt);
+                }
+            }
+        }else{
+            //we find the best unsolvable grid
+            int min = Integer.MIN_VALUE;
+            for(int i = 0;i<population.size();i++){
+              int eval = evaluationFunction(population.get(i),dimension,dimension);
+              if(eval>min){
+                  min = eval;
+                  result = population.get(i);
+              }
+
+            }
+        }
+        return result;
+    }
 }
