@@ -998,12 +998,24 @@ public class GUI extends JFrame {
                     population.add(gridToAdd);
 
                 }
+                long geneticStartTime = System.nanoTime();
                 Node [][] geneticGridToAddToGUI = geneticAlgorithm(population,puzzleSizeInt,generations,probOfCrossoverDouble,probOfMutationsDouble);
-
+                long geneticStopTime = System.nanoTime();
+                long totalGeneticTime = geneticStopTime-geneticStartTime;
+                double totalGeneticTimeInSeconds = (double)totalGeneticTime/1000000000.0;
                 //clear the grid
                 removeGrid(mainPanel);
+                JPanel geneticStats = new JPanel();
+                JLabel geneticTitle = new JLabel("Genetic Algorithm");
+                JLabel geneticRunTime = new JLabel("Elapsed time:"+Double.toString(totalGeneticTimeInSeconds));
+                JLabel geneticEvalFunc = new JLabel("Evaluation function: "+Integer.toString(evaluationFunction(geneticGridToAddToGUI,geneticGridToAddToGUI.length,geneticGridToAddToGUI.length)));
+                geneticStats.add(geneticTitle);
+                geneticStats.add(geneticEvalFunc);
+                geneticStats.add(geneticRunTime);
                 //add the grid to the layout
                 addGridToLayout(mainPanel,geneticGridToAddToGUI);
+                mainPanel.add(geneticStats,BorderLayout.SOUTH);
+
                 frame.revalidate();
                 frame.repaint();
             }
