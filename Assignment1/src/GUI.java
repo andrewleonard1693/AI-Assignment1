@@ -22,8 +22,7 @@ public class GUI extends JFrame {
     public static int maxColumns = 0;
     public static void main(String[] args) {
         new GUI();
-        createDataForTask3();
-
+//        createDataForGraphs();
     }
 
     public GUI(){
@@ -467,67 +466,15 @@ public class GUI extends JFrame {
 
                 //start a timer
                 long startTime = System.nanoTime();
-                int evaluationScore = 0;
-                int newEvaluationScore=0;
-
-                //calculate the evaluation score for the starting grid
-                boolean isSolvable=false;
                 int initialEvalScore = evaluationFunction(gridOfNodes,gridOfNodes.length,gridOfNodes.length);
-                evaluationScore = initialEvalScore;
-                    System.out.println("Initial evalutation score: "+evaluationScore);
-                    //loop the amount of iterations
-                    for(int i = 0;i<numberOfIterations;i++){
-                        Random rand = new Random();
-                        int randomRow = rand.nextInt(gridOfNodes.length);
-                        int randomCol = rand.nextInt(gridOfNodes.length);
-                        //loop until the random cell is not the goal node
-                        while(randomRow==gridOfNodes.length-1 && randomCol==gridOfNodes.length-1){
-                            randomRow=rand.nextInt(gridOfNodes.length);
-                            randomCol=rand.nextInt(gridOfNodes.length);
-                        }
-                        //reset the grid's node levels
-                        gridOfNodes = clearGridNodeLevels(gridOfNodes);
-//                    System.out.println("random row: "+randomRow);
-//                    System.out.println("random col: "+randomCol);
-                        //store the node in a temp variable so we can hold onto it if we need to change the grid back
-                        int oldCellNumber = gridOfNodes[randomRow][randomCol].getCellValue();
-//                    System.out.println("old cell number: "+oldCellNumber);
-                        //generate a valid random number for that cells position
-                        int newCellNumber = generateGridNumber(randomRow,randomCol,gridOfNodes.length,gridOfNodes.length);
-//                    System.out.println("new cell number: "+newCellNumber);
-
-                        //change the node's cell value to that new number
-                        gridOfNodes[randomRow][randomCol].setCellValue(newCellNumber);
-                        //run BFS to set the grid node levels with the possibly new cell value number
-                        isSolvable = BFS(gridOfNodes[0][0],gridOfNodes[gridOfNodes.length-1][gridOfNodes.length-1],gridOfNodes,create2DVisitedMatrix(gridOfNodes.length,gridOfNodes.length),gridOfNodes.length,gridOfNodes.length);
-                        newEvaluationScore = evaluationFunction(gridOfNodes,gridOfNodes.length,gridOfNodes.length);
-                        if(isSolvable){//puzzle can be solved
-                            if(evaluationScore<0||newEvaluationScore<evaluationScore){//newEvaluation will be positive so we immediately set evaluation score to new evaluation score
-                                evaluationScore=newEvaluationScore;
-                            }else{
-                                gridOfNodes[randomRow][randomCol].setCellValue(oldCellNumber);
-                            }
-                        }else{ //puzzle cant be solved
-                            if(evaluationScore>0){
-                                gridOfNodes[randomRow][randomCol].setCellValue(oldCellNumber);
-
-
-                            }else{
-                                if(newEvaluationScore>evaluationScore){
-                                    evaluationScore=newEvaluationScore;
-                                }
-                                else{
-                                    gridOfNodes[randomRow][randomCol].setCellValue(oldCellNumber);
-                                }
-                            }
-
-                        }
-
-                    }
-                System.out.println("Ending evaluation score: "+evaluationScore);
-                //remove the current grid and create a new one and add it
+                Node[][] hillClimbGrid = hillClimb(gridOfNodes,numberOfIterations,gridOfNodes.length);
+                int endingEvalScore = evaluationFunction(hillClimbGrid,hillClimbGrid.length,hillClimbGrid.length);
+                boolean isSolvable = false;
+                if(endingEvalScore>0){
+                    isSolvable=true;
+                }
                 removeGrid(mainPanel);
-                addGridToLayout(mainPanel, gridOfNodes);
+                addGridToLayout(mainPanel, hillClimbGrid);
                 long endTime = System.nanoTime();
                 long totalTime = endTime-startTime;
                 double seconds = (double)totalTime / 1000000000.0;
@@ -552,7 +499,7 @@ public class GUI extends JFrame {
 
 
                 //new eval score label
-                JLabel newEvalScoreLabel = new JLabel("New Evaluation Score: "+Integer.toString(newEvaluationScore),JLabel.CENTER);
+                JLabel newEvalScoreLabel = new JLabel("New Evaluation Score: "+Integer.toString(endingEvalScore),JLabel.CENTER);
                 newEvalScoreLabel.setFont(font);
 
 
@@ -709,7 +656,7 @@ public class GUI extends JFrame {
                 double totalRestartTimeInSeconds = (double)totalRestartsTime/1000000000.0;
 
                 //find the location of the best evaluation function for hill climb with restarts
-                int num = Integer.MAX_VALUE;
+                int num = Integer.MIN_VALUE;
                 int pos = -1;
                 boolean hasPositiveInt = false;
 
@@ -724,7 +671,7 @@ public class GUI extends JFrame {
                 if(hasPositiveInt){
                     for(int i = 0;i<arrayOfGrids.size();i++){
                         int eval = evaluationFunction(arrayOfGrids.get(i),dim,dim);
-                        if(eval>0 && eval<num){
+                        if(eval>0 && eval>num){
                             num=eval;
                             pos = i;
 
@@ -1432,14 +1379,14 @@ public class GUI extends JFrame {
 
             //change the node's cell value to that new number
             grid[randomRow][randomCol].setCellValue(newCellNumber);
-            //run BFS to set the grid nodegrid levels with the possibly new cell value number
+            //run BFS to set the grid levels with the possibly new cell value number
             isSolvable = BFS(grid[0][0],grid[dimension-1][dimension-1],grid,create2DVisitedMatrix(dimension,dimension),dimension,dimension);
             newEvaluationScore = evaluationFunction(grid,dimension,dimension);
             if(isSolvable){//puzzle can be solved
                 if(evaluationScore<0){
                     evaluationScore=newEvaluationScore;
                 }else{
-                    if(evaluationScore<newEvaluationScore){
+                    if(evaluationScore>newEvaluationScore){
                         grid[randomRow][randomCol].setCellValue(oldCellNumber);
                     }else{
                         evaluationScore=newEvaluationScore;
@@ -1449,7 +1396,7 @@ public class GUI extends JFrame {
                 if(evaluationScore>0){
                     grid[randomRow][randomCol].setCellValue(oldCellNumber);
                 }else{
-                    if(evaluationScore>newEvaluationScore){
+                    if(evaluationScore<newEvaluationScore){
                         grid[randomRow][randomCol].setCellValue((oldCellNumber));
                     }else{
                         evaluationScore=newEvaluationScore;
@@ -1503,7 +1450,7 @@ public class GUI extends JFrame {
                 if (evaluationScore < 0) {
                     evaluationScore = newEvaluationScore;
                 } else {
-                    if (evaluationScore < newEvaluationScore) {
+                    if (evaluationScore > newEvaluationScore) {
                         //accept this downward step with a certain probability
                         if(probability>probabilityBound){
                             evaluationScore=newEvaluationScore;
@@ -1575,7 +1522,7 @@ public class GUI extends JFrame {
                 if(evaluationScore<0){
                     evaluationScore=newEvaluationScore;
                 }else{
-                    if(evaluationScore<newEvaluationScore){
+                    if(evaluationScore>newEvaluationScore){
                         //simulate annealing
                         int numerator =  newEvaluationScore-evaluationScore;
                         double power = (double)numerator/temperature;
@@ -1629,7 +1576,7 @@ public class GUI extends JFrame {
                 //choose two random parents and accept them with a probabiility proportional to the evaluation function
                 Node[][] parent = population.get(rand.nextInt(population.size()));
                 //calculate the probability of accepting the parent
-                if(Math.random()<optimalEvalFunction/evaluationFunction(parent,dimension,dimension)){
+                if(Math.random()<(1-(optimalEvalFunction/evaluationFunction(parent,dimension,dimension)))){
                     //we add the parent to the parent arraylist
                     parents.add(parent);
                 }
@@ -1722,11 +1669,11 @@ public class GUI extends JFrame {
 
         if(isPos){
             //there is a solvable grid in the population
-            int max = Integer.MAX_VALUE;
+            int min = Integer.MIN_VALUE;
             for(int opt = 0;opt<population.size();opt++){
                 int eval = evaluationFunction(population.get(opt),dimension,dimension);
-                if(eval< max && eval>0 ){
-                    max=eval;
+                if(eval>min && eval>0 ){
+                    min=eval;
                     result = population.get(opt);
                 }
             }
@@ -1743,5 +1690,115 @@ public class GUI extends JFrame {
             }
         }
         return result;
+    }
+    public static void createDataForGraphs(){
+        int[] iterations = {50,250,500,1000};
+        int restarts = 50;
+        int[] gridDimensions = {5,7,9,11};
+        int initialEval = 0;
+        double hillPercentageIncreaseSum = 0;
+        double restartSum=0;
+        int newEval = 0;
+        double randomWalk=0;
+        double simulatedAnnealingSum=0;
+        double geneticAlgoSum = 0;
+        //loop through the grid dimensions
+            try{
+                PrintWriter writer = new PrintWriter("stats.txt", "UTF-8");
+                for(int dimension = 0;dimension<gridDimensions.length;dimension++){
+                    int dim = gridDimensions[dimension];
+                    writer.println("Grid dimension: "+dim);
+                    writer.println("============================");
+                    //create a grid
+                    Node[][] grid = create2DArrayOfNodes(dim,dim);
+                    //runBFS on the grid
+                    boolean ranBFS = BFS(grid[0][0],grid[dim-1][dim-1],grid,create2DVisitedMatrix(dim,dim),dim,dim);
+                    initialEval = evaluationFunction(grid,dim,dim);
+                    //copy this grid
+                    Node[][] copyOfGrid = new Node[dim][dim];
+                    //copy the contents of the grid into the copy
+                    for(int i =0;i<dim;i++){
+                        for(int j =0;j<dim;j++){
+                            copyOfGrid[i][j]=new Node(i,j,grid[i][j].getCellValue());
+                        }
+                    }
+                    //loop through the number iterations array
+                    for(int i=0;i<iterations.length;i++){
+                        //grab the number of iterations
+                        writer.println("Iterations: "+iterations[i]);
+                        int iter = iterations[i];
+                        //average a number of 50 times
+                        for(int j=0;j<50;j++){
+                            //perform all of our stats here
+                            //hill climbing
+                            Node[][] hillClimbingGrid = hillClimb(grid,iter,dim);
+                            newEval = evaluationFunction(hillClimbingGrid,dim,dim);
+                            //calculate the percentage increase
+                            int diff = newEval-initialEval;
+                            double percentageIncrease = (double)(diff/initialEval)*100;
+                            hillPercentageIncreaseSum+=percentageIncrease;
+                            //reset the grid
+                            grid=copyOfGrid;
+
+                            int restartIter = iter/50;
+                            Node[][] restartGrid = hillClimb(grid,restartIter,dim);
+                            newEval = evaluationFunction(restartGrid,dim,dim);
+                            diff=newEval-initialEval;
+                            percentageIncrease=(double)(diff/initialEval)*100;
+                            restartSum+=percentageIncrease;
+
+                            //reset the grid
+                            grid=copyOfGrid;
+                            Node[][] hillClimbWithRandomWalk=hillClimbWithProbability(grid,iter,dim,0.2);
+                            newEval = evaluationFunction(hillClimbWithRandomWalk,dim,dim);
+                            diff=newEval-initialEval;
+                            percentageIncrease=(double)(diff/initialEval)*100;
+                            randomWalk+=percentageIncrease;
+
+                            //reset the grid
+                            grid=copyOfGrid;
+                            Node[][] simulateAnnealing = simulatedAnnealing(grid,iter,dim,500,0.6);
+                            newEval=evaluationFunction(simulateAnnealing,dim,dim);
+                            diff=newEval-initialEval;
+                            percentageIncrease=(double)(diff/initialEval)*100;
+                            simulatedAnnealingSum+=percentageIncrease;
+
+                            //reset the grid
+                            grid=copyOfGrid;
+
+//                            //create the genetic algorithm grids
+//                            //number of population = 50
+//                            //number of generations = 15
+//                            ArrayList<Node[][]> population = new ArrayList<>();
+//                            for(int pop = 0;pop<50;pop++){
+//                                Node[][] add = create2DArrayOfNodes(dim,dim);
+//                                population.add(add);
+//                            }
+//                            Node[][] geneticResult = geneticAlgorithm(population,dim,15,0.3,0.05);
+//                            newEval=evaluationFunction(geneticResult,dim,dim);
+//                            diff=newEval
+
+
+
+
+
+                        }
+                        writer.println("Average increase in eval function for pure hill climbing: "+hillPercentageIncreaseSum/50);
+                        writer.println("Average increase in eval function for hill climbing with restarts: "+restartSum/50);
+                        writer.println("Average increase in eval function for hill climbing with random walk: "+randomWalk/50);
+                        writer.println("Average increase in eval function for simulated annealing (starting temp = 500, decay rate = 0.6): "+simulatedAnnealingSum/50);
+
+                        hillPercentageIncreaseSum=0;
+                        restartSum=0;
+                        simulatedAnnealingSum=0;
+                        randomWalk=0;
+                    }
+                }
+                writer.close();
+            } catch (IOException e) {
+                // do something
+                System.out.println("Couldnt write file");
+            }
+
     }
 }
