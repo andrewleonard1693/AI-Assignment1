@@ -1,6 +1,22 @@
 Grid dimension: 5
 ============================
-Initial evaluation function: -14
+Initial evaluation function: 2
+Genetic algorithm stats for grid dimension: 5
+==========================================
+Number of generations: 10
+Ending evaluation function for grid size5: 7.0
+Number of generations: 20
+Ending evaluation function for grid size5: 15.0
+Number of generations: 30
+Ending evaluation function for grid size5: 23.0
+Number of generations: 40
+Ending evaluation function for grid size5: 33.0
+Number of generations: 50
+Ending evaluation function for grid size5: 44.0
+Number of generations: 100
+Ending evaluation function for grid size5: 55.0
+Number of generations: 200
+Ending evaluation function for grid size5: 66.0
 Iterations: 50
 Pure hill climbing-ending evaluation function 7.0
 Hill climbing with restarts-ending evaluation function: 7.0
@@ -9,11 +25,11 @@ Simulated Annealing - ending eval function (starting temp = 500, decay rate = 0.
 Iterations: 100
 Pure hill climbing-ending evaluation function 9.0
 Hill climbing with restarts-ending evaluation function: 9.0
-Hill climbing with random walk-ending eval function: 7.0
+Hill climbing with random walk-ending eval function: 6.0
 Simulated Annealing - ending eval function (starting temp = 500, decay rate = 0.6): 4.0
 Iterations: 250
-Pure hill climbing-ending evaluation function 12.0
-Hill climbing with restarts-ending evaluation function: 12.0
+Pure hill climbing-ending evaluation function 13.0
+Hill climbing with restarts-ending evaluation function: 13.0
 Hill climbing with random walk-ending eval function: 6.0
 Simulated Annealing - ending eval function (starting temp = 500, decay rate = 0.6): 6.0
 Iterations: 500
@@ -30,90 +46,138 @@ Iterations: 2000
 Pure hill climbing-ending evaluation function 18.0
 Hill climbing with restarts-ending evaluation function: 18.0
 Hill climbing with random walk-ending eval function: 6.0
-Simulated Annealing - ending eval function (starting temp = 500, decay rate = 0.6): 17.0
+Simulated Annealing - ending eval function (starting temp = 500, decay rate = 0.6): 18.0
 Grid dimension: 7
 ============================
-Initial evaluation function: 4
+Initial evaluation function: 8
+Genetic algorithm stats for grid dimension: 7
+==========================================
+Number of generations: 10
+Ending evaluation function for grid size7: 9.0
+Number of generations: 20
+Ending evaluation function for grid size7: 19.0
+Number of generations: 30
+Ending evaluation function for grid size7: 30.0
+Number of generations: 40
+Ending evaluation function for grid size7: 44.0
+Number of generations: 50
+Ending evaluation function for grid size7: 58.0
+Number of generations: 100
+Ending evaluation function for grid size7: 72.0
+Number of generations: 200
+Ending evaluation function for grid size7: 86.0
 Iterations: 50
-Pure hill climbing-ending evaluation function 9.0
+Pure hill climbing-ending evaluation function 8.0
 Hill climbing with restarts-ending evaluation function: 8.0
 Hill climbing with random walk-ending eval function: 8.0
-Simulated Annealing - ending eval function (starting temp = 500, decay rate = 0.6): 6.0
+Simulated Annealing - ending eval function (starting temp = 500, decay rate = 0.6): 5.0
 Iterations: 100
 Pure hill climbing-ending evaluation function 10.0
 Hill climbing with restarts-ending evaluation function: 10.0
-Hill climbing with random walk-ending eval function: 9.0
-Simulated Annealing - ending eval function (starting temp = 500, decay rate = 0.6): 6.0
+Hill climbing with random walk-ending eval function: 8.0
+Simulated Annealing - ending eval function (starting temp = 500, decay rate = 0.6): 5.0
 Iterations: 250
-Pure hill climbing-ending evaluation function 16.0
+Pure hill climbing-ending evaluation function 15.0
 Hill climbing with restarts-ending evaluation function: 16.0
-Hill climbing with random walk-ending eval function: 7.0
+Hill climbing with random walk-ending eval function: 8.0
 Simulated Annealing - ending eval function (starting temp = 500, decay rate = 0.6): 6.0
 Iterations: 500
 Pure hill climbing-ending evaluation function 24.0
 Hill climbing with restarts-ending evaluation function: 24.0
-Hill climbing with random walk-ending eval function: 8.0
-Simulated Annealing - ending eval function (starting temp = 500, decay rate = 0.6): 12.0
+Hill climbing with random walk-ending eval function: 7.0
+Simulated Annealing - ending eval function (starting temp = 500, decay rate = 0.6): 10.0
 Iterations: 1000
 Pure hill climbing-ending evaluation function 32.0
 Hill climbing with restarts-ending evaluation function: 32.0
-Hill climbing with random walk-ending eval function: 9.0
-Simulated Annealing - ending eval function (starting temp = 500, decay rate = 0.6): 25.0
+Hill climbing with random walk-ending eval function: 7.0
+Simulated Annealing - ending eval function (starting temp = 500, decay rate = 0.6): 24.0
 Iterations: 2000
 Pure hill climbing-ending evaluation function 37.0
 Hill climbing with restarts-ending evaluation function: 37.0
-Hill climbing with random walk-ending eval function: 7.0
+Hill climbing with random walk-ending eval function: 8.0
 Simulated Annealing - ending eval function (starting temp = 500, decay rate = 0.6): 32.0
 Grid dimension: 9
 ============================
-Initial evaluation function: 5
+Initial evaluation function: 8
+Genetic algorithm stats for grid dimension: 9
+==========================================
+Number of generations: 10
+Ending evaluation function for grid size9: 9.0
+Number of generations: 20
+Ending evaluation function for grid size9: 19.0
+Number of generations: 30
+Ending evaluation function for grid size9: 29.0
+Number of generations: 40
+Ending evaluation function for grid size9: 40.0
+Number of generations: 50
+Ending evaluation function for grid size9: 51.0
+Number of generations: 100
+Ending evaluation function for grid size9: 62.0
+Number of generations: 200
+Ending evaluation function for grid size9: 75.0
 Iterations: 50
 Pure hill climbing-ending evaluation function 8.0
 Hill climbing with restarts-ending evaluation function: 8.0
 Hill climbing with random walk-ending eval function: 8.0
 Simulated Annealing - ending eval function (starting temp = 500, decay rate = 0.6): 6.0
 Iterations: 100
-Pure hill climbing-ending evaluation function 10.0
+Pure hill climbing-ending evaluation function 9.0
 Hill climbing with restarts-ending evaluation function: 10.0
-Hill climbing with random walk-ending eval function: 9.0
+Hill climbing with random walk-ending eval function: 8.0
 Simulated Annealing - ending eval function (starting temp = 500, decay rate = 0.6): 6.0
 Iterations: 250
 Pure hill climbing-ending evaluation function 15.0
 Hill climbing with restarts-ending evaluation function: 15.0
 Hill climbing with random walk-ending eval function: 8.0
-Simulated Annealing - ending eval function (starting temp = 500, decay rate = 0.6): 7.0
+Simulated Annealing - ending eval function (starting temp = 500, decay rate = 0.6): 6.0
 Iterations: 500
-Pure hill climbing-ending evaluation function 26.0
-Hill climbing with restarts-ending evaluation function: 26.0
-Hill climbing with random walk-ending eval function: 8.0
-Simulated Annealing - ending eval function (starting temp = 500, decay rate = 0.6): 9.0
+Pure hill climbing-ending evaluation function 25.0
+Hill climbing with restarts-ending evaluation function: 25.0
+Hill climbing with random walk-ending eval function: 9.0
+Simulated Annealing - ending eval function (starting temp = 500, decay rate = 0.6): 10.0
 Iterations: 1000
-Pure hill climbing-ending evaluation function 41.0
-Hill climbing with restarts-ending evaluation function: 42.0
+Pure hill climbing-ending evaluation function 43.0
+Hill climbing with restarts-ending evaluation function: 43.0
 Hill climbing with random walk-ending eval function: 8.0
-Simulated Annealing - ending eval function (starting temp = 500, decay rate = 0.6): 23.0
+Simulated Annealing - ending eval function (starting temp = 500, decay rate = 0.6): 24.0
 Iterations: 2000
-Pure hill climbing-ending evaluation function 54.0
-Hill climbing with restarts-ending evaluation function: 54.0
+Pure hill climbing-ending evaluation function 56.0
+Hill climbing with restarts-ending evaluation function: 56.0
 Hill climbing with random walk-ending eval function: 9.0
 Simulated Annealing - ending eval function (starting temp = 500, decay rate = 0.6): 41.0
 Grid dimension: 11
 ============================
-Initial evaluation function: 7
+Initial evaluation function: 8
+Genetic algorithm stats for grid dimension: 11
+==========================================
+Number of generations: 10
+Ending evaluation function for grid size11: 10.0
+Number of generations: 20
+Ending evaluation function for grid size11: 21.0
+Number of generations: 30
+Ending evaluation function for grid size11: 32.0
+Number of generations: 40
+Ending evaluation function for grid size11: 45.0
+Number of generations: 50
+Ending evaluation function for grid size11: 58.0
+Number of generations: 100
+Ending evaluation function for grid size11: 71.0
+Number of generations: 200
+Ending evaluation function for grid size11: 84.0
 Iterations: 50
-Pure hill climbing-ending evaluation function 8.0
-Hill climbing with restarts-ending evaluation function: 8.0
-Hill climbing with random walk-ending eval function: 8.0
+Pure hill climbing-ending evaluation function 9.0
+Hill climbing with restarts-ending evaluation function: 9.0
+Hill climbing with random walk-ending eval function: 9.0
 Simulated Annealing - ending eval function (starting temp = 500, decay rate = 0.6): 7.0
 Iterations: 100
-Pure hill climbing-ending evaluation function 10.0
-Hill climbing with restarts-ending evaluation function: 10.0
+Pure hill climbing-ending evaluation function 9.0
+Hill climbing with restarts-ending evaluation function: 9.0
 Hill climbing with random walk-ending eval function: 9.0
 Simulated Annealing - ending eval function (starting temp = 500, decay rate = 0.6): 7.0
 Iterations: 250
-Pure hill climbing-ending evaluation function 12.0
-Hill climbing with restarts-ending evaluation function: 12.0
-Hill climbing with random walk-ending eval function: 9.0
+Pure hill climbing-ending evaluation function 13.0
+Hill climbing with restarts-ending evaluation function: 13.0
+Hill climbing with random walk-ending eval function: 10.0
 Simulated Annealing - ending eval function (starting temp = 500, decay rate = 0.6): 7.0
 Iterations: 500
 Pure hill climbing-ending evaluation function 19.0
@@ -121,12 +185,12 @@ Hill climbing with restarts-ending evaluation function: 19.0
 Hill climbing with random walk-ending eval function: 9.0
 Simulated Annealing - ending eval function (starting temp = 500, decay rate = 0.6): 8.0
 Iterations: 1000
-Pure hill climbing-ending evaluation function 40.0
-Hill climbing with restarts-ending evaluation function: 41.0
+Pure hill climbing-ending evaluation function 39.0
+Hill climbing with restarts-ending evaluation function: 39.0
 Hill climbing with random walk-ending eval function: 9.0
-Simulated Annealing - ending eval function (starting temp = 500, decay rate = 0.6): 16.0
+Simulated Annealing - ending eval function (starting temp = 500, decay rate = 0.6): 15.0
 Iterations: 2000
-Pure hill climbing-ending evaluation function 65.0
-Hill climbing with restarts-ending evaluation function: 66.0
+Pure hill climbing-ending evaluation function 66.0
+Hill climbing with restarts-ending evaluation function: 67.0
 Hill climbing with random walk-ending eval function: 9.0
-Simulated Annealing - ending eval function (starting temp = 500, decay rate = 0.6): 37.0
+Simulated Annealing - ending eval function (starting temp = 500, decay rate = 0.6): 39.0

@@ -953,15 +953,24 @@ public class GUI extends JFrame {
                 //clear the grid
                 removeGrid(mainPanel);
                 JPanel geneticStats = new JPanel();
+                geneticStats.setLayout(new BoxLayout(geneticStats,BoxLayout.Y_AXIS));
                 JLabel geneticTitle = new JLabel("Genetic Algorithm");
+
+                Font font = new Font("Arial Black",Font.BOLD,20);
+
+                geneticTitle.setFont(font);
                 JLabel geneticRunTime = new JLabel("Elapsed time:"+Double.toString(totalGeneticTimeInSeconds));
+                geneticRunTime.setFont(font);
 //                JLabel geneticEvalFunc = new JLabel("Evaluation function: "+Integer.toString(evaluationFunction(geneticGridToAddToGUI,geneticGridToAddToGUI.length,geneticGridToAddToGUI.length)));
                 geneticStats.add(geneticTitle);
-//                geneticStats.add(geneticEvalFunc);
+                int gEval = evaluationFunction(geneticGridToAddToGUI,geneticGridToAddToGUI.length,geneticGridToAddToGUI.length);
+                JLabel geneticEvaluationFunction = new JLabel("Evaluation function: "+Integer.toString(gEval));
+                geneticEvaluationFunction.setFont(font);
+                geneticStats.add(geneticEvaluationFunction);
                 geneticStats.add(geneticRunTime);
                 //add the grid to the layout
                 addGridToLayout(mainPanel,geneticGridToAddToGUI);
-//                mainPanel.add(geneticStats,BorderLayout.SOUTH);
+                mainPanel.add(geneticStats,BorderLayout.SOUTH);
 
                 frame.revalidate();
                 frame.repaint();
@@ -1692,6 +1701,7 @@ public class GUI extends JFrame {
         return result;
     }
     public static void createDataForGraphs(){
+        int[] generations = {10,20,30,40,50,100,200};
         int[] iterations = {50,100,250,500,1000,2000};
         int restarts = 50;
         int[] gridDimensions = {5,7,9,11};
@@ -1703,10 +1713,19 @@ public class GUI extends JFrame {
         double simulatedAnnealingSum=0;
         double geneticAlgoSum = 0;
         //loop through the grid dimensions
-            try{
-                PrintWriter writer = new PrintWriter("stats.txt", "UTF-8");
-                for(int dimension = 0;dimension<gridDimensions.length;dimension++){
-                    int dim = gridDimensions[dimension];
+        try{
+
+
+            PrintWriter writer = new PrintWriter("stats.txt", "UTF-8");
+            for(int dimension = 0;dimension<gridDimensions.length;dimension++){
+                ArrayList<Node[][]> population = new ArrayList<>();
+                ArrayList<Node[][]> copyOfPopulation = new ArrayList();
+                int dim = gridDimensions[dimension];
+                for(int pop = 0;pop<50;pop++){
+                    Node[][] add = create2DArrayOfNodes(dim,dim);
+                    population.add(add);
+                    copyOfPopulation.add(add);
+                }
                     writer.println("Grid dimension: "+dim);
                     writer.println("============================");
                     //create a grid
@@ -1723,6 +1742,24 @@ public class GUI extends JFrame {
                             copyOfGrid[i][j]=new Node(i,j,grid[i][j].getCellValue());
                         }
                     }
+                    int genEval=0;
+                    int genEvalSum = 0;
+                    Node[][] geneticGrid=new Node[dim][dim];
+                    writer.println("Genetic algorithm stats for grid dimension: "+dim);
+                    writer.println("==========================================");
+                    for(int gen = 0;gen<generations.length;gen++){
+                        int currentGen = generations[gen];
+                        writer.println("Number of generations: "+currentGen);
+                        for(int p=0;p<50;p++){
+                            geneticGrid = geneticAlgorithm(population,dim,currentGen,0.1,0.05);
+                            genEval=evaluationFunction(geneticGrid,dim,dim);
+                            genEvalSum+=genEval;
+                        }
+                    writer.println("Ending evaluation function for grid size"+dim+": "+Math.ceil((double)genEvalSum/50));
+                    }
+                    genEvalSum=0;
+                    population=copyOfPopulation;
+
                     //loop through the number iterations array
                     for(int i=0;i<iterations.length;i++){
                         //grab the number of iterations
