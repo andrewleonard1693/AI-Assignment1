@@ -22,7 +22,7 @@ public class GUI extends JFrame {
     public static int maxColumns = 0;
     public static void main(String[] args) {
         new GUI();
-        createDataForGraphs();
+//        createDataForGraphs();
     }
 
     public GUI(){
