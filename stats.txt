@@ -1,88 +1,132 @@
 Grid dimension: 5
 ============================
+Initial evaluation function: -14
 Iterations: 50
-Average increase in eval function for pure hill climbing: 0.0
-Average increase in eval function for hill climbing with restarts: 0.0
-Average increase in eval function for hill climbing with random walk: 0.0
-Average increase in eval function for simulated annealing (starting temp = 500, decay rate = 0.6): 0.0
+Pure hill climbing-ending evaluation function 7.0
+Hill climbing with restarts-ending evaluation function: 7.0
+Hill climbing with random walk-ending eval function: 7.0
+Simulated Annealing - ending eval function (starting temp = 500, decay rate = 0.6): 4.0
+Iterations: 100
+Pure hill climbing-ending evaluation function 9.0
+Hill climbing with restarts-ending evaluation function: 9.0
+Hill climbing with random walk-ending eval function: 7.0
+Simulated Annealing - ending eval function (starting temp = 500, decay rate = 0.6): 4.0
 Iterations: 250
-Average increase in eval function for pure hill climbing: 60.0
-Average increase in eval function for hill climbing with restarts: 64.0
-Average increase in eval function for hill climbing with random walk: 0.0
-Average increase in eval function for simulated annealing (starting temp = 500, decay rate = 0.6): 0.0
+Pure hill climbing-ending evaluation function 12.0
+Hill climbing with restarts-ending evaluation function: 12.0
+Hill climbing with random walk-ending eval function: 6.0
+Simulated Annealing - ending eval function (starting temp = 500, decay rate = 0.6): 6.0
 Iterations: 500
-Average increase in eval function for pure hill climbing: 112.0
-Average increase in eval function for hill climbing with restarts: 112.0
-Average increase in eval function for hill climbing with random walk: 0.0
-Average increase in eval function for simulated annealing (starting temp = 500, decay rate = 0.6): 42.0
+Pure hill climbing-ending evaluation function 16.0
+Hill climbing with restarts-ending evaluation function: 16.0
+Hill climbing with random walk-ending eval function: 6.0
+Simulated Annealing - ending eval function (starting temp = 500, decay rate = 0.6): 11.0
 Iterations: 1000
-Average increase in eval function for pure hill climbing: 124.0
-Average increase in eval function for hill climbing with restarts: 124.0
-Average increase in eval function for hill climbing with random walk: 0.0
-Average increase in eval function for simulated annealing (starting temp = 500, decay rate = 0.6): 104.0
+Pure hill climbing-ending evaluation function 17.0
+Hill climbing with restarts-ending evaluation function: 17.0
+Hill climbing with random walk-ending eval function: 6.0
+Simulated Annealing - ending eval function (starting temp = 500, decay rate = 0.6): 15.0
+Iterations: 2000
+Pure hill climbing-ending evaluation function 18.0
+Hill climbing with restarts-ending evaluation function: 18.0
+Hill climbing with random walk-ending eval function: 6.0
+Simulated Annealing - ending eval function (starting temp = 500, decay rate = 0.6): 17.0
 Grid dimension: 7
 ============================
+Initial evaluation function: 4
 Iterations: 50
-Average increase in eval function for pure hill climbing: 8.0
-Average increase in eval function for hill climbing with restarts: 4.0
-Average increase in eval function for hill climbing with random walk: 8.0
-Average increase in eval function for simulated annealing (starting temp = 500, decay rate = 0.6): 0.0
+Pure hill climbing-ending evaluation function 9.0
+Hill climbing with restarts-ending evaluation function: 8.0
+Hill climbing with random walk-ending eval function: 8.0
+Simulated Annealing - ending eval function (starting temp = 500, decay rate = 0.6): 6.0
+Iterations: 100
+Pure hill climbing-ending evaluation function 10.0
+Hill climbing with restarts-ending evaluation function: 10.0
+Hill climbing with random walk-ending eval function: 9.0
+Simulated Annealing - ending eval function (starting temp = 500, decay rate = 0.6): 6.0
 Iterations: 250
-Average increase in eval function for pure hill climbing: 112.0
-Average increase in eval function for hill climbing with restarts: 112.0
-Average increase in eval function for hill climbing with random walk: 6.0
-Average increase in eval function for simulated annealing (starting temp = 500, decay rate = 0.6): 0.0
+Pure hill climbing-ending evaluation function 16.0
+Hill climbing with restarts-ending evaluation function: 16.0
+Hill climbing with random walk-ending eval function: 7.0
+Simulated Annealing - ending eval function (starting temp = 500, decay rate = 0.6): 6.0
 Iterations: 500
-Average increase in eval function for pure hill climbing: 264.0
-Average increase in eval function for hill climbing with restarts: 268.0
-Average increase in eval function for hill climbing with random walk: 4.0
-Average increase in eval function for simulated annealing (starting temp = 500, decay rate = 0.6): 52.0
+Pure hill climbing-ending evaluation function 24.0
+Hill climbing with restarts-ending evaluation function: 24.0
+Hill climbing with random walk-ending eval function: 8.0
+Simulated Annealing - ending eval function (starting temp = 500, decay rate = 0.6): 12.0
 Iterations: 1000
-Average increase in eval function for pure hill climbing: 394.0
-Average increase in eval function for hill climbing with restarts: 394.0
-Average increase in eval function for hill climbing with random walk: 6.0
-Average increase in eval function for simulated annealing (starting temp = 500, decay rate = 0.6): 254.0
+Pure hill climbing-ending evaluation function 32.0
+Hill climbing with restarts-ending evaluation function: 32.0
+Hill climbing with random walk-ending eval function: 9.0
+Simulated Annealing - ending eval function (starting temp = 500, decay rate = 0.6): 25.0
+Iterations: 2000
+Pure hill climbing-ending evaluation function 37.0
+Hill climbing with restarts-ending evaluation function: 37.0
+Hill climbing with random walk-ending eval function: 7.0
+Simulated Annealing - ending eval function (starting temp = 500, decay rate = 0.6): 32.0
 Grid dimension: 9
 ============================
+Initial evaluation function: 5
 Iterations: 50
-Average increase in eval function for pure hill climbing: 4.0
-Average increase in eval function for hill climbing with restarts: 6.0
-Average increase in eval function for hill climbing with random walk: 4.0
-Average increase in eval function for simulated annealing (starting temp = 500, decay rate = 0.6): 0.0
+Pure hill climbing-ending evaluation function 8.0
+Hill climbing with restarts-ending evaluation function: 8.0
+Hill climbing with random walk-ending eval function: 8.0
+Simulated Annealing - ending eval function (starting temp = 500, decay rate = 0.6): 6.0
+Iterations: 100
+Pure hill climbing-ending evaluation function 10.0
+Hill climbing with restarts-ending evaluation function: 10.0
+Hill climbing with random walk-ending eval function: 9.0
+Simulated Annealing - ending eval function (starting temp = 500, decay rate = 0.6): 6.0
 Iterations: 250
-Average increase in eval function for pure hill climbing: 36.0
-Average increase in eval function for hill climbing with restarts: 40.0
-Average increase in eval function for hill climbing with random walk: 0.0
-Average increase in eval function for simulated annealing (starting temp = 500, decay rate = 0.6): 0.0
+Pure hill climbing-ending evaluation function 15.0
+Hill climbing with restarts-ending evaluation function: 15.0
+Hill climbing with random walk-ending eval function: 8.0
+Simulated Annealing - ending eval function (starting temp = 500, decay rate = 0.6): 7.0
 Iterations: 500
-Average increase in eval function for pure hill climbing: 162.0
-Average increase in eval function for hill climbing with restarts: 164.0
-Average increase in eval function for hill climbing with random walk: 0.0
-Average increase in eval function for simulated annealing (starting temp = 500, decay rate = 0.6): 4.0
+Pure hill climbing-ending evaluation function 26.0
+Hill climbing with restarts-ending evaluation function: 26.0
+Hill climbing with random walk-ending eval function: 8.0
+Simulated Annealing - ending eval function (starting temp = 500, decay rate = 0.6): 9.0
 Iterations: 1000
-Average increase in eval function for pure hill climbing: 364.0
-Average increase in eval function for hill climbing with restarts: 364.0
-Average increase in eval function for hill climbing with random walk: 0.0
-Average increase in eval function for simulated annealing (starting temp = 500, decay rate = 0.6): 124.0
+Pure hill climbing-ending evaluation function 41.0
+Hill climbing with restarts-ending evaluation function: 42.0
+Hill climbing with random walk-ending eval function: 8.0
+Simulated Annealing - ending eval function (starting temp = 500, decay rate = 0.6): 23.0
+Iterations: 2000
+Pure hill climbing-ending evaluation function 54.0
+Hill climbing with restarts-ending evaluation function: 54.0
+Hill climbing with random walk-ending eval function: 9.0
+Simulated Annealing - ending eval function (starting temp = 500, decay rate = 0.6): 41.0
 Grid dimension: 11
 ============================
+Initial evaluation function: 7
 Iterations: 50
-Average increase in eval function for pure hill climbing: 6.0
-Average increase in eval function for hill climbing with restarts: 6.0
-Average increase in eval function for hill climbing with random walk: 6.0
-Average increase in eval function for simulated annealing (starting temp = 500, decay rate = 0.6): 0.0
+Pure hill climbing-ending evaluation function 8.0
+Hill climbing with restarts-ending evaluation function: 8.0
+Hill climbing with random walk-ending eval function: 8.0
+Simulated Annealing - ending eval function (starting temp = 500, decay rate = 0.6): 7.0
+Iterations: 100
+Pure hill climbing-ending evaluation function 10.0
+Hill climbing with restarts-ending evaluation function: 10.0
+Hill climbing with random walk-ending eval function: 9.0
+Simulated Annealing - ending eval function (starting temp = 500, decay rate = 0.6): 7.0
 Iterations: 250
-Average increase in eval function for pure hill climbing: 58.0
-Average increase in eval function for hill climbing with restarts: 62.0
-Average increase in eval function for hill climbing with random walk: 14.0
-Average increase in eval function for simulated annealing (starting temp = 500, decay rate = 0.6): 0.0
+Pure hill climbing-ending evaluation function 12.0
+Hill climbing with restarts-ending evaluation function: 12.0
+Hill climbing with random walk-ending eval function: 9.0
+Simulated Annealing - ending eval function (starting temp = 500, decay rate = 0.6): 7.0
 Iterations: 500
-Average increase in eval function for pure hill climbing: 158.0
-Average increase in eval function for hill climbing with restarts: 158.0
-Average increase in eval function for hill climbing with random walk: 12.0
-Average increase in eval function for simulated annealing (starting temp = 500, decay rate = 0.6): 4.0
+Pure hill climbing-ending evaluation function 19.0
+Hill climbing with restarts-ending evaluation function: 19.0
+Hill climbing with random walk-ending eval function: 9.0
+Simulated Annealing - ending eval function (starting temp = 500, decay rate = 0.6): 8.0
 Iterations: 1000
-Average increase in eval function for pure hill climbing: 558.0
-Average increase in eval function for hill climbing with restarts: 560.0
-Average increase in eval function for hill climbing with random walk: 4.0
-Average increase in eval function for simulated annealing (starting temp = 500, decay rate = 0.6): 122.0
+Pure hill climbing-ending evaluation function 40.0
+Hill climbing with restarts-ending evaluation function: 41.0
+Hill climbing with random walk-ending eval function: 9.0
+Simulated Annealing - ending eval function (starting temp = 500, decay rate = 0.6): 16.0
+Iterations: 2000
+Pure hill climbing-ending evaluation function 65.0
+Hill climbing with restarts-ending evaluation function: 66.0
+Hill climbing with random walk-ending eval function: 9.0
+Simulated Annealing - ending eval function (starting temp = 500, decay rate = 0.6): 37.0

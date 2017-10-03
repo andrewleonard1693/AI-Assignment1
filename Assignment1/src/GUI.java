@@ -22,7 +22,7 @@ public class GUI extends JFrame {
     public static int maxColumns = 0;
     public static void main(String[] args) {
         new GUI();
-//        createDataForGraphs();
+        createDataForGraphs();
     }
 
     public GUI(){
@@ -1692,7 +1692,7 @@ public class GUI extends JFrame {
         return result;
     }
     public static void createDataForGraphs(){
-        int[] iterations = {50,250,500,1000};
+        int[] iterations = {50,100,250,500,1000,2000};
         int restarts = 50;
         int[] gridDimensions = {5,7,9,11};
         int initialEval = 0;
@@ -1714,6 +1714,7 @@ public class GUI extends JFrame {
                     //runBFS on the grid
                     boolean ranBFS = BFS(grid[0][0],grid[dim-1][dim-1],grid,create2DVisitedMatrix(dim,dim),dim,dim);
                     initialEval = evaluationFunction(grid,dim,dim);
+                    writer.println("Initial evaluation function: "+initialEval);
                     //copy this grid
                     Node[][] copyOfGrid = new Node[dim][dim];
                     //copy the contents of the grid into the copy
@@ -1734,34 +1735,27 @@ public class GUI extends JFrame {
                             Node[][] hillClimbingGrid = hillClimb(grid,iter,dim);
                             newEval = evaluationFunction(hillClimbingGrid,dim,dim);
                             //calculate the percentage increase
-                            int diff = newEval-initialEval;
-                            double percentageIncrease = (double)(diff/initialEval)*100;
-                            hillPercentageIncreaseSum+=percentageIncrease;
+                            hillPercentageIncreaseSum+=newEval;
                             //reset the grid
                             grid=copyOfGrid;
 
                             int restartIter = iter/50;
                             Node[][] restartGrid = hillClimb(grid,restartIter,dim);
                             newEval = evaluationFunction(restartGrid,dim,dim);
-                            diff=newEval-initialEval;
-                            percentageIncrease=(double)(diff/initialEval)*100;
-                            restartSum+=percentageIncrease;
+                            restartSum+=newEval;
 
                             //reset the grid
                             grid=copyOfGrid;
                             Node[][] hillClimbWithRandomWalk=hillClimbWithProbability(grid,iter,dim,0.2);
                             newEval = evaluationFunction(hillClimbWithRandomWalk,dim,dim);
-                            diff=newEval-initialEval;
-                            percentageIncrease=(double)(diff/initialEval)*100;
-                            randomWalk+=percentageIncrease;
+                            randomWalk+=newEval;
+
 
                             //reset the grid
                             grid=copyOfGrid;
                             Node[][] simulateAnnealing = simulatedAnnealing(grid,iter,dim,500,0.6);
                             newEval=evaluationFunction(simulateAnnealing,dim,dim);
-                            diff=newEval-initialEval;
-                            percentageIncrease=(double)(diff/initialEval)*100;
-                            simulatedAnnealingSum+=percentageIncrease;
+                            simulatedAnnealingSum+=newEval;
 
                             //reset the grid
                             grid=copyOfGrid;
@@ -1783,11 +1777,10 @@ public class GUI extends JFrame {
 
 
                         }
-                        writer.println("Average increase in eval function for pure hill climbing: "+hillPercentageIncreaseSum/50);
-                        writer.println("Average increase in eval function for hill climbing with restarts: "+restartSum/50);
-                        writer.println("Average increase in eval function for hill climbing with random walk: "+randomWalk/50);
-                        writer.println("Average increase in eval function for simulated annealing (starting temp = 500, decay rate = 0.6): "+simulatedAnnealingSum/50);
-
+                        writer.println("Pure hill climbing-ending evaluation function "+Math.ceil(hillPercentageIncreaseSum/50));
+                        writer.println("Hill climbing with restarts-ending evaluation function: "+Math.ceil(restartSum/50));
+                        writer.println("Hill climbing with random walk-ending eval function: "+Math.ceil(randomWalk/50));
+                        writer.println("Simulated Annealing - ending eval function (starting temp = 500, decay rate = 0.6): "+Math.ceil(simulatedAnnealingSum/50));
                         hillPercentageIncreaseSum=0;
                         restartSum=0;
                         simulatedAnnealingSum=0;
